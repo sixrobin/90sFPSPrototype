@@ -6,8 +6,11 @@
 public class FPSMaster : MonoBehaviour
 {
     [SerializeField] private FPSControllableComponent[] _allComponents = null;
+    [SerializeField] private FPSController _fpsController = null;
     [SerializeField] private FPSCameraShake _fpsCameraShake = null;
     [SerializeField] private OptionsManager _optionsManager = null;
+
+    public FPSController FPSController => _fpsController;
 
     public FPSCameraShake FPSCameraShake => _fpsCameraShake;
 
@@ -19,8 +22,8 @@ public class FPSMaster : MonoBehaviour
     [ContextMenu("Enable All Components")]
     public void EnableAllComponents()
     {
-        foreach (FPSControllableComponent component in _allComponents)
-            component.Controllable = true;
+        for (int i = _allComponents.Length - 1; i >= 0; --i)
+            _allComponents[i].Controllable = true;
     }
 
     /// <summary>
@@ -29,8 +32,8 @@ public class FPSMaster : MonoBehaviour
     [ContextMenu("Disable All Components")]
     public void DisableAllComponents()
     {
-        foreach (FPSControllableComponent component in _allComponents)
-            component.Controllable = false;
+        for (int i = _allComponents.Length - 1; i >= 0; --i)
+            _allComponents[i].Controllable = false;
     }
 
     private void Awake()

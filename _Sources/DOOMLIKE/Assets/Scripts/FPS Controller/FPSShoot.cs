@@ -10,14 +10,18 @@ public class FPSShoot : FPSControllableComponent
     
     [Header("IMPACT")]
     [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
+    [SerializeField] private float _shootTrauma = 0.15f;
 
     [Header("DEBUG")]
     [SerializeField] private bool _dbg = true;
 
     private bool _canShoot = true;
-    private bool _shooting = false;
+    private bool _shooting = false; // Animating running.
 
     private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
+
+    public delegate void ShotEventHandler();
+    public event ShotEventHandler OnShot;
 
     protected override void OnControlAllowed()
     {
@@ -50,11 +54,17 @@ public class FPSShoot : FPSControllableComponent
 
         if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, Mathf.Infinity))
         {
+            Debug.Log($"Shooting on {hit.transform.name}", gameObject);
+
             if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
                 if (hit.collider.TryGetComponent(out shootable))
                     _knownShootables.Add(hit.collider, shootable);
 
-            shootable?.OnShot(hit.point);
+            if (shootable != null)
+            {
+                shootable.OnShot(hit.point);
+                FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
+            }
 
             // Bullet impacts.
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
@@ -66,7 +76,15 @@ public class FPSShoot : FPSControllableComponent
             }
         }
 
-        FPSMaster.FPSCameraShake.SetTrauma(0.15f);
+        OnShot?.Invoke();
+        FPSMaster.FPSCameraShake.AddTrauma(_shootTrauma);
+    }
+
+    private void UpdateAnimator()
+    {
+        _weaponAnimator.SetBool("Moving", FPSMaster.FPSController.IsMoving);
+        _weaponAnimator.SetBool("Sprinting", FPSMaster.FPSController.Sprinting);
+        _weaponAnimator.SetBool("Crouched", FPSMaster.FPSController.Crouched);
     }
 
     private void OnOptionsStateChanged(bool state)
@@ -97,6 +115,7 @@ public class FPSShoot : FPSControllableComponent
             return;
 
         TryShoot();
+        UpdateAnimator();
     }
 
     private void OnDestroy()

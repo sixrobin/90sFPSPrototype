@@ -1,32 +1,37 @@
-- Preset imports
-
-- Options
-	- Binder weapon switch
-	- Arme à droite ou à gauche
-	- Input maintenu pour crouch/sprint/visée
-	- Design crosshair/couleur
+- Exporter la logique des options dans un manager.
+- Options:
+	- Binder weapon switch.
+	- Arme à droite ou à gauche.
+	- Input maintenu pour crouch/sprint/visée.
+	- Design crosshair/couleur.
 	- Si minimap:
-		- Position/Size
-		- Static par rapport au joueur ou non
-	- Head bob: plutôt un pourcentage qu'un toggle
+		- Position/Size.
+		- Static par rapport au joueur ou non.
+	- Head bob: plutôt un pourcentage qu'un toggle.
 		
-- VFX quand on pète une wall light
-- Changement visuel sur le switch des portes quand on/off
+- Changement visuel sur le switch des portes quand on/off.
+- Permettre de tirer sur un switch ce qui l'active mais le rend inutilisable ensuite.
+- Permettre de tirer dans les petites lumières des portes pour les ouvrir.
 
 - Training workshops:
-	- Reset si en cours depuis x secondes
-	- Ecran pour afficher le score (vitesse et accuracy)
+	- Ecran pour afficher le score (vitesse et accuracy) avec versions on et off.
+	- Ecran entouré d'un vitrage pour ne pas pouvoir le casser, mais qui rendrait l'UI illisible car texture de fissures par dessus.
+	- L'écran devrait ouvrir une UI et ne plus être focusable, puis quand l'UI se ferme, s'éteindre et redevenir focusable.
 
-- Penser à l'orientation des éléments d'enviro pour la direction à suivre
-- Contrôles manette
-- Occlusion culling
+- Contrôles manette.
+- Occlusion culling.
+- Ouverture de la grande porte avec 4 générateurs.
+- IA (v1 débile à base de si raycast, chase, sinon, idle).
+- Night vision (transitions, grayscale, fog, UI).
+- Outline qui ne traverse pas les meshes.
 
-- Double sided doors
-- Animation de run/idle du gun
+- Voir si moyen d'écrire un shader unlit à la con plus opti que celui de base ?
+- Console Pro ?
 
-- Ouverture de la grande porte avec 4 générateurs
+- Si projet prend de l'ampleur, faire une database xml.
+- Accès rapide au FPSMaster (singleton ?) pour accéder à tous ses composantes.
 
-- Variante du mur avec le symbole en forme de flèche, 2 directions
+- Namespace !
+- Classe pour les FPSInteraction qui ont une outline.
 
-- IA (v1 débile à base de si raycast, chase, sinon, idle)
-- Night vision (transitions, grayscale, fog, UI)
+- Commande tcl.

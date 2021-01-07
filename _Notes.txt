@@ -15,6 +15,8 @@
 
 - Ramasser sur les corps des enregistrements audio qui correspondraient aux communications entre le soldat et une base militaire (on imagine qu'elles seraient enregistrées pour x raison).
 
+- Ce serait quand même trop bien qu'il y ait des réactions de NPC ou autre si on met énormément de balles dans une porte ou autre (du genre "ça ne s'ouvrira pas comme ça !").
+
 - Le joueur pourrait à un moment clef de l'histoire, se faire contaminer mais sans mourir, ce qui le rendrait fou petit à petit. Il deviendrait le vaisseau du mal et deviendrait l'ennemi des hommes.
 - Possibilité de soigner ce mal voire de se protéger à l'avance pour éviter la contamination ?
 - Possibilité d'utiliser la contamination, la réguler et l'utiliser pour obtenir une force capable de percer les défenses des aliens.
@@ -46,6 +48,7 @@
 - Salle de contrôle de caméras qu'on peut utiliser pour voir des salles à l'avance.
 
 - Possibilité de changer le style du scope (gagner des scopes différents).
+- Penser à l'orientation des éléments d'enviro pour la direction à suivre.
 
 - Perks/Stats potentielles :
 	- Attack speed.

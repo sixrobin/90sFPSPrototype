@@ -5,9 +5,13 @@ public class TrainingTarget : WorldSpaceBillboard, IFPSShootable
     [SerializeField] private Animator _animator = null;
     [SerializeField] private Collider _collider = null;
     [SerializeField] private GameObject _hitPrefab = null;
+    [SerializeField] private float _traumaOnShot = 0.25f;
+
+    private bool _isDown = false;
+
+    public float TraumaOnShot => _traumaOnShot;
 
     public delegate void TargetShotEventHandler(TrainingTarget target);
-
     public event TargetShotEventHandler TargetShot;
 
     public void OnShot(Vector3 point)
@@ -21,12 +25,19 @@ public class TrainingTarget : WorldSpaceBillboard, IFPSShootable
         Transform hitInstanceTransform = Instantiate(_hitPrefab, point, Quaternion.identity).transform;
         hitInstanceTransform.forward = hitInstanceTransform.position - BillboardCam.position;
 
+        _isDown = true;
+
         TargetShot?.Invoke(this);
     }
 
     [ContextMenu("Reset Target")]
     public void ResetTarget()
     {
+        if (!_isDown)
+            return;
+
+        _isDown = false;
+
         _animator.SetTrigger("Reset");
         _billboardEnabled = true;
         _collider.enabled = true; // Make sure player is not overlapping!

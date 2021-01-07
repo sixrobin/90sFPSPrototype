@@ -147,6 +147,7 @@ MonoBehaviour:
   _collider: {fileID: 9105639943080575528}
   _hitPrefab: {fileID: 3878435600342363824, guid: 04c3b3ba805ffbc4e9db4a1ab71814af,
     type: 3}
+  _traumaOnShot: 0.17
 --- !u!1 &9105639943525201237
 GameObject:
   m_ObjectHideFlags: 0
