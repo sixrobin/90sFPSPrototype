@@ -1,0 +1,58 @@
+- Bunker militaire dédié à gérer la population alien enfouie encore plus profond qui cherche à remonter à la surface.
+	- Salle d'entraînement au tir dans le bunker pour un tuto (reward si le joueur fait le tuto avec rapidité et précision ?).
+- Plusieurs niveaux, du bunker jusqu'à la base du mal, avec de moins en moins de signes humains et de plus en plus de signe aliens.
+
+- Impossibilité d'envoyer plusieurs hommes en même temps pour éradiquer le mal (pourquoi?) ce qui justifierait que le joueur soit seul.
+- Retrouver des anciens alliés contaminés (pouvoir donc ramasser leurs armes, leurs perks, trouver des objets de lore, etc.).
+- Est-ce qu'on joue du coup le même personnage à chaque fois ? Sinon, comment justifier les perks obtenues qui se transmettent d'un homme à l'autre ?
+
+- L'environnement change à chaque fois (si roguelike), ce qui pourrait se justifier par plusieurs choses :
+	- soit les humains ont développé une base capable de changer pour confondre l'ennemi.
+	- soit l'ennemi influence les hommes par un genre de folie ce qui leur fait perdre tout sens de l'orientation.
+- Certains étages peuvent être labyrinthique voire changer de forme au runtime.
+
+- Peut-être commencer en extérieur car la base est déjà désertée/entièrement contaminée ?
+
+- Ramasser sur les corps des enregistrements audio qui correspondraient aux communications entre le soldat et une base militaire (on imagine qu'elles seraient enregistrées pour x raison).
+
+- Le joueur pourrait à un moment clef de l'histoire, se faire contaminer mais sans mourir, ce qui le rendrait fou petit à petit. Il deviendrait le vaisseau du mal et deviendrait l'ennemi des hommes.
+- Possibilité de soigner ce mal voire de se protéger à l'avance pour éviter la contamination ?
+- Possibilité d'utiliser la contamination, la réguler et l'utiliser pour obtenir une force capable de percer les défenses des aliens.
+- Utiliser la contamination pour s'orienter dans un lieu où en temps normal, tout se transforme en permanence, rendant impossible la progression.
+
+- Rencontrer un scientifique qui serait coincé profondément sous terre, mais aurait réussi à s'enfermer quelque part à l'abri.
+
+- Déclencher une alarme/urgence dans un moment où le joueur est crouché/rampe et est donc lent.
+- Alarme quand porte blindée s'ouvre car pas de système de sécurité déverouillé (ce qui éveillerait des gardes présents dans la salle de sécurité qui se mettraient à chasser le joueur pour le tuer. Si on va d'abord dans la salle de sécu, on peut les surprendre, voire utiliser un barrel).
+
+- Si PAS un roguelike : checkpoints qui seraient des endroits avec un genre de tour de contrôle pour gérer les stats, récup des munitions, etc.
+- Pour accéder à la deuxième zone du jeu, devoir activer x générateurs pour ouvrir une porte blindée.
+- NPC au début qui explique que la porte blindée est censée être ouverte depuis plusieurs générateurs mais comme tout le monde est mort, plus possible de le faire sauf en allant les activer un par un.
+
+- Utiliser la vision nocturne pour évoluer dans le noir (les UI devraient aussi changer avec la vision nocturne).
+- La vision nocturne devrait également permettre de révéler des choses invisibles pour le joueur en temps normal (pourquoi pas des éléments un peu plus meta aussi, des UI, etc.).
+
+- Accès à une minimap.
+- Nécessité de pouvoir se heal.
+- Capsules de téléportation entre checkpoints avec charges limitées (et unlock d'un truc qui rend la TP illimitée).
+- Utiliser le crouch pour certains passages du LD.
+
+- Plusieurs training workshops de plus en plus durs avec un reward à chaque fois.
+- Fake training workshop ? Tirer sur une cible explose un truc ou autre.
+
+- Capsules pour stocker l'inventaire comme les coffres de Undertale ?
+- Briser des vitres, certaines à travers lesquelles on peut voir dans un sens mais pas dans l'autre.
+- Barrels explosifs.
+- Salle de contrôle de caméras qu'on peut utiliser pour voir des salles à l'avance.
+
+- Possibilité de changer le style du scope (gagner des scopes différents).
+
+- Perks/Stats potentielles :
+	- Attack speed.
+	- Attack damages.
+	- Movement speed.
+	- Roulade.
+	- More stamina.
+	- More health total.
+	- Resistance.
+	- More damages when low on health.
