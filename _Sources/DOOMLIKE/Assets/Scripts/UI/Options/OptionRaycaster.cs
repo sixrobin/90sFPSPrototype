@@ -1,34 +1,37 @@
-﻿using UnityEngine;
-using UnityEngine.EventSystems;
-
-public abstract class OptionRaycaster : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+﻿namespace Doomlike.UI
 {
-    [SerializeField] private TMPro.TextMeshProUGUI _optionNameText = null;
+    using UnityEngine;
+    using UnityEngine.EventSystems;
 
-    private string _optionName;
-
-    public void OnPointerEnter(PointerEventData eventData)
+    public abstract class OptionRaycaster : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
     {
-        _optionNameText.text = $" {_optionName}";
-    }
+        [SerializeField] private TMPro.TextMeshProUGUI _optionNameText = null;
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _optionNameText.text = _optionName;
-    }
+        private string _optionName;
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        OnClicked();
-    }
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _optionNameText.text = $" {_optionName}";
+        }
 
-    public abstract void Init();
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _optionNameText.text = _optionName;
+        }
 
-    public abstract void OnClicked();
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            OnClicked();
+        }
 
-    protected virtual void Start()
-    {
-        _optionName = _optionNameText.text;
-        Init();
+        public abstract void Init();
+
+        public abstract void OnClicked();
+
+        protected virtual void Start()
+        {
+            _optionName = _optionNameText.text;
+            Init();
+        }
     }
 }

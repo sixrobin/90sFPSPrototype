@@ -1,84 +1,95 @@
-﻿/// <summary>
-/// Stamina manager of the FPS controller. Does not inherit from MonoBehaviour and has an Update
-/// method that should be call in some MonoBehaviour Update.
-/// Must be constructed to be initialized with the wanted settings.
-/// </summary>
-public class FPSStaminaManager
+﻿namespace Doomlike.FPSCtrl
 {
-    public delegate void OutOfStaminaEventHandler ();
-    public event OutOfStaminaEventHandler OutOfStamina;
-
-    private float _fullDuration;
-    private float _recoverDelay;
-    private float _reloadDuration;
-    private bool _recovering;
-    private float _recoverTimer;
-
-    private float _currentCharge;
-    public float CurrentCharge
-    {
-        get => _currentCharge;
-        private set => _currentCharge = UnityEngine.Mathf.Clamp01(value);
-    }
-
-    public bool IsEmpty => CurrentCharge == 0f;
-
-    public FPSStaminaManager()
-    {
-        SetSettings(5f, 2f, 15f);
-        CurrentCharge = 1f;
-    }
-
-    public FPSStaminaManager(float fullDuration, float recoverDelay, float reloadDuration)
-    {
-        SetSettings(fullDuration, recoverDelay, reloadDuration);
-        CurrentCharge = 1f;
-    }
-
     /// <summary>
-    /// Overrides the stamina settings at runtime.
+    /// Stamina manager of the FPS controller. Does not inherit from MonoBehaviour and has an Update
+    /// method that should be call in some MonoBehaviour Update.
+    /// Must be constructed to be initialized with the wanted settings.
     /// </summary>
-    /// <param name="fullDuration">Full stamina charge duration.</param>
-    /// <param name="recoverDelay">Delay to wait when stamina is empty.</param>
-    /// <param name="reloadDuration">Full reload duration from empty to full.</param>
-    public void SetSettings(float fullDuration, float recoverDelay, float reloadDuration)
+    public class FPSStaminaManager : IConsoleProLoggable
     {
-        _fullDuration = fullDuration;
-        _recoverDelay = recoverDelay;
-        _reloadDuration = reloadDuration;
-    }
+        public delegate void OutOfStaminaEventHandler();
+        public event OutOfStaminaEventHandler OutOfStamina;
 
-    /// <summary>
-    /// Updates the stamina charge according to the stamina current state (reloading, empty, etc.).
-    /// Must be called inside a MonoBehaviour Update method.
-    /// </summary>
-    /// <param name="consuming">Is the stamina being consumed.</param>
-    public void Update(bool consuming)
-    {
-        if (_recovering)
+        private float _fullDuration;
+        private float _recoverDelay;
+        private float _reloadDuration;
+        private bool _recovering;
+        private float _recoverTimer;
+
+        private float _currentCharge;
+        public float CurrentCharge
         {
-            _recoverTimer += UnityEngine.Time.deltaTime;
-            if (_recoverTimer > _recoverDelay)
-            {
-                _recoverTimer = 0;
-                _recovering = false;
-            }
-
-            return;
+            get => _currentCharge;
+            private set => _currentCharge = UnityEngine.Mathf.Clamp01(value);
         }
 
-        if (consuming)
+        public bool IsEmpty => CurrentCharge == 0f;
+
+        public string ConsoleProPrefix => "FPS Stamina Manager";
+
+        public FPSStaminaManager()
         {
-            CurrentCharge -= UnityEngine.Time.deltaTime / _fullDuration;
-            if (CurrentCharge == 0)
-            {
-                OutOfStamina?.Invoke();
-                _recovering = true;
-            }
+            SetSettings(5f, 2f, 15f);
+            CurrentCharge = 1f;
         }
-        else
+
+        public FPSStaminaManager(float fullDuration, float recoverDelay, float reloadDuration)
         {
-            CurrentCharge += UnityEngine.Time.deltaTime / _reloadDuration;
+            SetSettings(fullDuration, recoverDelay, reloadDuration);
+            CurrentCharge = 1f;
+        }
+
+        /// <summary>
+        /// Overrides the stamina settings at runtime.
+        /// </summary>
+        /// <param name="fullDuration">Full stamina charge duration.</param>
+        /// <param name="recoverDelay">Delay to wait when stamina is empty.</param>
+        /// <param name="reloadDuration">Full reload duration from empty to full.</param>
+        public void SetSettings(float fullDuration, float recoverDelay, float reloadDuration)
+        {
+            ConsoleProLogger.Log(this, "Setting stamina stats :\n" +
+                $"Full duration: {fullDuration},\n" +
+                $"Recover delay: {recoverDelay},\n" +
+                $"Reload duration: {reloadDuration}.\n");
+
+            _fullDuration = fullDuration;
+            _recoverDelay = recoverDelay;
+            _reloadDuration = reloadDuration;
+        }
+
+        /// <summary>
+        /// Updates the stamina charge according to the stamina current state (reloading, empty, etc.).
+        /// Must be called inside a MonoBehaviour Update method.
+        /// </summary>
+        /// <param name="consuming">Is the stamina being consumed.</param>
+        public void Update(bool consuming)
+        {
+            if (_recovering)
+            {
+                _recoverTimer += UnityEngine.Time.deltaTime;
+                if (_recoverTimer > _recoverDelay)
+                {
+                    _recoverTimer = 0;
+                    _recovering = false;
+                }
+
+                return;
+            }
+
+            if (consuming)
+            {
+                CurrentCharge -= UnityEngine.Time.deltaTime / _fullDuration;
+                if (CurrentCharge == 0)
+                {
+                    ConsoleProLogger.Log(this, "Out of stamina.");
+                    OutOfStamina?.Invoke();
+                    _recovering = true;
+                }
+            }
+            else
+            {
+                CurrentCharge += UnityEngine.Time.deltaTime / _reloadDuration;
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
-using UnityEngine;
-
 namespace UnityStandardAssets.ImageEffects
 {
+    using UnityEngine;
+    
     [ExecuteInEditMode]
     [AddComponentMenu("Image Effects/Color Adjustments/Grayscale")]
     public class Grayscale : ImageEffectBase

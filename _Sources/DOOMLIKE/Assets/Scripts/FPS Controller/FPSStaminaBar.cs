@@ -1,62 +1,65 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-
-/// <summary>
-/// Visual handler of the FPS stamina manager.
-/// </summary>
-public class FPSStaminaBar : MonoBehaviour
+﻿namespace Doomlike.FPSCtrl
 {
-    [Header ("REFERENCES")]
-    [SerializeField] private FPSController _fpsController = null;
-    [SerializeField] private GameObject _barHolder = null;
-    [SerializeField] private Image _staminaFill = null;
+    using UnityEngine;
+    using UnityEngine.UI;
 
-    [Header ("STATS")]
-    [SerializeField] private float _hideDelay = 2;
-
-    private float _hideTimer;
-    private bool _hidden;
-
-    private void Hide()
+    /// <summary>
+    /// Visual handler of the FPS stamina manager.
+    /// </summary>
+    public class FPSStaminaBar : MonoBehaviour
     {
-        _barHolder.SetActive(false);
-        _hidden = true;
-    }
+        [Header("REFERENCES")]
+        [SerializeField] private FPSController _fpsController = null;
+        [SerializeField] private GameObject _barHolder = null;
+        [SerializeField] private Image _staminaFill = null;
 
-    private void Show()
-    {
-        _barHolder.SetActive(true);
-        _hidden = false;
-    }
+        [Header("STATS")]
+        [SerializeField] private float _hideDelay = 2;
 
-    private void UpdateVisual()
-    {
-        _staminaFill.fillAmount = _fpsController.StaminaManager.CurrentCharge;
+        private float _hideTimer;
+        private bool _hidden;
 
-        if (_staminaFill.fillAmount == 1)
+        private void Hide()
         {
-            if (_hidden)
-                return;
-
-            _hideTimer += Time.deltaTime;
-            if (_hideTimer > _hideDelay)
-                Hide();
+            _barHolder.SetActive(false);
+            _hidden = true;
         }
-        else
+
+        private void Show()
         {
-            _hideTimer = 0;
-            if (_hidden)
-                Show();
+            _barHolder.SetActive(true);
+            _hidden = false;
         }
-    }
 
-    private void Start()
-    {
-        Hide();
-    }
+        private void UpdateVisual()
+        {
+            _staminaFill.fillAmount = _fpsController.StaminaManager.CurrentCharge;
 
-    private void Update()
-    {
-        UpdateVisual();
+            if (_staminaFill.fillAmount == 1)
+            {
+                if (_hidden)
+                    return;
+
+                _hideTimer += Time.deltaTime;
+                if (_hideTimer > _hideDelay)
+                    Hide();
+            }
+            else
+            {
+                _hideTimer = 0;
+                if (_hidden)
+                    Show();
+            }
+        }
+
+        private void Start()
+        {
+            Hide();
+        }
+
+        private void Update()
+        {
+            UpdateVisual();
+        }
     }
 }

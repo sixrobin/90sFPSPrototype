@@ -1,53 +1,56 @@
-﻿using UnityEngine;
-
-/// <summary>
-/// Abstract class that every FPS component that can be enabled or disabled should extend.
-/// Contains a public variable to control the enable and virtual methods and events called when this variable value is changed;
-/// </summary>
-public abstract class FPSControllableComponent : MonoBehaviour
+﻿namespace Doomlike.FPSCtrl
 {
-    public delegate void ControllableEventHandler();
-    public event ControllableEventHandler ControlAllowed;
-    public event ControllableEventHandler ControlDisallowed;
+    using UnityEngine;
 
-    protected FPSMaster FPSMaster { get; private set; }
-
-    private bool _controllable = true;
-    public bool Controllable
+    /// <summary>
+    /// Abstract class that every FPS component that can be enabled or disabled should extend.
+    /// Contains a public variable to control the enable and virtual methods and events called when this variable value is changed;
+    /// </summary>
+    public abstract class FPSControllableComponent : MonoBehaviour
     {
-        get => _controllable;
-        set
+        public delegate void ControllableEventHandler();
+        public event ControllableEventHandler ControlAllowed;
+        public event ControllableEventHandler ControlDisallowed;
+
+        protected FPSMaster FPSMaster { get; private set; }
+
+        private bool _controllable = true;
+        public bool Controllable
         {
-            if (value)
-                OnControlAllowed();
-            else
-                OnControlDisallowed();
+            get => _controllable;
+            set
+            {
+                if (value)
+                    OnControlAllowed();
+                else
+                    OnControlDisallowed();
 
-            _controllable = value;
+                _controllable = value;
+            }
         }
-    }
 
-    public void SetFPSMaster(FPSMaster master)
-    {
-        if (FPSMaster != null)
-            Debug.Log($"Overriding FPSMaster on {transform.name}");
+        public void SetFPSMaster(FPSMaster master)
+        {
+            if (FPSMaster != null)
+                Debug.Log($"Overriding FPSMaster on {transform.name}");
 
-        FPSMaster = master;
-    }
+            FPSMaster = master;
+        }
 
-    /// <summary>
-    /// Called when the component controls are allowed. Triggers an event and can be overriden.
-    /// </summary>
-    protected virtual void OnControlAllowed()
-    {
-        ControlAllowed?.Invoke();
-    }
+        /// <summary>
+        /// Called when the component controls are allowed. Triggers an event and can be overriden.
+        /// </summary>
+        protected virtual void OnControlAllowed()
+        {
+            ControlAllowed?.Invoke();
+        }
 
-    /// <summary>
-    /// Called when the component controls are disallowed. Triggers an event and can be overriden.
-    /// </summary>
-    protected virtual void OnControlDisallowed()
-    {
-        ControlDisallowed?.Invoke();
+        /// <summary>
+        /// Called when the component controls are disallowed. Triggers an event and can be overriden.
+        /// </summary>
+        protected virtual void OnControlDisallowed()
+        {
+            ControlDisallowed?.Invoke();
+        }
     }
 }

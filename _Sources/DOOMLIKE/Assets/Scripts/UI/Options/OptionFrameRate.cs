@@ -1,26 +1,32 @@
-﻿using UnityEngine;
-
-public class OptionFrameRate : OptionRaycasterValues
+﻿namespace Doomlike.UI
 {
-    public override void Init()
-    {
-        OnValueChanged(_valueText.text);
-    }
+    using UnityEngine;
 
-    public override void OnValueChanged(string value)
+    public class OptionFrameRate : OptionRaycasterValues
     {
-        if (value == "MAX")
+        public override void Init()
         {
-            Application.targetFrameRate = -1;
-            return;
+            OnValueChanged(_valueText.text);
         }
 
-        if (!int.TryParse(value, out int frameRate))
+        public override void OnValueChanged(string value)
         {
-            Debug.LogError($"Could not parse {value} to an integer value!");
-            return;
-        }
+            if (value == "MAX")
+            {
+                ConsoleProLogger.LogMisc("Setting Application target frame rate to unclamped.");
 
-        Application.targetFrameRate = frameRate;
+                Application.targetFrameRate = -1;
+                return;
+            }
+
+            if (!int.TryParse(value, out int fps))
+            {
+                Debug.LogError($"Could not parse {value} to an integer value!");
+                return;
+            }
+
+            ConsoleProLogger.LogMisc($"Setting Application target frame rate to {fps} fps.");
+            Application.targetFrameRate = fps;
+        }
     }
 }

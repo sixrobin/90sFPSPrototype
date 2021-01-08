@@ -1,22 +1,25 @@
-﻿using UnityEngine;
-
-public class OptionReverseAxis : OptionRaycasterToggle
+﻿namespace Doomlike.UI
 {
-    [SerializeField] private FPSCamera.Axis _axis = FPSCamera.Axis.None;
-    [SerializeField] private FPSCamera _fpsCamera = null;
+    using UnityEngine;
 
-    public override void Init()
+    public class OptionReverseAxis : OptionRaycasterToggle
     {
-    }
+        [SerializeField] private FPSCtrl.FPSCamera.Axis _axis = FPSCtrl.FPSCamera.Axis.None;
+        [SerializeField] private FPSCtrl.FPSCamera _fpsCamera = null;
 
-    public override void OnToggleValueChanged(bool value)
-    {
-        if (_axis == FPSCamera.Axis.None)
+        public override void Init()
         {
-            Debug.LogError("Invalid axis.");
-            return;
         }
 
-        _fpsCamera.ReverseAxis(_axis);
+        public override void OnToggleValueChanged(bool value)
+        {
+            if (_axis == FPSCtrl.FPSCamera.Axis.None)
+            {
+                Debug.LogError("Invalid axis.");
+                return;
+            }
+
+            _fpsCamera.ReverseAxis(_axis);
+        }
     }
 }

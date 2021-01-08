@@ -1,7 +1,10 @@
-﻿public class UIEmptyGraphic : UnityEngine.UI.Graphic
+﻿namespace Doomlike
 {
-	protected override void OnPopulateMesh(UnityEngine.UI.VertexHelper vh)
+	public class UIEmptyGraphic : UnityEngine.UI.Graphic
 	{
-		vh.Clear();
+		protected override void OnPopulateMesh(UnityEngine.UI.VertexHelper vh)
+		{
+			vh.Clear();
+		}
 	}
 }

@@ -1,26 +1,29 @@
-﻿using UnityEngine;
-
-public class FPSWeaponView : MonoBehaviour
+﻿namespace Doomlike.FPSCtrl
 {
-    public delegate void ShootAnimationEventHandler();
+    using UnityEngine;
 
-    public event ShootAnimationEventHandler ShootAnimationOver;
-    public event ShootAnimationEventHandler ShootFrame;
-
-    // Animation event.
-    public void OnShootFrame()
+    public class FPSWeaponView : MonoBehaviour
     {
-        ShootFrame();
-    }
+        public delegate void ShootAnimationEventHandler();
 
-    // Animation event.
-    public void OnShootAnimationOver()
-    {
-        ShootAnimationOver();
-    }
+        public event ShootAnimationEventHandler ShootAnimationOver;
+        public event ShootAnimationEventHandler ShootFrame;
 
-    public void Display(bool state)
-    {
-        gameObject.SetActive(state);
+        // Animation event.
+        public void OnShootFrame()
+        {
+            ShootFrame();
+        }
+
+        // Animation event.
+        public void OnShootAnimationOver()
+        {
+            ShootAnimationOver();
+        }
+
+        public void Display(bool state)
+        {
+            gameObject.SetActive(state);
+        }
     }
 }

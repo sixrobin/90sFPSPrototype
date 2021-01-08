@@ -1,22 +1,26 @@
-﻿using UnityEngine;
-
-public class OptionFOV : OptionRaycasterValues
+﻿namespace Doomlike.UI
 {
-    [SerializeField] private Camera[] _cameras = null;
+    using UnityEngine;
 
-    public override void Init()
+    public class OptionFOV : OptionRaycasterValues
     {
-    }
+        [SerializeField] private Camera[] _cameras = null;
 
-    public override void OnValueChanged(string value)
-    {
-        if (!int.TryParse(value, out int fov))
+        public override void Init()
         {
-            Debug.LogError($"Could not parse {value} to an int value!");
-            return;
         }
 
-        for (int i = _cameras.Length - 1; i >= 0; --i)
-            _cameras[i].fieldOfView = fov;
+        public override void OnValueChanged(string value)
+        {
+            if (!int.TryParse(value, out int fov))
+            {
+                Debug.LogError($"Could not parse {value} to an int value!");
+                return;
+            }
+
+            ConsoleProLogger.LogMisc($"Setting {_cameras.Length} cameras FOV to {fov}.");
+            for (int i = _cameras.Length - 1; i >= 0; --i)
+                _cameras[i].fieldOfView = fov;
+        }
     }
 }

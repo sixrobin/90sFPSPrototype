@@ -1,43 +1,79 @@
-﻿using UnityEngine;
-
-public class TrainingWorkshopTerminal : FPSInteraction
+﻿namespace Doomlike
 {
-    [SerializeField] private TrainingWorkshop _trainingWorkshop = null;
-    [SerializeField] private MeshRenderer _terminalRenderer = null;
-    [SerializeField] private Material _terminalOnMaterial = null;
-    [SerializeField] private cakeslice.Outline _outline = null;
+    using UnityEngine;
 
-    private Material _terminalOffMaterial = null;
-    private bool _isOn = false;
-
-    public override void Focus()
+    public class TrainingWorkshopTerminal : OutlinedInteraction, FPSCtrl.IFPSShootable, IConsoleProLoggable
     {
-        base.Focus();
-        _outline.eraseRenderer = false;
-    }
+        [SerializeField] private TrainingWorkshop _trainingWorkshop = null;
+        [SerializeField] private UI.TrainingWorkshopTerminalScreen _trainingWorkshopTerminalScreen = null;
+        [SerializeField] private MeshRenderer _terminalRenderer = null;
+        [SerializeField] private Material _terminalOnMaterial = null;
+        [SerializeField] private GameObject _screenShatter = null;
+        [SerializeField] private float _traumaOnShot = 0.13f;
 
-    public override void Unfocus()
-    {
-        base.Unfocus();
-        _outline.eraseRenderer = true;
-    }
+        private Material _terminalOffMaterial = null;
+        private bool _isOn = false;
 
-    public override void Interact()
-    {
-        base.Interact();
+        public bool ScreenShattered { get; private set; } = false;
 
-        _isOn = !_isOn;
-        _terminalRenderer.material = _isOn ? _terminalOnMaterial : _terminalOffMaterial;
+        public TrainingWorkshop TrainingWorkshop => _trainingWorkshop;
 
-        Debug.Log("Opening/Shutting down training workshop terminal...", gameObject);
-        Debug.Log($"Best time: {(_trainingWorkshop.BestTime == float.MaxValue ? 0f : _trainingWorkshop.BestTime)} seconds.", gameObject);
-        Debug.Log($"Best shots: {(_trainingWorkshop.BestShots == int.MaxValue ? 0 : _trainingWorkshop.BestShots)} shots.", gameObject);
-    }
+        public float TraumaOnShot => _traumaOnShot;
 
-    protected override void Awake()
-    {
-        base.Awake();
-        _terminalOffMaterial = _terminalRenderer.material;
-        _outline.eraseRenderer = true;
+        public string ConsoleProPrefix => "Training Workshop";
+
+        public override void Interact()
+        {
+            base.Interact();
+
+            if (_isOn)
+                return;
+
+            _isOn = true;
+            if (!ScreenShattered)
+                _terminalRenderer.material = _terminalOnMaterial;
+
+            ConsoleProLogger.Log(this, $"Opening Training Workshop terminal <b>{transform.name}</b> :", gameObject);
+            ConsoleProLogger.Log(this, $"Tries: {_trainingWorkshop.Tries},\n" +
+                $"Best time: {(_trainingWorkshop.BestTime == float.MaxValue ? 0f : _trainingWorkshop.BestTime)} seconds,\n" +
+                $"Best shots: {(_trainingWorkshop.BestShots == int.MaxValue ? 0 : _trainingWorkshop.BestShots)} shots,\n" +
+                $"Score: {_trainingWorkshop.Score}.", gameObject);
+        }
+
+        public void OnShot(Vector3 point)
+        {
+            if (ScreenShattered)
+                return;
+
+            ConsoleProLogger.Log(this, $"Shattering Training Workshop terminal <b>{transform.name}</b>'s screen.", gameObject);
+            ScreenShattered = true;
+            _screenShatter.SetActive(true);
+        }
+
+        public void ShutdownTerminal()
+        {
+            ConsoleProLogger.Log(this, $"Shutting down Training Workshop terminal <b>{transform.name}</b>.", gameObject);
+            _isOn = false;
+            _terminalRenderer.material = _terminalOffMaterial;
+        }
+
+        private void OnTerminalScreenToggled(bool state)
+        {
+            if (!state)
+                ShutdownTerminal();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            _trainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            _terminalOffMaterial = _terminalRenderer.material;
+        }
+
+        private void OnDestroy()
+        {
+            _trainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
+        }
     }
 }

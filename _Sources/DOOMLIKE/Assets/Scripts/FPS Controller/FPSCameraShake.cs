@@ -1,48 +1,54 @@
-﻿using UnityEngine;
-
-public class FPSCameraShake : FPSCameraExtraMovement
+﻿namespace Doomlike.FPSCtrl
 {
-    [SerializeField] private Shake.ShakeSettings _settings = Shake.ShakeSettings.Default;
+    using UnityEngine;
 
-    private Shake _shake = null;
-
-    public override void ApplyMovement()
+    public class FPSCameraShake : FPSCameraExtraMovement, IConsoleProLoggable
     {
-        ApplyShake();
-    }
+        [SerializeField] private Shake.ShakeSettings _settings = Shake.ShakeSettings.Default;
 
-    public void AddTrauma(float value)
-    {
-        _shake.AddTrauma(value);
-    }
+        private Shake _shake = null;
 
-    public void SetTrauma(float value)
-    {
-        _shake.SetTrauma(value);
-    }
+        public string ConsoleProPrefix => "FPS Camera";
 
-    public void ResetTrauma()
-    {
-        _shake.SetTrauma(0f);
-    }
+        public override void ApplyMovement()
+        {
+            ApplyShake();
+        }
 
-    public void SetShakePercentage(float value)
-    {
-        _shake.SetMultiplier(value * 0.01f);
-    }
+        public void AddTrauma(float value)
+        {
+            _shake.AddTrauma(value);
+        }
 
-    private void ApplyShake()
-    {
-        System.Tuple<Vector3, Quaternion> evaluatedShake = _shake.Evaluate(transform);
-        if (evaluatedShake == null)
-            return;
+        public void SetTrauma(float value)
+        {
+            _shake.SetTrauma(value);
+        }
 
-        transform.position += evaluatedShake.Item1;
-        transform.rotation *= evaluatedShake.Item2;
-    }
+        public void ResetTrauma()
+        {
+            _shake.SetTrauma(0f);
+        }
 
-    private void Awake()
-    {
-        _shake = new Shake(_settings);
+        public void SetShakePercentage(float value)
+        {
+            ConsoleProLogger.Log(this, $"Setting shake percentage to {value}%.", gameObject);
+            _shake.SetMultiplier(value * 0.01f);
+        }
+
+        private void ApplyShake()
+        {
+            System.Tuple<Vector3, Quaternion> evaluatedShake = _shake.Evaluate(transform);
+            if (evaluatedShake == null)
+                return;
+
+            transform.position += evaluatedShake.Item1;
+            transform.rotation *= evaluatedShake.Item2;
+        }
+
+        private void Awake()
+        {
+            _shake = new Shake(_settings);
+        }
     }
 }

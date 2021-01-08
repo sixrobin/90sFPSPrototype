@@ -1,16 +1,19 @@
-﻿using UnityEngine;
-
-public class OptionHeadBob : OptionRaycasterToggle
+﻿namespace Doomlike.UI
 {
-    [SerializeField] private FPSHeadBob _fpsHeadBob = null;
+    using UnityEngine;
 
-    public override void Init()
+    public class OptionHeadBob : OptionRaycasterToggle
     {
-        OnToggleValueChanged(_toggle.isOn);
-    }
+        [SerializeField] private FPSCtrl.FPSHeadBob _fpsHeadBob = null;
 
-    public override void OnToggleValueChanged(bool value)
-    {
-        _fpsHeadBob.SetState(_toggle.isOn);
+        public override void Init()
+        {
+            OnToggleValueChanged(_toggle.isOn);
+        }
+
+        public override void OnToggleValueChanged(bool value)
+        {
+            _fpsHeadBob.SetState(_toggle.isOn);
+        }
     }
 }

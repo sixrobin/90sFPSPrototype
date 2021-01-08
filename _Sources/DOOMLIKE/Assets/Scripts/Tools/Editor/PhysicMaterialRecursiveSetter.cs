@@ -1,4 +1,4 @@
-﻿namespace RSTools
+﻿namespace DoomlikeEditor
 {
 	using UnityEngine;
 	using UnityEditor;

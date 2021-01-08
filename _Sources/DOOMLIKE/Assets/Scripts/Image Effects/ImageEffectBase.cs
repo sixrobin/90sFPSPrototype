@@ -1,8 +1,7 @@
-using System;
-using UnityEngine;
-
 namespace UnityStandardAssets.ImageEffects
 {
+    using UnityEngine;
+    
     [RequireComponent(typeof (Camera))]
     [AddComponentMenu("")]
     public class ImageEffectBase : MonoBehaviour

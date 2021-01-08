@@ -1,27 +1,31 @@
-﻿using RSLib.Extensions;
-using UnityEngine;
-
-public class OptionCrosshairAlpha : OptionRaycasterValues
+﻿namespace Doomlike.UI
 {
-    [SerializeField] private UnityEngine.UI.Image _crosshair = null;
+    using RSLib.Extensions;
+    using UnityEngine;
 
-    public override void Init()
+    public class OptionCrosshairAlpha : OptionRaycasterValues
     {
-    }
+        [SerializeField] private UnityEngine.UI.Image _crosshair = null;
 
-    public override string FormatValueDisplay(string display)
-    {
-        return $"{display}<b>%</b>";
-    }
-
-    public override void OnValueChanged(string value)
-    {
-        if (!float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float alpha))
+        public override void Init()
         {
-            Debug.LogError($"Could not parse {value} to a float value!");
-            return;
         }
 
-        _crosshair.color = _crosshair.color.WithA(alpha * 0.01f);
+        public override string FormatValueDisplay(string display)
+        {
+            return $"{display}<b>%</b>";
+        }
+
+        public override void OnValueChanged(string value)
+        {
+            if (!float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float alpha))
+            {
+                Debug.LogError($"Could not parse {value} to a float value!");
+                return;
+            }
+
+            ConsoleProLogger.LogMisc($"Setting crosshair alpha to {alpha}%.");
+            _crosshair.color = _crosshair.color.WithA(alpha * 0.01f);
+        }
     }
 }

@@ -1,6 +1,9 @@
-﻿public interface IFPSShootable 
+﻿namespace Doomlike.FPSCtrl
 {
-    float TraumaOnShot { get; }
+    public interface IFPSShootable
+    {
+        float TraumaOnShot { get; }
 
-    void OnShot(UnityEngine.Vector3 point);
+        void OnShot(UnityEngine.Vector3 point);
+    }
 }

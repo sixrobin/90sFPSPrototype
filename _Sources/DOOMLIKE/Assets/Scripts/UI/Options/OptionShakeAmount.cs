@@ -1,26 +1,29 @@
-﻿using UnityEngine;
-
-public class OptionShakeAmount : OptionRaycasterValues
+﻿namespace Doomlike.UI
 {
-    [SerializeField] private FPSCameraShake _fpsCameraShake = null;
+    using UnityEngine;
 
-    public override void Init()
+    public class OptionShakeAmount : OptionRaycasterValues
     {
-    }
+        [SerializeField] private FPSCtrl.FPSCameraShake _fpsCameraShake = null;
 
-    public override string FormatValueDisplay(string display)
-    {
-        return $"{display}<b>%</b>";
-    }
-
-    public override void OnValueChanged(string value)
-    {
-        if (!float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float shakeMult))
+        public override void Init()
         {
-            Debug.LogError($"Could not parse {value} to a float value!");
-            return;
         }
 
-        _fpsCameraShake.SetShakePercentage(shakeMult);
+        public override string FormatValueDisplay(string display)
+        {
+            return $"{display}<b>%</b>";
+        }
+
+        public override void OnValueChanged(string value)
+        {
+            if (!float.TryParse(value, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float shakeMult))
+            {
+                Debug.LogError($"Could not parse {value} to a float value!");
+                return;
+            }
+
+            _fpsCameraShake.SetShakePercentage(shakeMult);
+        }
     }
 }

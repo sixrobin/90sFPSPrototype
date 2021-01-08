@@ -1,127 +1,131 @@
-﻿using RSLib.Extensions;
-using UnityEngine;
-
-public class FPSShoot : FPSControllableComponent
+﻿namespace Doomlike.FPSCtrl
 {
-    [Header("REFERENCES")]
-    [SerializeField] private Transform _cameraTransform = null;
-    [SerializeField] private Animator _weaponAnimator = null;
-    [SerializeField] private FPSWeaponView _weaponView = null;
-    
-    [Header("IMPACT")]
-    [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
-    [SerializeField] private float _shootTrauma = 0.15f;
+    using RSLib.Extensions;
+    using UnityEngine;
 
-    [Header("DEBUG")]
-    [SerializeField] private bool _dbg = true;
-
-    private bool _canShoot = true;
-    private bool _shooting = false; // Animating running.
-
-    private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
-
-    public delegate void ShotEventHandler();
-    public event ShotEventHandler OnShot;
-
-    protected override void OnControlAllowed()
+    public class FPSShoot : FPSControllableComponent, IConsoleProLoggable
     {
-        base.OnControlAllowed();
-        _weaponView.Display(true);
-    }
+        [Header("REFERENCES")]
+        [SerializeField] private Transform _cameraTransform = null;
+        [SerializeField] private Animator _weaponAnimator = null;
+        [SerializeField] private FPSWeaponView _weaponView = null;
 
-    protected override void OnControlDisallowed()
-    {
-        base.OnControlDisallowed();
-        _weaponView.Display(false);
-    }
+        [Header("IMPACT")]
+        [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
+        [SerializeField] private float _shootTrauma = 0.15f;
 
-    private void TryShoot()
-    {
-        if (Input.GetButtonDown("Fire1"))
+        [Header("DEBUG")]
+        [SerializeField] private bool _dbg = true;
+
+        private bool _canShoot = true;
+        private bool _shooting = false; // Animating running.
+
+        private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
+
+        public string ConsoleProPrefix => "FPS Shoot";
+
+        public delegate void ShotEventHandler();
+        public event ShotEventHandler OnShot;
+
+        protected override void OnControlAllowed()
         {
-            if (_dbg)
-                Debug.Log("Triggering Shoot animation!");
-
-            _shooting = true;
-            _weaponAnimator.SetTrigger("Shoot");
+            base.OnControlAllowed();
+            _weaponView.Display(true);
         }
-    }
 
-    private void ApplyShoot()
-    {
-        if (_dbg)
-            Debug.Log("Shooting!");
-
-        if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, Mathf.Infinity))
+        protected override void OnControlDisallowed()
         {
-            Debug.Log($"Shooting on {hit.transform.name}", gameObject);
+            base.OnControlDisallowed();
+            _weaponView.Display(false);
+        }
 
-            if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
-                if (hit.collider.TryGetComponent(out shootable))
-                    _knownShootables.Add(hit.collider, shootable);
-
-            if (shootable != null)
+        private void TryShoot()
+        {
+            if (Input.GetButtonDown("Fire1"))
             {
-                shootable.OnShot(hit.point);
-                FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
-            }
-
-            // Bullet impacts.
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
-            {
-                Transform bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform).transform;
-                bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
-                bulletImpactInstance.forward = -hit.normal;
-                bulletImpactInstance.Rotate(0f, 0f, Random.Range(0, 4) * 90);
+                ConsoleProLogger.Log(this, "Triggering shoot animation.", gameObject);
+                _shooting = true;
+                _weaponAnimator.SetTrigger("Shoot");
             }
         }
 
-        OnShot?.Invoke();
-        FPSMaster.FPSCameraShake.AddTrauma(_shootTrauma);
-    }
+        private void ApplyShoot()
+        {
+            ConsoleProLogger.Log(this, "Apply shot.", gameObject);
 
-    private void UpdateAnimator()
-    {
-        _weaponAnimator.SetBool("Moving", FPSMaster.FPSController.IsMoving);
-        _weaponAnimator.SetBool("Sprinting", FPSMaster.FPSController.Sprinting);
-        _weaponAnimator.SetBool("Crouched", FPSMaster.FPSController.Crouched);
-    }
+            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, Mathf.Infinity))
+            {
+                ConsoleProLogger.Log(this, $"Shot on <b>{hit.transform.name}</b>.", gameObject);
 
-    private void OnOptionsStateChanged(bool state)
-    {
-        _canShoot = !state;
-    }
+                if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
+                    if (hit.collider.TryGetComponent(out shootable))
+                        _knownShootables.Add(hit.collider, shootable);
 
-    private void OnShootAnimationOver()
-    {
-        _shooting = false;
-    }
+                if (shootable != null)
+                {
+                    shootable.OnShot(hit.point);
+                    FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
+                }
 
-    private void OnShootFrame()
-    {
-        ApplyShoot();
-    }
+                // Bullet impacts.
+                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
+                {
+                    ConsoleProLogger.Log(this, $"Instantiating bullet impact.", gameObject);
 
-    private void Start()
-    {
-        FPSMaster.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
-        _weaponView.ShootAnimationOver += OnShootAnimationOver;
-        _weaponView.ShootFrame += OnShootFrame;
-    }
+                    Transform bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform).transform;
+                    bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
+                    bulletImpactInstance.forward = -hit.normal;
+                    bulletImpactInstance.Rotate(0f, 0f, Random.Range(0, 4) * 90);
+                }
+            }
 
-    private void Update()
-    {
-        if (!Controllable || !_canShoot || _shooting)
-            return;
+            OnShot?.Invoke();
+            FPSMaster.FPSCameraShake.AddTrauma(_shootTrauma);
+        }
 
-        TryShoot();
-        UpdateAnimator();
-    }
+        private void UpdateAnimator()
+        {
+            _weaponAnimator.SetBool("Moving", FPSMaster.FPSController.IsMoving);
+            _weaponAnimator.SetBool("Sprinting", FPSMaster.FPSController.Sprinting);
+            _weaponAnimator.SetBool("Crouched", FPSMaster.FPSController.Crouched);
+        }
 
-    private void OnDestroy()
-    {
-        FPSMaster.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
-        _weaponView.ShootAnimationOver -= OnShootAnimationOver;
-        _weaponView.ShootFrame -= OnShootFrame;
+        private void OnOptionsStateChanged(bool state)
+        {
+            _canShoot = !state;
+        }
+
+        private void OnShootAnimationOver()
+        {
+            _shooting = false;
+        }
+
+        private void OnShootFrame()
+        {
+            ApplyShoot();
+        }
+
+        private void Start()
+        {
+            FPSMaster.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            _weaponView.ShootAnimationOver += OnShootAnimationOver;
+            _weaponView.ShootFrame += OnShootFrame;
+        }
+
+        private void Update()
+        {
+            if (!Controllable || !_canShoot || _shooting)
+                return;
+
+            TryShoot();
+            UpdateAnimator();
+        }
+
+        private void OnDestroy()
+        {
+            FPSMaster.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            _weaponView.ShootAnimationOver -= OnShootAnimationOver;
+            _weaponView.ShootFrame -= OnShootFrame;
+        }
     }
 }

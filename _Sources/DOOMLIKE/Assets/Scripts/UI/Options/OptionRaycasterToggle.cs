@@ -1,19 +1,22 @@
-﻿using UnityEngine;
-
-public abstract class OptionRaycasterToggle : OptionRaycaster
+﻿namespace Doomlike.UI
 {
-    [SerializeField] protected UnityEngine.UI.Toggle _toggle = null;
+    using UnityEngine;
 
-    public override void OnClicked()
+    public abstract class OptionRaycasterToggle : OptionRaycaster
     {
-        _toggle.isOn = !_toggle.isOn;
-    }
+        [SerializeField] protected UnityEngine.UI.Toggle _toggle = null;
 
-    public abstract void OnToggleValueChanged(bool value);
+        public override void OnClicked()
+        {
+            _toggle.isOn = !_toggle.isOn;
+        }
 
-    protected override void Start()
-    {
-        base.Start();
-        _toggle.onValueChanged.AddListener(OnToggleValueChanged);
+        public abstract void OnToggleValueChanged(bool value);
+
+        protected override void Start()
+        {
+            base.Start();
+            _toggle.onValueChanged.AddListener(OnToggleValueChanged);
+        }
     }
 }

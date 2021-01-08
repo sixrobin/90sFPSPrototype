@@ -1,8 +1,8 @@
-using System;
-using UnityEngine;
-
 namespace UnityStandardAssets.ImageEffects
 {
+    using System;
+    using UnityEngine;
+
     /// A Utility class for performing various image based rendering tasks.
     [AddComponentMenu("")]
     public class ImageEffects

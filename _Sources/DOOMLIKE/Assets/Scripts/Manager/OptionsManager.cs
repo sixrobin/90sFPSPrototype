@@ -1,37 +1,45 @@
-﻿using UnityEngine;
-
-public class OptionsManager : MonoBehaviour
+﻿namespace Doomlike.Manager
 {
-    [SerializeField] private TimeManager _timeManager = null;
-    [SerializeField] private GameObject _optionsView = null;
+    using UnityEngine;
 
-    public delegate void OptionsStateChangedEventHandler(bool state);
-
-    public event OptionsStateChangedEventHandler OptionsStateChanged;
-
-    public bool IsOpen { get; private set; } = false;
-
-    private void OpenClose()
+    public class OptionsManager : MonoBehaviour, IConsoleProLoggable
     {
-        IsOpen = !IsOpen;
-        _optionsView.SetActive(IsOpen);
+        [SerializeField] private TimeManager _timeManager = null;
+        [SerializeField] private GameObject _optionsView = null;
 
-        if (IsOpen)
-            _timeManager.Freeze();
-        else
-            _timeManager.Unfreeze();
+        public delegate void OptionsStateChangedEventHandler(bool state);
 
-        OptionsStateChanged(IsOpen);
-    }
+        public event OptionsStateChangedEventHandler OptionsStateChanged;
 
-    private void Start()
-    {
-        _optionsView.SetActive(IsOpen);
-    }
+        public bool IsOpen { get; private set; } = false;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            OpenClose();
+        public string ConsoleProPrefix => "Options Manager";
+
+        private void ToggleView()
+        {
+            IsOpen = !IsOpen;
+
+            ConsoleProLogger.Log(this, IsOpen ? "Opening options." : "Closing options.", gameObject);
+            
+            _optionsView.SetActive(IsOpen);
+
+            if (IsOpen)
+                _timeManager.Freeze();
+            else
+                _timeManager.Unfreeze();
+
+            OptionsStateChanged(IsOpen);
+        }
+
+        private void Start()
+        {
+            _optionsView.SetActive(IsOpen);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+                ToggleView();
+        }
     }
 }

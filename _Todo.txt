@@ -1,4 +1,4 @@
-- Exporter la logique des options dans un manager.
+- Exporter la logique des options dans un manager (avec un préfixe de log plus propre du coup).
 - Options:
 	- Binder weapon switch.
 	- Arme à droite ou à gauche.
@@ -11,12 +11,7 @@
 		
 - Changement visuel sur le switch des portes quand on/off.
 - Permettre de tirer sur un switch ce qui l'active mais le rend inutilisable ensuite.
-- Permettre de tirer dans les petites lumières des portes pour les ouvrir.
-
-- Training workshops:
-	- Ecran pour afficher le score (vitesse et accuracy) avec versions on et off.
-	- Ecran entouré d'un vitrage pour ne pas pouvoir le casser, mais qui rendrait l'UI illisible car texture de fissures par dessus.
-	- L'écran devrait ouvrir une UI et ne plus être focusable, puis quand l'UI se ferme, s'éteindre et redevenir focusable.
+- Voir pour un feedback au niveau du switch qui ne peut donc plus gérer la porte.
 
 - Contrôles manette.
 - Occlusion culling.
@@ -26,12 +21,14 @@
 - Outline qui ne traverse pas les meshes.
 
 - Voir si moyen d'écrire un shader unlit à la con plus opti que celui de base ?
-- Console Pro ?
 
 - Si projet prend de l'ampleur, faire une database xml.
 - Accès rapide au FPSMaster (singleton ?) pour accéder à tous ses composantes.
 
-- Namespace !
-- Classe pour les FPSInteraction qui ont une outline.
-
 - Commande tcl.
+- Doc de coding conventions.
+- Console Pro: classe static avec les constantes pour les préfixes (et dans la foulée se passer du singleton Logger pour pouvoir double clic sur un log sans que ça n'ouvre ce singleton).
+- Importer la console in game ?
+
+- Tester si plusieurs training workshops fonctionnent (niveau event, terminal, etc.).
+- Réfléchir à une façon de spawner les impacts sans dépendre du scale des parents potentiels.

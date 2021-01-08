@@ -1,60 +1,63 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-
-/// <summary>
-/// Abstract class for every gameObject in the game that the FPS controller can interact with.
-/// </summary>
-public abstract class FPSInteraction : MonoBehaviour
+﻿namespace Doomlike.FPSCtrl
 {
-    [SerializeField] bool _unfocusedOnInteracted = false;
-    [SerializeField] bool _uniqueInteraction = false;
-    [SerializeField] UnityEvent _onInteracted = null;
-
-    public delegate void InteractedEventHandler ();
-    public event InteractedEventHandler Interacted;
-
-    public bool InteractionAllowed { get; set; } = true;
-
-    public bool UnfocusedOnInteracted => _unfocusedOnInteracted;
+    using UnityEngine;
+    using UnityEngine.Events;
 
     /// <summary>
-    /// Called when the player is looking to the gameObject and is ready to interact with it.
+    /// Abstract class for every gameObject in the game that the FPS controller can interact with.
     /// </summary>
-    public virtual void Focus()
+    public abstract class FPSInteraction : MonoBehaviour
     {
-        if (!InteractionAllowed)
-            return;
-    }
+        [SerializeField] bool _unfocusedOnInteracted = false;
+        [SerializeField] bool _uniqueInteraction = false;
+        [SerializeField] UnityEvent _onInteracted = null;
 
-    /// <summary>
-    /// Called with the player leaves the interactable gameObject.
-    /// </summary>
-    public virtual void Unfocus()
-    {
-    }
+        public delegate void InteractedEventHandler(FPSInteraction interaction);
+        public event InteractedEventHandler Interacted;
 
-    /// <summary>
-    /// Called when the player interacts with the gameObject.
-    /// Calls related events after some more checks.
-    /// </summary>
-    public virtual void Interact()
-    {
-        if (!InteractionAllowed)
-            return;
+        public bool InteractionAllowed { get; set; } = true;
 
-        if (_uniqueInteraction)
-            InteractionAllowed = false;
+        public bool UnfocusedOnInteracted => _unfocusedOnInteracted;
 
-        if (_unfocusedOnInteracted)
-            Unfocus();
+        /// <summary>
+        /// Called when the player is looking to the gameObject and is ready to interact with it.
+        /// </summary>
+        public virtual void Focus()
+        {
+            if (!InteractionAllowed)
+                return;
+        }
 
-        Interacted?.Invoke();
-        _onInteracted.Invoke();
-    }
+        /// <summary>
+        /// Called with the player leaves the interactable gameObject.
+        /// </summary>
+        public virtual void Unfocus()
+        {
+        }
 
-    protected virtual void Awake()
-    {
-        if (!GetComponent<Collider>())
-            Debug.LogWarning ("FPSInteraction WARNING: gameObject doesn't have a collider and can't be interacted.", gameObject);
+        /// <summary>
+        /// Called when the player interacts with the gameObject.
+        /// Calls related events after some more checks.
+        /// </summary>
+        public virtual void Interact()
+        {
+            if (!InteractionAllowed)
+                return;
+
+            if (_uniqueInteraction)
+                InteractionAllowed = false;
+
+            if (_unfocusedOnInteracted)
+                Unfocus();
+
+            Interacted?.Invoke(this);
+            _onInteracted.Invoke();
+        }
+
+        protected virtual void Awake()
+        {
+            if (!GetComponent<Collider>())
+                Debug.LogWarning("FPSInteraction WARNING: gameObject doesn't have a collider and can't be interacted.", gameObject);
+        }
     }
 }
