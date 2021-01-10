@@ -2302,7 +2302,7 @@ GameObject:
   - component: {fileID: 184594548}
   - component: {fileID: 184594547}
   m_Layer: 0
-  m_Name: ___ Debug Console
+  m_Name: __ DBG CONSOLE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7703,7 +7703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d6bef675cf1274ab0d4cea4db4ebad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 5171682535446924947}
+  _camTransform: {fileID: 5171682535446924947}
   _weaponAnimator: {fileID: 1491526920}
   _weaponView: {fileID: 1491526922}
   _bulletImpactPrefabs:
@@ -24106,7 +24106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eddb8bbca85febb43bd7b5419852b711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cameraTransform: {fileID: 5171682536398433466}
+  _camTransform: {fileID: 5171682535446924947}
   _maxDist: 0.7
   _interactionMask:
     serializedVersion: 2
@@ -24204,6 +24204,7 @@ MonoBehaviour:
   _atkDist: 0.65
   _traumaOnShot: 0.2
   _dbgModeOn: 1
+  _dbgDist: 9
   _dbgStateTextPivot: {fileID: 1994124480}
   _pathView: {fileID: 465621135}
 --- !u!136 &919132148043584602
@@ -25988,7 +25989,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canSprint: 1
   _canCrouch: 1
-  _cameraTransform: {fileID: 5171682536398433466}
+  _camTransform: {fileID: 5171682536398433466}
   _baseSpeed: 2
   _crouchedSpeed: 0.7
   _sprintSpeed: 4.3
@@ -25996,9 +25997,9 @@ MonoBehaviour:
   _capsuleCrouchedHeight: 0.5
   _inputDamping: 0.1
   _uncrouchCheckAccuracy: 0.2
-  _fullSprintDuration: 5
-  _recoverDuration: 2
-  _fullReloadDuration: 15
+  _fullSprintDur: 5
+  _recoverDur: 2
+  _fullReloadDur: 15
   _groundMask:
     serializedVersion: 2
     m_Bits: 256
@@ -26149,7 +26150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fe939e5ebfe224ab87a1bb3a529993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  step: 0.03
+  _step: 0.03
 --- !u!4 &5372056942045976154
 Transform:
   m_ObjectHideFlags: 0

@@ -31,9 +31,9 @@
         [SerializeField] private Transform _dbgStateTextPivot = null;
         [SerializeField] private LineRenderer _pathView = null;
 
-        private AIState _currentState = AIState.Idle;
-        private float _currentPlayerDistSqr;
-        private float _currentSpeed;
+        private AIState _currState = AIState.Idle;
+        private float _currPlayerDistSqr;
+        private float _currSpeed;
         private float _refSpeed;
 
         public enum AIState
@@ -52,40 +52,33 @@
 
         public void OnShot(Vector3 point)
         {
-            // damages.
+            // TODO: Damages.
 
-            if (_currentState != AIState.Hurt)
+            if (_currState != AIState.Hurt)
                 SetState(AIState.Hurt);
 
             Transform bloodSplashInstance = Instantiate(_bloodSplashPrefab, point, Quaternion.identity).transform;
             bloodSplashInstance.forward = transform.position - _fpsController.transform.position;
         }
 
-
-        ////////////////////
-        // Animation events.
-        ////////////////////
-
+        // Animation event.
         public void OnAttackFrame()
         {
             if (_dbgModeOn)
                 ConsoleProLogger.Log(this, $"<b>{transform.name}</b> attacking.", gameObject);
         }
 
+        // Animation event.
         public void OnAttackAnimationOver()
         {
             SetState(AIState.RunToPlayer);
         }
 
+        // Animation event.
         public void OnHurtAnimationOver()
         {
             SetState(AIState.WalkToPlayer);
         }
-
-
-        ////////
-        /// FSM.
-        ////////
 
         private void SetState(AIState newState)
         {
@@ -93,7 +86,7 @@
             {
                 case AIState.Idle:
                 {
-                    _currentSpeed = 0f;
+                    _currSpeed = 0f;
                     break;
                 }
 
@@ -112,7 +105,7 @@
                 case AIState.Attack:
                 {
                     _animator.SetTrigger($"Atk{Random.Range(0, 2)}");
-                    _currentSpeed = 0f;
+                    _currSpeed = 0f;
                     break;
                 }
 
@@ -120,22 +113,22 @@
                 {
                     // Stop navmesh.
                     _animator.SetTrigger("Hurt");
-                    _currentSpeed = 0f;
+                    _currSpeed = 0f;
                     break;
                 }
             }
 
-            _currentState = newState;
-            _navMeshAgent.isStopped = _currentState == AIState.Attack || _currentState == AIState.Hurt;
+            _currState = newState;
+            _navMeshAgent.isStopped = _currState == AIState.Attack || _currState == AIState.Hurt;
         }
 
         private void Act()
         {
-            switch (_currentState)
+            switch (_currState)
             {
                 case AIState.Idle:
                 {
-                    if (_currentPlayerDistSqr <= _detectionDist.Sqr())
+                    if (_currPlayerDistSqr <= _detectionDist.Sqr())
                         SetState(AIState.WalkToPlayer);
 
                     break;
@@ -143,9 +136,9 @@
 
                 case AIState.WalkToPlayer:
                 {
-                    if (_currentPlayerDistSqr <= _startRunDist.Sqr())
+                    if (_currPlayerDistSqr <= _startRunDist.Sqr())
                         SetState(AIState.RunToPlayer);
-                    else if (_currentPlayerDistSqr > _detectionDist.Sqr())
+                    else if (_currPlayerDistSqr > _detectionDist.Sqr())
                         SetState(AIState.Idle);
 
                     break;
@@ -153,9 +146,9 @@
 
                 case AIState.RunToPlayer:
                 {
-                    if (_currentPlayerDistSqr <= _atkDist.Sqr())
+                    if (_currPlayerDistSqr <= _atkDist.Sqr())
                         SetState(AIState.Attack);
-                    if (_currentPlayerDistSqr > _startRunDist.Sqr())
+                    if (_currPlayerDistSqr > _startRunDist.Sqr())
                         SetState(AIState.WalkToPlayer);
 
                     break;
@@ -169,7 +162,6 @@
             }
         }
 
-
         private bool HasPlayerInSight()
         {
             if (Physics.Raycast(transform.position.WithY(0.5f), _fpsController.transform.position - transform.position, out RaycastHit hit, Mathf.Infinity))
@@ -180,24 +172,24 @@
         private void EvaluateSpeed()
         {
             float targetSpeed = 0f;
-            if (_currentState == AIState.WalkToPlayer)
+            if (_currState == AIState.WalkToPlayer)
                 targetSpeed = _walkSpeed;
-            else if (_currentState == AIState.RunToPlayer)
+            else if (_currState == AIState.RunToPlayer)
                 targetSpeed = _runSpeed;
 
-            _currentSpeed = Mathf.SmoothDamp(_currentSpeed, targetSpeed, ref _refSpeed, _speedDampingTime);
-            _navMeshAgent.speed = _currentSpeed;
+            _currSpeed = Mathf.SmoothDamp(_currSpeed, targetSpeed, ref _refSpeed, _speedDampingTime);
+            _navMeshAgent.speed = _currSpeed;
         }
 
         private void UpdateDistanceToPlayer()
         {
             _navMeshAgent.SetDestination(_fpsController.transform.position);
-            _currentPlayerDistSqr = _navMeshAgent.ComputeRemainingDistanceSqr();
+            _currPlayerDistSqr = _navMeshAgent.ComputeRemainingDistanceSqr();
         }
 
         private void AdjustAnimatorMoveSpeed()
         {
-            switch (_currentState)
+            switch (_currState)
             {
                 case AIState.Idle:
                 case AIState.Attack:
@@ -209,14 +201,30 @@
                 case AIState.WalkToPlayer:
                 case AIState.RunToPlayer:
                     _animator.SetBool("Moving", true);
-                    _animator.SetFloat("MoveSpeed", RSLib.Maths.Maths.Normalize01Clamped(_currentSpeed, _walkSpeed, _runSpeed));
+                    _animator.SetFloat("MoveSpeed", RSLib.Maths.Maths.Normalize01Clamped(_currSpeed, _walkSpeed, _runSpeed));
                     break;
+            }
+        }
+
+        private void Update()
+        {
+            UpdateDistanceToPlayer();
+            EvaluateSpeed();
+            AdjustAnimatorMoveSpeed();
+            Act();
+
+            _pathView.enabled = _dbgModeOn;
+            if (_dbgModeOn)
+            {
+                _pathView.positionCount = _navMeshAgent.path.corners.Length;
+                for (int i = 0; i < _navMeshAgent.path.corners.Length; ++i)
+                    _pathView.SetPosition(i, _navMeshAgent.path.corners[i].AddY(0.1f));
             }
         }
 
         private void OnGUI()
         {
-            if (!_dbgModeOn || _currentPlayerDistSqr > _dbgDist.Sqr())
+            if (!_dbgModeOn || _currPlayerDistSqr > _dbgDist.Sqr())
                 return;
 
             Vector3 worldPos = Camera.main.WorldToScreenPoint(_dbgStateTextPivot.position);
@@ -234,24 +242,8 @@
             };
 
             worldPos.y = Screen.height - worldPos.y;
-            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), _currentState.ToString(), dbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), _currState.ToString(), dbgStyle);
             GUI.Label(new Rect(worldPos.x, worldPos.y + 15f, 200f, 100f), $"Sight: {HasPlayerInSight()}", dbgStyle);
-        }
-
-        private void Update()
-        {
-            UpdateDistanceToPlayer();
-            EvaluateSpeed();
-            AdjustAnimatorMoveSpeed();
-            Act();
-
-            _pathView.enabled = _dbgModeOn;
-            if (_dbgModeOn)
-            {
-                _pathView.positionCount = _navMeshAgent.path.corners.Length;
-                for (int i = 0; i < _navMeshAgent.path.corners.Length; ++i)
-                    _pathView.SetPosition(i, _navMeshAgent.path.corners[i].AddY(0.1f));
-            }
         }
     }
 }

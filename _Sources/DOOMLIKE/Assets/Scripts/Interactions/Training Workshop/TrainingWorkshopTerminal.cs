@@ -11,10 +11,10 @@
         [SerializeField] private GameObject _screenShatter = null;
         [SerializeField] private float _traumaOnShot = 0.13f;
 
-        private Material _terminalOffMaterial = null;
-        private bool _isOn = false;
+        private Material _terminalOffMaterial;
+        private bool _isOn;
 
-        public bool ScreenShattered { get; private set; } = false;
+        public bool ScreenShattered { get; private set; }
 
         public TrainingWorkshop TrainingWorkshop => _trainingWorkshop;
 

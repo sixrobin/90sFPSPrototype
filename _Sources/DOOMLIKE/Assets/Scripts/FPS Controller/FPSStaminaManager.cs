@@ -7,14 +7,15 @@
     /// </summary>
     public class FPSStaminaManager : IConsoleProLoggable
     {
-        public delegate void OutOfStaminaEventHandler();
-        public event OutOfStaminaEventHandler OutOfStamina;
-
-        private float _fullDuration;
+        private float _fullDur;
         private float _recoverDelay;
-        private float _reloadDuration;
+        private float _reloadDur;
         private bool _recovering;
         private float _recoverTimer;
+
+        public delegate void OutOfStaminaEventHandler();
+
+        public event OutOfStaminaEventHandler OutOfStamina;
 
         private float _currentCharge;
         public float CurrentCharge
@@ -42,19 +43,19 @@
         /// <summary>
         /// Overrides the stamina settings at runtime.
         /// </summary>
-        /// <param name="fullDuration">Full stamina charge duration.</param>
+        /// <param name="fullDur">Full stamina charge duration.</param>
         /// <param name="recoverDelay">Delay to wait when stamina is empty.</param>
-        /// <param name="reloadDuration">Full reload duration from empty to full.</param>
-        public void SetSettings(float fullDuration, float recoverDelay, float reloadDuration)
+        /// <param name="reloadDur">Full reload duration from empty to full.</param>
+        public void SetSettings(float fullDur, float recoverDelay, float reloadDur)
         {
             ConsoleProLogger.Log(this, "Setting stamina stats :\n" +
-                $"Full duration: {fullDuration},\n" +
+                $"Full duration: {fullDur},\n" +
                 $"Recover delay: {recoverDelay},\n" +
-                $"Reload duration: {reloadDuration}.\n");
+                $"Reload duration: {reloadDur}.\n");
 
-            _fullDuration = fullDuration;
+            _fullDur = fullDur;
             _recoverDelay = recoverDelay;
-            _reloadDuration = reloadDuration;
+            _reloadDur = reloadDur;
         }
 
         /// <summary>
@@ -78,7 +79,7 @@
 
             if (consuming)
             {
-                CurrentCharge -= UnityEngine.Time.deltaTime / _fullDuration;
+                CurrentCharge -= UnityEngine.Time.deltaTime / _fullDur;
                 if (CurrentCharge == 0)
                 {
                     ConsoleProLogger.Log(this, "Out of stamina.");
@@ -88,7 +89,7 @@
             }
             else
             {
-                CurrentCharge += UnityEngine.Time.deltaTime / _reloadDuration;
+                CurrentCharge += UnityEngine.Time.deltaTime / _reloadDur;
             }
         }
     }

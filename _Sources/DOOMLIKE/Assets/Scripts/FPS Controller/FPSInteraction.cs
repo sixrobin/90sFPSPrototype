@@ -13,9 +13,10 @@
         [SerializeField] UnityEvent _onInteracted = null;
 
         public delegate void InteractedEventHandler(FPSInteraction interaction);
+
         public event InteractedEventHandler Interacted;
 
-        public bool InteractionAllowed { get; set; } = true;
+        public bool InteractionAllowed { get; private set; } = true;
 
         public bool UnfocusedOnInteracted => _unfocusedOnInteracted;
 
@@ -54,8 +55,14 @@
             _onInteracted.Invoke();
         }
 
+        public void SetInteractionAvailability(bool state)
+        {
+            InteractionAllowed = state;
+        }
+
         protected virtual void Awake()
         {
+            // No RequireComponent because the collider type is variable.
             if (!GetComponent<Collider>())
                 Debug.LogWarning("FPSInteraction WARNING: gameObject doesn't have a collider and can't be interacted.", gameObject);
         }

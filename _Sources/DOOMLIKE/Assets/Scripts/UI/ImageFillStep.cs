@@ -1,40 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-
-public class ImageFillStep : MonoBehaviour
+﻿namespace Doomlike.UI
 {
-    public float step;
+    using UnityEngine;
 
-    Image image;
-
-    // Start is called before the first frame update
-    void Start()
+    [RequireComponent(typeof(UnityEngine.UI.Image))]
+    public class ImageFillStep : MonoBehaviour
     {
-        image = GetComponent<Image>();
-    }
+        [SerializeField] private float _step = 0.03f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (step == 0f)
+        private UnityEngine.UI.Image _image;
+
+        private void Start()
         {
-            return;
+            _image = GetComponent<UnityEngine.UI.Image>();
         }
 
-        float target = 0f;
-        for (float f = 0f; f <= 1f; f += step)
+        private void Update()
         {
-            if (f < image.fillAmount)
+            if (_step == 0f)
+                return;
+
+            float target = 0f;
+            for (float f = 0f; f <= 1f; f += _step)
             {
-                target = f;
-                continue;
+                if (f < _image.fillAmount)
+                {
+                    target = f;
+                    continue;
+                }
+
+                break;
             }
 
-            break;
+            _image.fillAmount = target;
         }
-
-        image.fillAmount = target;
     }
 }

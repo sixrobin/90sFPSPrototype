@@ -13,8 +13,8 @@
         [SerializeField] private bool _clampUp = false;
         [SerializeField] private bool _clampForward = false;
 
-        private Vector3 _align;
         protected bool _billboardEnabled = true;
+        private Vector3 _align;
 
         protected Transform BillboardCam => _cam;
 

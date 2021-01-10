@@ -12,7 +12,7 @@
         public override bool CanToggle
         {
             get => _canToggle;
-            set
+            protected set
             {
                 _canToggle = value;
                 if (!_canToggle && !IsOn)
@@ -22,6 +22,8 @@
 
         public void ShootTrigger()
         {
+            ConsoleProLogger.Log(this, "Toggling door by shooting its trigger.", gameObject);
+
             Toggle();
             CanToggle = false;
 

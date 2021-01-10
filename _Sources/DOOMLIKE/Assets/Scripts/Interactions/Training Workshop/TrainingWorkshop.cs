@@ -10,11 +10,15 @@
 
         [SerializeField] private FPSCtrl.FPSShoot _fpsShoot = null;
 
-        private int _targetsShot = 0;
-        private bool _inProgress = false;
-        private float _timer = 0f;
-        private float _noShotsTimer = 0f;
-        private int _shots = 0;
+        private bool _inProgress;
+        private int _targetsShot;
+        private float _timer;
+        private float _noShotsTimer;
+        private int _shots;
+
+        public delegate void WorkshopCompleteEventHandler();
+
+        public event WorkshopCompleteEventHandler WorkshopComplete;
 
         public float BestTime { get; private set; } = float.MaxValue;
 
@@ -26,8 +30,16 @@
 
         public string ConsoleProPrefix => "Training Workshop";
 
-        public delegate void WorkshopCompleteEventHandler();
-        public event WorkshopCompleteEventHandler WorkshopComplete;
+        [ContextMenu("Reset Score")]
+        public void ResetScore()
+        {
+            ConsoleProLogger.Log(this, $"Resetting score for Training Workshop <b>{transform.name}</b>.", gameObject);
+
+            Tries = 0;
+            BestTime = float.MaxValue;
+            BestShots = int.MaxValue;
+            Score = "D";
+        }
 
         private void OnTargetShot(TrainingTarget target)
         {
@@ -59,17 +71,6 @@
             // TODO: Compute some S/A/B/C/D score here.
         }
 
-        [ContextMenu("Reset Score")]
-        public void ResetScore()
-        {
-            ConsoleProLogger.Log(this, $"Resetting score for Training Workshop <b>{transform.name}</b>.", gameObject);
-
-            Tries = 0;
-            BestTime = float.MaxValue;
-            BestShots = int.MaxValue;
-            Score = "D";
-        }
-
         private System.Collections.IEnumerator ResetWorkshopCoroutine()
         {
             yield return RSLib.Yield.SharedYields.WaitForSeconds(_resetDelayAfterCompletion);
@@ -95,7 +96,7 @@
 
         private void Awake()
         {
-            _fpsShoot.OnShot += OnShot;
+            _fpsShoot.Shot += OnShot;
             for (int i = _targets.Length - 1; i >= 0; --i)
                 _targets[i].TargetShot += OnTargetShot;
         }
@@ -122,7 +123,7 @@
 
         private void OnDestroy()
         {
-            _fpsShoot.OnShot -= OnShot;
+            _fpsShoot.Shot -= OnShot;
             for (int i = _targets.Length - 1; i >= 0; --i)
                 _targets[i].TargetShot -= OnTargetShot;
         }

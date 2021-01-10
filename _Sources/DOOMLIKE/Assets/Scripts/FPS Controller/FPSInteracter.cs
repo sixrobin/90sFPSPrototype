@@ -9,7 +9,7 @@
     public class FPSInteracter : FPSControllableComponent, IConsoleProLoggable
     {
         [Header("REFERENCES")]
-        [SerializeField] private Transform _cameraTransform = null;
+        [SerializeField] private Transform _camTransform = null;
 
         [Header("SETTINGS")]
         [SerializeField] private float _maxDist = 1.5f;
@@ -18,6 +18,8 @@
         [Header("DEBUG")]
         [SerializeField] private bool _dbg = true;
 
+        private FPSInteraction _lastInteracted;
+
         private FPSInteraction _currentInteraction;
         private FPSInteraction CurrentInteraction
         {
@@ -25,7 +27,6 @@
             set
             {
                 _currentInteraction = value;
-
                 if (_currentInteraction != null)
                 {
                     ConsoleProLogger.Log(this, $"Focusing <b>{transform.name}</b>.", gameObject);
@@ -35,8 +36,6 @@
         }
 
         public string ConsoleProPrefix => "FPS Interacter";
-
-        private FPSInteraction _lastInteracted;
 
         protected override void OnControlAllowed()
         {
@@ -70,10 +69,10 @@
         /// </summary>
         private void CheckForInteraction()
         {
-            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxDist, _interactionMask))
+            if (Physics.Raycast(_camTransform.position, _camTransform.forward, out RaycastHit hit, _maxDist, _interactionMask))
             {
                 if (_dbg)
-                    Debug.DrawLine(_cameraTransform.position, hit.point, Color.red);
+                    Debug.DrawLine(_camTransform.position, hit.point, Color.red);
 
                 if (CurrentInteraction == null
                     && hit.collider.TryGetComponent(out FPSInteraction interactable)
@@ -84,7 +83,7 @@
             else
             {
                 if (_dbg)
-                    Debug.DrawLine(_cameraTransform.position, _cameraTransform.position + _cameraTransform.forward * _maxDist, Color.red);
+                    Debug.DrawLine(_camTransform.position, _camTransform.position + _camTransform.forward * _maxDist, Color.red);
 
                 ResetCurrentInteractions();
             }
@@ -111,14 +110,6 @@
             }
         }
 
-        private void OnGUI()
-        {
-            if (!_dbg)
-                return;
-
-            GUI.Label(new Rect(10, 10, 500, 20), CurrentInteraction != null ? $"Can interact with {CurrentInteraction.transform.name}." : "No interaction possible.");
-        }
-
         private void Update()
         {
             if (!Controllable)
@@ -126,6 +117,14 @@
 
             CheckForInteraction();
             TryInteract();
+        }
+
+        private void OnGUI()
+        {
+            if (!_dbg)
+                return;
+
+            GUI.Label(new Rect(10, 10, 500, 20), CurrentInteraction != null ? $"Can interact with {CurrentInteraction.transform.name}." : "No interaction possible.");
         }
     }
 }

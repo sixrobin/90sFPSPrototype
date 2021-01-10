@@ -6,7 +6,7 @@
     public class FPSShoot : FPSControllableComponent, IConsoleProLoggable
     {
         [Header("REFERENCES")]
-        [SerializeField] private Transform _cameraTransform = null;
+        [SerializeField] private Transform _camTransform = null;
         [SerializeField] private Animator _weaponAnimator = null;
         [SerializeField] private FPSWeaponView _weaponView = null;
 
@@ -15,15 +15,15 @@
         [SerializeField] private float _shootTrauma = 0.15f;
 
         private bool _canShoot = true;
-        private bool _shooting = false; // Animating running.
+        private bool _isShooting; // Animating running.
 
         private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
 
-        public string ConsoleProPrefix => "FPS Shoot";
-
         public delegate void ShotEventHandler();
 
-        public event ShotEventHandler OnShot;
+        public event ShotEventHandler Shot;
+
+        public string ConsoleProPrefix => "FPS Shoot";
 
         protected override void OnControlAllowed()
         {
@@ -42,7 +42,7 @@
             if (Input.GetButtonDown("Fire1"))
             {
                 ConsoleProLogger.Log(this, "Triggering shoot animation.", gameObject);
-                _shooting = true;
+                _isShooting = true;
                 _weaponAnimator.SetTrigger("Shoot");
             }
         }
@@ -51,7 +51,7 @@
         {
             ConsoleProLogger.Log(this, "Apply shot.", gameObject);
 
-            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, Mathf.Infinity))
+            if (Physics.Raycast(_camTransform.position, _camTransform.forward, out RaycastHit hit, Mathf.Infinity))
             {
                 ConsoleProLogger.Log(this, $"Shot on <b>{hit.transform.name}</b>.", gameObject);
 
@@ -77,13 +77,13 @@
                 }
             }
 
-            OnShot?.Invoke();
+            Shot?.Invoke();
             FPSMaster.FPSCameraShake.AddTrauma(_shootTrauma);
         }
 
         private void UpdateAnimator()
         {
-            _weaponAnimator.SetBool("Moving", FPSMaster.FPSController.IsMoving);
+            _weaponAnimator.SetBool("Moving", FPSMaster.FPSController.CheckMovement());
             _weaponAnimator.SetBool("Sprinting", FPSMaster.FPSController.Sprinting);
             _weaponAnimator.SetBool("Crouched", FPSMaster.FPSController.Crouched);
         }
@@ -95,7 +95,7 @@
 
         private void OnShootAnimationOver()
         {
-            _shooting = false;
+            _isShooting = false;
         }
 
         private void OnShootFrame()
@@ -112,7 +112,7 @@
 
         private void Update()
         {
-            if (!Controllable || !_canShoot || _shooting)
+            if (!Controllable || !_canShoot || _isShooting)
                 return;
 
             TryShoot();

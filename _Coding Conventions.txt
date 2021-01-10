@@ -7,6 +7,11 @@ _ Only use delegates, no System.Action (for better readability of event argument
 _ Event listener methods must only call another method and have no "hard-written" logic.
 _ GetComponent used in Start() for caching should have a linked RequireComponent attribute.
 _ Adding commands to DebugConsole is done as the last instructions in Awake().
+_ Enums shall have a "None" value used as default value.
+_ Use early returns instead of big if statements, even for one instruction.
+_ Use for loops instead of foreach loop whenever it's possible.
+_ Float values are written with the "f" suffix even if their value is whole.
+_ Debug.Log should have a context if possible.
 
 
 
@@ -18,12 +23,12 @@ _ Nested classes.
 _ Constants.
 _ Inspector exposed fields, sorted for Inspector editing purpose.
 _ Non exposed fields, sorted by context.
-_ Constructors.
-_ Destructors.
 _ Delegates.
 _ Events.
 _ Enums.
 _ Properties (if a property is linked to a field, the field is declared right above the property).
+_ Constructors.
+_ Destructors.
 _ Methods.
 	_ Sorted by context, following these rules :
 		_ Animation events are the first public methods, have a name starting with "On" and shall have a comment "// Animation event." right above.
@@ -51,12 +56,15 @@ _ Fields are named using Camel case after an underscore (ex: _speed, _animator).
 _ Properties are named using Pascal case.
 _ Properties returning a boolean have a name starting with a verb (ex: Exists, IsValid, HasHealth).
 _ Delegates are named using the context in past tense and the suffix "EventHandler" (ex: KilledEventHandler).
-_ Events are named using the delegate context and the prefix "On" (ex: OnKilled).
+_ Events are named using the delegate context (ex: Killed).
 _ Event listener methods are named like the event, with possibly some context (ex: OnEnemyKilled).
 _ Animation events methods are named as an event without necessarily using the past tense (ex: OnAttackFrame).
+_ Debug field are named with the "dbg" prefix (after the underscore).
+_ Debug properties are named with the "DBG_" prefix.
 _ Debug methods are named with the "DBG_" prefix.
 
 _ Some words can be contracted only if there's no possible mistake (ex: dbg for debug, atk for attack, vel for velocity).
+	_ This is NOT valid for method names.
 
 
 

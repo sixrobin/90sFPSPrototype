@@ -9,12 +9,13 @@
         [SerializeField] private GameObject _hitPrefab = null;
         [SerializeField] private float _traumaOnShot = 0.25f;
 
-        private bool _isDown = false;
-
-        public float TraumaOnShot => _traumaOnShot;
+        private bool _isDown;
 
         public delegate void TargetShotEventHandler(TrainingTarget target);
+
         public event TargetShotEventHandler TargetShot;
+
+        public float TraumaOnShot => _traumaOnShot;
 
         public void OnShot(Vector3 point)
         {
@@ -42,13 +43,14 @@
 
             _animator.SetTrigger("Reset");
             _billboardEnabled = true;
-            _collider.enabled = true; // Make sure player is not overlapping!
+            _collider.enabled = true; // Requires to make sure player is not overlapping.
 
             StartCoroutine(ResetTargetCoroutine());
         }
 
         private System.Collections.IEnumerator ResetTargetCoroutine()
         {
+            // Wait for animator transition before disabling it.
             for (int i = 0; i < 3; ++i)
                 yield return new WaitForEndOfFrame();
 

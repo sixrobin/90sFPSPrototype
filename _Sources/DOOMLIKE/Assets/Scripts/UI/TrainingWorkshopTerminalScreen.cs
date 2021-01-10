@@ -14,6 +14,7 @@
         [SerializeField] private float _bestTimeSecondsTextSize = 2.5f;
 
         public delegate void TerminalScreenToggledEventHandler(bool state);
+
         public event TerminalScreenToggledEventHandler TerminalScreenToggled;
         
         public string ConsoleProPrefix => "Training Workshop";
@@ -22,7 +23,7 @@
         {
             ConsoleProLogger.Log(this, $"Turning on Training Workshop terminal screen.");
 
-            // Dictionary<Interaction, Terminal> ??
+            // TODO: Dictionary<Interaction, Terminal> to avoid cast?
             TrainingWorkshopTerminal terminal = interaction as TrainingWorkshopTerminal;
             UnityEngine.Assertions.Assert.IsTrue(terminal != null);
 

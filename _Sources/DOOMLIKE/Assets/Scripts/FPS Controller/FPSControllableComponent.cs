@@ -9,6 +9,7 @@
     public abstract class FPSControllableComponent : MonoBehaviour
     {
         public delegate void ControllableEventHandler();
+
         public event ControllableEventHandler ControlAllowed;
         public event ControllableEventHandler ControlDisallowed;
 
@@ -18,14 +19,14 @@
         public bool Controllable
         {
             get => _controllable;
-            set
+            private set
             {
+                _controllable = value;
+
                 if (value)
                     OnControlAllowed();
                 else
                     OnControlDisallowed();
-
-                _controllable = value;
             }
         }
 
@@ -35,6 +36,15 @@
                 Debug.Log($"Overriding FPSMaster on {transform.name}");
 
             FPSMaster = master;
+        }
+
+        /// <summary>
+        /// Sets the controllability of the component.
+        /// </summary>
+        /// <param name="state">Controllability.</param>
+        public void SetControllability(bool state)
+        {
+            Controllable = state;
         }
 
         /// <summary>

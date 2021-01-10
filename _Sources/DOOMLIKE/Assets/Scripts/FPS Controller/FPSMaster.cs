@@ -33,7 +33,7 @@
         {
             ConsoleProLogger.Log(this, $"Enabling all {_allComponents.Length} components.", gameObject);
             for (int i = _allComponents.Length - 1; i >= 0; --i)
-                _allComponents[i].Controllable = true;
+                _allComponents[i].SetControllability(true);
         }
 
         public System.Collections.IEnumerator EnableAllComponentsAtEndOfFrame()
@@ -50,7 +50,7 @@
         {
             ConsoleProLogger.Log(this, $"Disabling all {_allComponents.Length} components.", gameObject);
             for (int i = _allComponents.Length - 1; i >= 0; --i)
-                _allComponents[i].Controllable = false;
+                _allComponents[i].SetControllability(false);
         }
 
         private void OnTerminalScreenToggled(bool state)
