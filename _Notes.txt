@@ -17,6 +17,12 @@
 - Ennemi qui n'évolue que dans le noir, donc à affronter en vision nocturne seulement.
 
 - Dans une chute, mettre un trou dans le mur auquel on ne peut accéder qu'en l'ayant raté et vu, et en repassant une deuxième fois.
+- Salles secrètes, salles shootables pour les révéler façon Dark Souls ?
+- Trappes surprises qui font tomber le joueur en plein dans le bordel.
+- Ouvrir une porte avec plein de mobs derrière.
+
+- Zones avec des radiations et une tenue qu'on pourra trouver pour s'en protéger.
+	- Scientifique qu'on peut tuer pour récupérer sa tenue, mais ce qui bloquera certaines choses ensuite ou rendra le jeu plus difficile.
 
 - Ce serait quand même trop bien qu'il y ait des réactions de NPC ou autre si on met énormément de balles dans une porte ou autre (du genre "ça ne s'ouvrira pas comme ça !").
 - Code couleur pour les éléments bonus sur lesquels on peut tirer ?

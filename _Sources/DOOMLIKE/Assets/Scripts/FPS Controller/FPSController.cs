@@ -4,7 +4,7 @@
     using UnityEngine;
 
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
-    public class FPSController : FPSControllableComponent
+    public class FPSController : FPSControllableComponent, IConsoleProLoggable
     {
         [Header("CONTROLLER OPTIONS")]
         [SerializeField] private bool _canSprint = true;
@@ -35,7 +35,6 @@
 
         public FPSStaminaManager StaminaManager { get; set; }
 
-        private Transform m_Transform;
         private Rigidbody m_Rigidbody;
         private CapsuleCollider m_Capsule;
 
@@ -47,6 +46,8 @@
         private Vector3 _currentVelocity;
         private float _currentSpeed;
         private float _refSpeed;
+
+        private bool _noCollisionsMode; // Debug.
 
         private bool _sprinting;
         public bool Sprinting
@@ -87,6 +88,8 @@
 
         public bool IsMoving => _rawMovementInput.sqrMagnitude > 0;
 
+        public string ConsoleProPrefix => "FPS Controller";
+
         protected override void OnControlDisallowed()
         {
             base.OnControlDisallowed();
@@ -97,7 +100,7 @@
 
         public bool CheckGround()
         {
-            return Physics.Raycast(m_Transform.position + Vector3.up * 0.05f, Vector3.down, 0.1f, _groundMask);
+            return Physics.Raycast(transform.position + Vector3.up * 0.05f, Vector3.down, 0.1f, _groundMask);
         }
 
         public bool CheckUncrouchAbility()
@@ -105,7 +108,7 @@
             for (int i = 0; i < 4; ++i)
             {
                 float a = 90 * i * Mathf.Deg2Rad;
-                Vector3 raycastStart = m_Transform.position + new Vector3(Mathf.Cos(a), 0, Mathf.Sin(a)) * _uncrouchCheckAccuracy;
+                Vector3 raycastStart = transform.position + new Vector3(Mathf.Cos(a), 0, Mathf.Sin(a)) * _uncrouchCheckAccuracy;
                 if (Physics.Raycast(raycastStart, Vector3.up, _baseCapsuleHeight + 0.1f, _groundMask))
                     return false;
             }
@@ -142,6 +145,12 @@
         {
             EvaluateSpeed();
 
+            if (_noCollisionsMode)
+            {
+                MoveBodyWithoutCollisions();
+                return;
+            }
+
             Quaternion cameraForward = Quaternion.Euler(0, _cameraTransform.localEulerAngles.y, 0);
             _currentVelocity = cameraForward * _currentMovementInput;
             _currentVelocity *= _currentSpeed;
@@ -150,18 +159,39 @@
             m_Rigidbody.velocity = _currentVelocity;
 
             if (_dbg)
-                Debug.DrawLine(m_Transform.position, m_Transform.position + m_Rigidbody.velocity, Color.yellow);
+                Debug.DrawLine(transform.position, transform.position + m_Rigidbody.velocity, Color.yellow);
+        }
+
+        private void MoveBodyWithoutCollisions()
+        {
+            Quaternion cameraForward = Quaternion.Euler(_cameraTransform.localEulerAngles);
+            _currentVelocity = cameraForward * _currentMovementInput;
+            _currentVelocity *= _currentSpeed;
+
+            transform.Translate(_currentVelocity * Time.deltaTime);
+        }
+
+        [ContextMenu("Toggle Collisions")]
+        private void ToggleCollisions()
+        {
+            _noCollisionsMode = !_noCollisionsMode;
+            ConsoleProLogger.Log(this, $"Collisions {(_noCollisionsMode ? "off" : "on")}.", gameObject);
+
+            m_Rigidbody.isKinematic = _noCollisionsMode;
+            m_Capsule.enabled = !_noCollisionsMode;
+            FPSMaster.FPSCamera.TogglePitchClamp(!_noCollisionsMode);
         }
 
         private void Awake()
         {
-            m_Transform = transform;
             m_Rigidbody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
 
             StaminaManager = new FPSStaminaManager(_fullSprintDuration, _recoverDuration, _fullReloadDuration);
             _baseCapsuleHeight = m_Capsule.height;
             _baseCapsuleYCenter = m_Capsule.center.y;
+
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("tcl", "Toggle collisions.", true, false, ToggleCollisions));
         }
 
         private void Update()
@@ -171,7 +201,7 @@
                 for (int i = 0; i < 4; ++i)
                 {
                     float a = 90 * i * Mathf.Deg2Rad;
-                    Vector3 raycastStart = m_Transform.position + new Vector3(Mathf.Cos(a), 0, Mathf.Sin(a)) * _uncrouchCheckAccuracy;
+                    Vector3 raycastStart = transform.position + new Vector3(Mathf.Cos(a), 0, Mathf.Sin(a)) * _uncrouchCheckAccuracy;
                     Debug.DrawLine(raycastStart, raycastStart + Vector3.up * (_baseCapsuleHeight + 0.1f), Color.cyan);
                 }
             }

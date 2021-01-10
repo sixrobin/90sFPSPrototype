@@ -24,6 +24,10 @@
         [SerializeField, Range(0f, 90f)] private float _minPitch = 60;
         [SerializeField, Range(0f, 90f)] private float _maxPitch = 60;
 
+        private bool _pitchClamped = true;
+        private float _initMinPitch;
+        private float _initMaxPitch;
+
         private Vector3 _rawCamInput;
         private Vector3 _camDest;
         private Vector3 _currCamPos;
@@ -79,6 +83,13 @@
                 ConsoleProLogger.Log(this, $"Setting Y axis sensitivity multiplier to {value}%.", gameObject);
                 _xAxisSensitivityMult = value * 0.01f;
             }
+        }
+
+        public void TogglePitchClamp(bool state)
+        {
+            _pitchClamped = state;
+            _minPitch = _pitchClamped ? _initMinPitch : 90;
+            _maxPitch = _pitchClamped ? _initMaxPitch : 90;
         }
 
         protected override void OnControlAllowed()
@@ -144,6 +155,8 @@
         private void Awake()
         {
             _currCamEulerAngles = transform.localEulerAngles;
+            _initMinPitch = _minPitch;
+            _initMaxPitch = _maxPitch;
         }
 
         private void Start()

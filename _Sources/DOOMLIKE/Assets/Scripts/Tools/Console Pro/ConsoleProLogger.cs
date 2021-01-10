@@ -21,5 +21,10 @@
         {
             UnityEngine.Debug.Log($"#Misc.#{log}", context);
         }
+
+        public static void LogEditor(string log, UnityEngine.GameObject context = null)
+        {
+            UnityEngine.Debug.Log($"#Editor.#{log}", context);
+        }
     }
 }

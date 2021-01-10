@@ -13,6 +13,11 @@
             SetCursorState(state);
         }
 
+        private void OnDebugConsoleToggled(bool state)
+        {
+            SetCursorState(state);
+        }
+
         private void SetCursorState(bool state)
         {
             ConsoleProLogger.Log(this, state ? "Showing cursor and unlocking it." : "Hiding cursor and confining it.", gameObject);
@@ -24,9 +29,17 @@
         private void Awake()
         {
             _optionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            Console.DebugConsole.Instance.DebugConsoleToggled += OnDebugConsoleToggled;
 
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
+        }
+
+        private void OnDestroy()
+        {
+            _optionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            if (Console.DebugConsole.Exists())
+                Console.DebugConsole.Instance.DebugConsoleToggled -= OnDebugConsoleToggled;
         }
     }
 }

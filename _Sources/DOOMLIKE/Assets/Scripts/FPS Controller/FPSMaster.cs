@@ -9,12 +9,15 @@
     {
         [SerializeField] private FPSControllableComponent[] _allComponents = null;
         [SerializeField] private FPSController _fpsController = null;
+        [SerializeField] private FPSCamera _fpsCamera = null;
         [SerializeField] private FPSCameraShake _fpsCameraShake = null;
-        
+
         [SerializeField] private Manager.OptionsManager _optionsManager = null;
         [SerializeField] private UI.TrainingWorkshopTerminalScreen _trainingWorkshopTerminalScreen = null;
 
         public FPSController FPSController => _fpsController;
+
+        public FPSCamera FPSCamera => _fpsCamera;
 
         public FPSCameraShake FPSCameraShake => _fpsCameraShake;
 

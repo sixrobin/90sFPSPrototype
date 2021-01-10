@@ -14,9 +14,6 @@
         [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
         [SerializeField] private float _shootTrauma = 0.15f;
 
-        [Header("DEBUG")]
-        [SerializeField] private bool _dbg = true;
-
         private bool _canShoot = true;
         private bool _shooting = false; // Animating running.
 
@@ -25,6 +22,7 @@
         public string ConsoleProPrefix => "FPS Shoot";
 
         public delegate void ShotEventHandler();
+
         public event ShotEventHandler OnShot;
 
         protected override void OnControlAllowed()

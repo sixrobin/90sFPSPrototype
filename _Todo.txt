@@ -3,7 +3,7 @@
 	- Binder weapon switch.
 	- Arme à droite ou à gauche.
 	- Input maintenu pour crouch/sprint/visée.
-	- Design crosshair/couleur.
+	- Design crosshair/couleur (faire les designs dans Photoshop pour respecter le pixel size).
 	- Si minimap:
 		- Position/Size.
 		- Static par rapport au joueur ou non.
@@ -16,7 +16,13 @@
 - Contrôles manette.
 - Occlusion culling.
 - Ouverture de la grande porte avec 4 générateurs.
-- IA (v1 débile à base de si raycast, chase, sinon, idle).
+
+- IA (v1 débile à base de si raycast, chase, sinon, idle):
+	- Exposer toutes les valeurs nécessaires (détection).
+	- Senseurs pour les bruits de tir, valeurs de détection différentes si le joueur est crouched.
+	- Plus tard : FSM.
+	- Stocker la dernière position vue du player pour un chase, et si une fois arrivé à cette position, le player n'est plus vu, retour à l'idle.
+
 - Night vision (transitions, grayscale, fog, UI).
 - Outline qui ne traverse pas les meshes.
 
@@ -25,10 +31,6 @@
 - Si projet prend de l'ampleur, faire une database xml.
 - Accès rapide au FPSMaster (singleton ?) pour accéder à tous ses composantes.
 
-- Commande tcl.
 - Doc de coding conventions.
-- Console Pro: classe static avec les constantes pour les préfixes (et dans la foulée se passer du singleton Logger pour pouvoir double clic sur un log sans que ça n'ouvre ce singleton).
-- Importer la console in game ?
-
 - Tester si plusieurs training workshops fonctionnent (niveau event, terminal, etc.).
 - Réfléchir à une façon de spawner les impacts sans dépendre du scale des parents potentiels.
