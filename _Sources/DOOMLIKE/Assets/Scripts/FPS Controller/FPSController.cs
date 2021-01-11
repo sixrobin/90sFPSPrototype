@@ -155,7 +155,7 @@
                 return;
             }
 
-            Quaternion cameraForward = Quaternion.Euler(0, _camTransform.localEulerAngles.y, 0);
+            Quaternion cameraForward = Quaternion.Euler(0f, _camTransform.localEulerAngles.y, 0f);
             _currVel = cameraForward * _currMovementInput;
             _currVel *= _currSpeed;
             _currVel.y = _rb.velocity.y;

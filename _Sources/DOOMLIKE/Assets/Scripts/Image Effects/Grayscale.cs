@@ -1,15 +1,15 @@
 namespace UnityStandardAssets.ImageEffects
 {
     using UnityEngine;
-    
+
     [ExecuteInEditMode]
     [AddComponentMenu("Image Effects/Color Adjustments/Grayscale")]
     public class Grayscale : ImageEffectBase
     {
         public Texture2D textureRamp;
 
-        [Range(-1.0f, 1.0f)]
-        public float rampOffset;
+        [Range(-1f, 1f)] public float rampOffset = 0f;
+        [Range(0f, 1f)] public float weight = 1f;
 
         public bool inverted;
 
@@ -17,6 +17,7 @@ namespace UnityStandardAssets.ImageEffects
         {
             material.SetTexture("_RampTex", inverted ? textureRamp.FlipTexture() : textureRamp);
             material.SetFloat("_RampOffset", rampOffset);
+            material.SetFloat("_Weight", weight);
 
             Graphics.Blit(source, destination, material);
         }

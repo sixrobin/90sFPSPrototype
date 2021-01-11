@@ -1,19 +1,15 @@
 ﻿namespace Doomlike.FPSCtrl
 {
-    using UnityEngine;
-
     /// <summary>
     /// Abstract class that every FPS component that can be enabled or disabled should extend.
-    /// Contains a public variable to control the enable and virtual methods and events called when this variable value is changed;
+    /// Contains a method to control the enable and virtual methods and events called when this variable value is changed;
     /// </summary>
-    public abstract class FPSControllableComponent : MonoBehaviour
+    public abstract class FPSControllableComponent : FPSComponent
     {
         public delegate void ControllableEventHandler();
 
         public event ControllableEventHandler ControlAllowed;
         public event ControllableEventHandler ControlDisallowed;
-
-        protected FPSMaster FPSMaster { get; private set; }
 
         private bool _controllable = true;
         public bool Controllable
@@ -28,14 +24,6 @@
                 else
                     OnControlDisallowed();
             }
-        }
-
-        public void SetFPSMaster(FPSMaster master)
-        {
-            if (FPSMaster != null)
-                Debug.Log($"Overriding FPSMaster on {transform.name}");
-
-            FPSMaster = master;
         }
 
         /// <summary>

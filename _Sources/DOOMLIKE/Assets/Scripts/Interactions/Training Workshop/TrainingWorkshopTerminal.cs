@@ -5,7 +5,6 @@
     public class TrainingWorkshopTerminal : OutlinedInteraction, FPSCtrl.IFPSShootable, IConsoleProLoggable
     {
         [SerializeField] private TrainingWorkshop _trainingWorkshop = null;
-        [SerializeField] private UI.TrainingWorkshopTerminalScreen _trainingWorkshopTerminalScreen = null;
         [SerializeField] private MeshRenderer _terminalRenderer = null;
         [SerializeField] private Material _terminalOnMaterial = null;
         [SerializeField] private GameObject _screenShatter = null;
@@ -67,13 +66,14 @@
         {
             base.Awake();
 
-            _trainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
             _terminalOffMaterial = _terminalRenderer.material;
         }
 
         private void OnDestroy()
         {
-            _trainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
         }
     }
 }

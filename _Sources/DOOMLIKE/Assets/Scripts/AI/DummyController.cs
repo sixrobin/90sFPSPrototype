@@ -4,12 +4,14 @@
     using RSLib.Maths;
     using UnityEngine;
 
+    [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
     public class DummyController : MonoBehaviour, FPSCtrl.IFPSShootable, IConsoleProLoggable
     {
         [Header("REFERENCES")]
-        [SerializeField] private FPSCtrl.FPSController _fpsController = null;
-        [SerializeField] private UnityEngine.AI.NavMeshAgent _navMeshAgent = null;
+        [SerializeField] private DummyAttackController _atkController = null;
+        [SerializeField] private Transform _target = null;
         [SerializeField] private Animator _animator = null;
+        [SerializeField] private Collider _collider = null;
         [SerializeField] private GameObject _bloodSplashPrefab = null;
 
         [Header("MOVEMENT")]
@@ -21,6 +23,10 @@
         [SerializeField] private float _detectionDist = 4f;
         [SerializeField] private float _startRunDist = 3f;
         [SerializeField] private float _atkDist = 0.75f;
+        [SerializeField] private LayerMask _playerSightMask = 1;
+
+        [Header("HEALTH")]
+        [SerializeField] private int _initHealth = 100;
 
         [Header("MISC")]
         [SerializeField] private float _traumaOnShot = 0.2f;
@@ -31,8 +37,9 @@
         [SerializeField] private Transform _dbgStateTextPivot = null;
         [SerializeField] private LineRenderer _pathView = null;
 
+        private UnityEngine.AI.NavMeshAgent _navMeshAgent;
         private AIState _currState = AIState.Idle;
-        private float _currPlayerDistSqr;
+        private float _currPlayerDistSqr = Mathf.Infinity;
         private float _currSpeed;
         private float _refSpeed;
 
@@ -43,22 +50,37 @@
             WalkToPlayer,
             RunToPlayer,
             Attack,
-            Hurt
+            Hurt,
+            Death
         }
 
-        public string ConsoleProPrefix => "Dummy Controller";
+        public RSLib.HealthSystem HealthSystem { get; private set; }
+
+        public bool DbgModeOn => _dbgModeOn;
+
+        public string ConsoleProPrefix => "Dummy";
 
         public float TraumaOnShot => _traumaOnShot;
 
         public void OnShot(Vector3 point)
         {
-            // TODO: Damages.
+            if (_currState == AIState.Death)
+                return;
 
-            if (_currState != AIState.Hurt)
-                SetState(AIState.Hurt);
+            HealthSystem.Damage(34); // TMP hard coded value.
+
+            if (HealthSystem.IsDead)
+            {
+                SetState(AIState.Death);
+            }
+            else
+            {
+                if (_currState != AIState.Hurt)
+                    SetState(AIState.Hurt);
+            }
 
             Transform bloodSplashInstance = Instantiate(_bloodSplashPrefab, point, Quaternion.identity).transform;
-            bloodSplashInstance.forward = transform.position - _fpsController.transform.position;
+            bloodSplashInstance.forward = transform.position - _target.position;
         }
 
         // Animation event.
@@ -66,6 +88,8 @@
         {
             if (_dbgModeOn)
                 ConsoleProLogger.Log(this, $"<b>{transform.name}</b> attacking.", gameObject);
+
+            _atkController.Attack();
         }
 
         // Animation event.
@@ -80,8 +104,20 @@
             SetState(AIState.WalkToPlayer);
         }
 
+        private bool CanReachTarget()
+        {
+            UnityEngine.AI.NavMeshPath path = new UnityEngine.AI.NavMeshPath();
+            _navMeshAgent.CalculatePath(_target.position, path);
+            return path.status == UnityEngine.AI.NavMeshPathStatus.PathComplete;
+        }
+
         private void SetState(AIState newState)
         {
+            if (_currState == AIState.Death)
+                return;
+
+            ConsoleProLogger.Log(this, $"Setting state to {newState}.");
+
             switch (newState)
             {
                 case AIState.Idle:
@@ -92,18 +128,19 @@
 
                 case AIState.WalkToPlayer:
                 {
-                    _navMeshAgent.SetDestination(_fpsController.transform.position);
+                    _navMeshAgent.SetDestination(_target.position);
                     break;
                 }
 
                 case AIState.RunToPlayer:
                 {
-                    _navMeshAgent.SetDestination(_fpsController.transform.position);
+                    _navMeshAgent.SetDestination(_target.position);
                     break;
                 }
 
                 case AIState.Attack:
                 {
+                    LookAtPlayer();
                     _animator.SetTrigger($"Atk{Random.Range(0, 2)}");
                     _currSpeed = 0f;
                     break;
@@ -116,10 +153,21 @@
                     _currSpeed = 0f;
                     break;
                 }
+
+                case AIState.Death:
+                {
+                    _collider.enabled = false;
+                    _navMeshAgent.enabled = false;
+                    _pathView.enabled = false;
+                    LookAtPlayer();
+                    _animator.SetTrigger("Death");
+                    break;
+                }
             }
 
             _currState = newState;
-            _navMeshAgent.isStopped = _currState == AIState.Attack || _currState == AIState.Hurt;
+            if (_currState != AIState.Death)
+                _navMeshAgent.isStopped = _currState == AIState.Attack || _currState == AIState.Hurt;
         }
 
         private void Act()
@@ -128,7 +176,8 @@
             {
                 case AIState.Idle:
                 {
-                    if (_currPlayerDistSqr <= _detectionDist.Sqr())
+                    // Detect player = sight, ear or distance.
+                    if (_currPlayerDistSqr <= _detectionDist.Sqr() && CanReachTarget())
                         SetState(AIState.WalkToPlayer);
 
                     break;
@@ -138,7 +187,7 @@
                 {
                     if (_currPlayerDistSqr <= _startRunDist.Sqr())
                         SetState(AIState.RunToPlayer);
-                    else if (_currPlayerDistSqr > _detectionDist.Sqr())
+                    else if (_currPlayerDistSqr > _detectionDist.Sqr() || !CanReachTarget())
                         SetState(AIState.Idle);
 
                     break;
@@ -154,9 +203,9 @@
                     break;
                 }
 
-                case AIState.Attack:
+                default:
                 {
-                    // Attack animation running naturally.
+                    // Hurt/Atk/Death, nothing to do.
                     break;
                 }
             }
@@ -164,9 +213,9 @@
 
         private bool HasPlayerInSight()
         {
-            if (Physics.Raycast(transform.position.WithY(0.5f), _fpsController.transform.position - transform.position, out RaycastHit hit, Mathf.Infinity))
-                return hit.collider.GetComponent<FPSCtrl.FPSController>();
-            return false;
+            // Requires optimization/caching.
+            return Physics.Raycast(transform.position, _target.position - transform.position, out RaycastHit hit, Mathf.Infinity, _playerSightMask)
+                && hit.collider.GetComponent<FPSCtrl.FPSController>() || hit.collider.GetComponent<FPSCtrl.FPSHealthSystem>();
         }
 
         private void EvaluateSpeed()
@@ -183,8 +232,8 @@
 
         private void UpdateDistanceToPlayer()
         {
-            _navMeshAgent.SetDestination(_fpsController.transform.position);
-            _currPlayerDistSqr = _navMeshAgent.ComputeRemainingDistanceSqr();
+            _navMeshAgent.SetDestination(_target.position);
+            _currPlayerDistSqr = _navMeshAgent.hasPath ? _navMeshAgent.ComputeRemainingDistanceSqr() : Mathf.Infinity;
         }
 
         private void AdjustAnimatorMoveSpeed()
@@ -206,8 +255,23 @@
             }
         }
 
+        private void LookAtPlayer()
+        {
+            transform.forward = (_target.position - transform.position).WithY(0f);
+        }
+
+        private void Awake()
+        {
+            _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            _atkController.SetDummyController(this);
+            HealthSystem = new RSLib.HealthSystem(_initHealth);
+        }
+
         private void Update()
         {
+            if (_currState == AIState.Death)
+                return;
+
             UpdateDistanceToPlayer();
             EvaluateSpeed();
             AdjustAnimatorMoveSpeed();
@@ -224,7 +288,7 @@
 
         private void OnGUI()
         {
-            if (!_dbgModeOn || _currPlayerDistSqr > _dbgDist.Sqr())
+            if (!_dbgModeOn || _currPlayerDistSqr > _dbgDist.Sqr() || _currState == AIState.Death)
                 return;
 
             Vector3 worldPos = Camera.main.WorldToScreenPoint(_dbgStateTextPivot.position);
@@ -235,6 +299,7 @@
             {
                 alignment = TextAnchor.MiddleLeft,
                 fontStyle = FontStyle.Bold,
+                fontSize = 9,
                 normal = new GUIStyleState()
                 {
                     textColor = new Color(1f, 1f, 1f, 1f)
@@ -242,8 +307,9 @@
             };
 
             worldPos.y = Screen.height - worldPos.y;
-            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), _currState.ToString(), dbgStyle);
-            GUI.Label(new Rect(worldPos.x, worldPos.y + 15f, 200f, 100f), $"Sight: {HasPlayerInSight()}", dbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"State: {_currState}", dbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y + 10f, 200f, 100f), $"Sight: {HasPlayerInSight()}", dbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y + 20f, 200f, 100f), $"Reach: {CanReachTarget()}", dbgStyle);
         }
     }
 }

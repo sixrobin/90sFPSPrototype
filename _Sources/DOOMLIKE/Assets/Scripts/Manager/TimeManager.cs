@@ -17,5 +17,24 @@
             ConsoleProLogger.Log(this, "Unfreezing time (setting time scale to 1).", gameObject);
             Time.timeScale = 1f;
         }
+
+        private void OnDebugConsoleToggled(bool state)
+        {
+            if (state)
+                Freeze();
+            else
+                Unfreeze();
+        }
+
+        private void Awake()
+        {
+            Console.DebugConsole.Instance.DebugConsoleToggled += OnDebugConsoleToggled;
+        }
+
+        private void OnDestroy()
+        {
+            if (Console.DebugConsole.Exists())
+                Console.DebugConsole.Instance.DebugConsoleToggled -= OnDebugConsoleToggled;
+        }
     }
 }

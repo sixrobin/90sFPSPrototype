@@ -1,5 +1,6 @@
 - Exporter la logique des options dans un manager (avec un préfixe de log plus propre du coup).
 - Options:
+	- Ajuster la view selon les scènes (pas de fov si on est dans un menu sans joueur, par exemple).
 	- Binder weapon switch.
 	- Arme à droite ou à gauche.
 	- Input maintenu pour crouch/sprint/visée.
@@ -7,7 +8,7 @@
 	- Si minimap:
 		- Position/Size.
 		- Static par rapport au joueur ou non.
-	- Head bob: plutôt un pourcentage qu'un toggle.	
+	- Head bob: plutôt un pourcentage qu'un toggle.
 - Changement visuel sur le switch des portes quand on/off.
 - Permettre de tirer sur un switch ce qui l'active mais le rend inutilisable ensuite.
 - Voir pour un feedback au niveau du switch qui ne peut donc plus gérer la porte.
@@ -15,15 +16,15 @@
 - Occlusion culling.
 - Ouverture de la grande porte avec 4 générateurs.
 - IA (v1 débile à base de si raycast, chase, sinon, idle):
-	- Exposer toutes les valeurs nécessaires (détection).
 	- Senseurs pour les bruits de tir, valeurs de détection différentes si le joueur est crouched.
 	- Plus tard : FSM.
 	- Stocker la dernière position vue du player pour un chase, et si une fois arrivé à cette position, le player n'est plus vu, retour à l'idle.
-	_ Méthode pour savoir si le joueur est sur la même nav mesh surface que soi.
 - Night vision (transitions, grayscale, fog, UI).
 - Outline qui ne traverse pas les meshes.
 - Voir si moyen d'écrire un shader unlit à la con plus opti que celui de base ?
 - Si projet prend de l'ampleur, faire une database xml.
-- Accès rapide au FPSMaster (singleton ?) pour accéder à tous ses composantes.
 - Tester si plusieurs training workshops fonctionnent (niveau event, terminal, etc.).
-- Réfléchir à une façon de spawner les impacts sans dépendre du scale des parents potentiels.
+_ Reload de l'arme.
+_ Voir pour cumuler des grayscales et le pixel perfect sans le blur.
+_ Permettre aux ennemis de caser des trucs que le joueur peut lui aussi casser en tirant dessus ?
+_ Bug en build : quand on interagit avec le terminal, l'input le close sur le champ.

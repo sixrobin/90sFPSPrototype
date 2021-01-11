@@ -74,6 +74,10 @@
                     bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
                     bulletImpactInstance.forward = -hit.normal;
                     bulletImpactInstance.Rotate(0f, 0f, Random.Range(0, 4) * 90);
+
+                    Vector3 scale = bulletImpactInstance.localScale;
+                    scale.Scale(new Vector3(1f / hit.transform.localScale.x, 1f / hit.transform.localScale.y, 1f / hit.transform.localScale.z));
+                    bulletImpactInstance.localScale = scale;
                 }
             }
 
@@ -105,7 +109,7 @@
 
         private void Start()
         {
-            FPSMaster.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
             _weaponView.ShootAnimationOver += OnShootAnimationOver;
             _weaponView.ShootFrame += OnShootFrame;
         }
@@ -121,7 +125,9 @@
 
         private void OnDestroy()
         {
-            FPSMaster.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+
             _weaponView.ShootAnimationOver -= OnShootAnimationOver;
             _weaponView.ShootFrame -= OnShootFrame;
         }

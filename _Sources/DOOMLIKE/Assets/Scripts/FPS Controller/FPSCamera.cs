@@ -11,6 +11,7 @@
         [Header("REFERENCES")]
         [SerializeField] private FPSController _fpsController = null;
         [SerializeField] private FPSCameraExtraMovement[] _extraMovements = null;
+        [SerializeField] private CameraRampsController _camRampsController = null;
         [SerializeField] private GameObject _scopeVisual = null;
 
         [Header("CAMERA SETTINGS")]
@@ -44,6 +45,8 @@
         }
 
         public string ConsoleProPrefix => "FPS Camera";
+
+        public CameraRampsController CamRampsController => _camRampsController;
 
         public void ReverseAxis(Axis axis)
         {
@@ -155,14 +158,11 @@
 
         private void Awake()
         {
+            Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+
             _currCamEulerAngles = transform.localEulerAngles;
             _initMinPitch = _minPitch;
             _initMaxPitch = _maxPitch;
-        }
-
-        private void Start()
-        {
-            FPSMaster.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
         }
 
         private void Update()
@@ -178,6 +178,12 @@
             EvaluateDestination();
             Position();
             ApplyExtraMovements();
+        }
+
+        private void OnDestroy()
+        {
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
         }
     }
 }

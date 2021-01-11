@@ -8,8 +8,6 @@
         [SerializeField] private float _resetDelayAfterCompletion = 1f;
         [SerializeField] private float _resetDelayAfterNoShot = 5f;
 
-        [SerializeField] private FPSCtrl.FPSShoot _fpsShoot = null;
-
         private bool _inProgress;
         private int _targetsShot;
         private float _timer;
@@ -96,7 +94,7 @@
 
         private void Awake()
         {
-            _fpsShoot.Shot += OnShot;
+            Manager.ReferencesHub.FPSMaster.FPSShoot.Shot += OnShot;
             for (int i = _targets.Length - 1; i >= 0; --i)
                 _targets[i].TargetShot += OnTargetShot;
         }
@@ -123,7 +121,9 @@
 
         private void OnDestroy()
         {
-            _fpsShoot.Shot -= OnShot;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.FPSMaster.FPSShoot.Shot -= OnShot;
+
             for (int i = _targets.Length - 1; i >= 0; --i)
                 _targets[i].TargetShot -= OnTargetShot;
         }

@@ -7,13 +7,18 @@
     /// </summary>
     public class FPSMaster : MonoBehaviour, IConsoleProLoggable
     {
-        [SerializeField] private FPSControllableComponent[] _allComponents = null;
+        [SerializeField] private FPSComponent[] _allComponents = null;
+
+        [Space(15)]
         [SerializeField] private FPSController _fpsController = null;
         [SerializeField] private FPSCamera _fpsCamera = null;
         [SerializeField] private FPSCameraShake _fpsCameraShake = null;
+        [SerializeField] private FPSCameraAnimator _fpsCameraAnimator = null;
+        [SerializeField] private FPSHealthSystem _fpsHealthSystem = null;
+        [SerializeField] private FPSHeadBob _fpsHeadBob = null;
+        [SerializeField] private FPSShoot _fpsShoot = null;
 
-        [SerializeField] private Manager.OptionsManager _optionsManager = null;
-        [SerializeField] private UI.TrainingWorkshopTerminalScreen _trainingWorkshopTerminalScreen = null;
+        private System.Collections.Generic.List<FPSControllableComponent> _allControllableComponents;
 
         public FPSController FPSController => _fpsController;
 
@@ -21,7 +26,13 @@
 
         public FPSCameraShake FPSCameraShake => _fpsCameraShake;
 
-        public Manager.OptionsManager OptionsManager => _optionsManager;
+        public FPSCameraAnimator FPSCameraAnimator => _fpsCameraAnimator;
+
+        public FPSHealthSystem FPSHealthSystem => _fpsHealthSystem;
+
+        public FPSHeadBob FPSHeadBob => _fpsHeadBob;
+
+        public FPSShoot FPSShoot => _fpsShoot;
 
         public string ConsoleProPrefix => "FPS Master";
 
@@ -31,9 +42,9 @@
         [ContextMenu("Enable All Components")]
         public void EnableAllComponents()
         {
-            ConsoleProLogger.Log(this, $"Enabling all {_allComponents.Length} components.", gameObject);
-            for (int i = _allComponents.Length - 1; i >= 0; --i)
-                _allComponents[i].SetControllability(true);
+            ConsoleProLogger.Log(this, $"Enabling all {_allControllableComponents.Count} components.", gameObject);
+            for (int i = _allControllableComponents.Count - 1; i >= 0; --i)
+                _allControllableComponents[i].SetControllability(true);
         }
 
         public System.Collections.IEnumerator EnableAllComponentsAtEndOfFrame()
@@ -48,9 +59,9 @@
         [ContextMenu("Disable All Components")]
         public void DisableAllComponents()
         {
-            ConsoleProLogger.Log(this, $"Disabling all {_allComponents.Length} components.", gameObject);
-            for (int i = _allComponents.Length - 1; i >= 0; --i)
-                _allComponents[i].SetControllability(false);
+            ConsoleProLogger.Log(this, $"Disabling all {_allControllableComponents.Count} components.", gameObject);
+            for (int i = _allControllableComponents.Count - 1; i >= 0; --i)
+                _allControllableComponents[i].SetControllability(false);
         }
 
         private void OnTerminalScreenToggled(bool state)
@@ -63,15 +74,22 @@
 
         private void Awake()
         {
-            for (int i = _allComponents.Length - 1; i >= 0; --i)
-                _allComponents[i].SetFPSMaster(this);
+            _allControllableComponents = new System.Collections.Generic.List<FPSControllableComponent>();
 
-            _trainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            for (int i = _allComponents.Length - 1; i >= 0; --i)
+            {
+                _allComponents[i].SetFPSMaster(this);
+                if (_allComponents[i] is FPSControllableComponent controllableComponent)
+                    _allControllableComponents.Add(controllableComponent);
+            }
+
+            Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
         }
 
         private void OnDestroy()
         {
-            _trainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
         }
     }
 }

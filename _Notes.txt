@@ -6,6 +6,9 @@
 - Retrouver des anciens alliés contaminés (pouvoir donc ramasser leurs armes, leurs perks, trouver des objets de lore, etc.).
 - Est-ce qu'on joue du coup le même personnage à chaque fois ? Sinon, comment justifier les perks obtenues qui se transmettent d'un homme à l'autre ?
 
+- Grilles pour voir une salle sans pouvoir y accéder.
+- Canalisations au plafond pour indiquer des directions.
+
 - L'environnement change à chaque fois (si roguelike), ce qui pourrait se justifier par plusieurs choses :
 	- soit les humains ont développé une base capable de changer pour confondre l'ennemi.
 	- soit l'ennemi influence les hommes par un genre de folie ce qui leur fait perdre tout sens de l'orientation.
@@ -14,7 +17,14 @@
 - Peut-être commencer en extérieur car la base est déjà désertée/entièrement contaminée ?
 
 - Ramasser sur les corps des enregistrements audio qui correspondraient aux communications entre le soldat et une base militaire (on imagine qu'elles seraient enregistrées pour x raison).
+	- Les bunkers ont des téléphones utilisés par les militaires qui s'étaient perdus pour demander des indications "je suis à tel numéro, où dois-je aller ?".
 - Ennemi qui n'évolue que dans le noir, donc à affronter en vision nocturne seulement.
+
+- Devoir réactiver un monte-charge pour descendre une énorme galerie.
+	- Le monte-charge pourrait mener à un endroit condamné par les hommes car il fournirait un accès trop facile pour la menace, mais qui serait du coup un endroit pas con pour y aller.
+- Pas mal d'extincteurs disposés partout dans les bunkers.
+
+- Badges militaires pour accéder à des secteurs du bunker.
 
 - Dans une chute, mettre un trou dans le mur auquel on ne peut accéder qu'en l'ayant raté et vu, et en repassant une deuxième fois.
 - Salles secrètes, salles shootables pour les révéler façon Dark Souls ?

@@ -4,7 +4,6 @@
 
     public class OptionsManager : MonoBehaviour, IConsoleProLoggable
     {
-        [SerializeField] private TimeManager _timeManager = null;
         [SerializeField] private GameObject _optionsView = null;
 
         public delegate void OptionsStateChangedEventHandler(bool state);
@@ -20,13 +19,13 @@
             IsOpen = !IsOpen;
 
             ConsoleProLogger.Log(this, IsOpen ? "Opening options." : "Closing options.", gameObject);
-            
+
             _optionsView.SetActive(IsOpen);
 
             if (IsOpen)
-                _timeManager.Freeze();
+                ReferencesHub.TimeManager.Freeze();
             else
-                _timeManager.Unfreeze();
+                ReferencesHub.TimeManager.Unfreeze();
 
             OptionsStateChanged(IsOpen);
         }

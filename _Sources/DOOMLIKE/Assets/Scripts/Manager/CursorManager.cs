@@ -4,8 +4,6 @@
 
     public class CursorManager : MonoBehaviour, IConsoleProLoggable
     {
-        [SerializeField] private OptionsManager _optionsManager = null;
-
         public string ConsoleProPrefix => "Cursor Manager";
 
         private void OnOptionsStateChanged(bool state)
@@ -28,7 +26,7 @@
 
         private void Awake()
         {
-            _optionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
             Console.DebugConsole.Instance.DebugConsoleToggled += OnDebugConsoleToggled;
 
             Cursor.visible = false;
@@ -37,7 +35,9 @@
 
         private void OnDestroy()
         {
-            _optionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            if (ReferencesHub.Exists())
+                ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+
             if (Console.DebugConsole.Exists())
                 Console.DebugConsole.Instance.DebugConsoleToggled -= OnDebugConsoleToggled;
         }
