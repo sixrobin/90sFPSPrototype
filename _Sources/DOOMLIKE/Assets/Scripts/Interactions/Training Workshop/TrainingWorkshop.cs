@@ -7,6 +7,7 @@
         [SerializeField] private TrainingTarget[] _targets = null;
         [SerializeField] private float _resetDelayAfterCompletion = 1f;
         [SerializeField] private float _resetDelayAfterNoShot = 5f;
+        [SerializeField] private int _workshopIndex = 0;
 
         private bool _inProgress;
         private int _targetsShot;
@@ -25,6 +26,8 @@
         public string Score { get; private set; } = "D";
 
         public int Tries { get; private set; }
+
+        public int WorkshopIndex => _workshopIndex;
 
         public string ConsoleProPrefix => "Training Workshop";
 

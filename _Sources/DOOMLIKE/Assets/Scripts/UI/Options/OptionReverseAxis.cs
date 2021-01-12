@@ -5,7 +5,6 @@
     public class OptionReverseAxis : OptionRaycasterToggle
     {
         [SerializeField] private FPSCtrl.FPSCamera.Axis _axis = FPSCtrl.FPSCamera.Axis.None;
-        [SerializeField] private FPSCtrl.FPSCamera _fpsCamera = null;
 
         public override void Init()
         {
@@ -19,7 +18,7 @@
                 return;
             }
 
-            _fpsCamera.ReverseAxis(_axis);
+            Manager.ReferencesHub.FPSMaster.FPSCamera.ReverseAxis(_axis);
         }
     }
 }

@@ -12,18 +12,23 @@
         [SerializeField] private float _pauseDur = 0.15f;
         [SerializeField] private float _fadeToBlackDur = 2.3f;
 
+        private Collider _hitbox;
+
         public RSLib.HealthSystem HealthSystem { get; private set; }
 
         public string ConsoleProPrefix => "FPS Health System";
 
         public void Damage(int dmg, float trauma)
         {
+            if (FPSMaster.DbgGodMode)
+                return;
+
             UnityEngine.Assertions.Assert.IsFalse(HealthSystem.IsDead, "Damaging an already dead health system owner.");
 
             HealthSystem.Damage(dmg);
             ConsoleProLogger.Log(this, $"Received <b>{dmg}</b> damages, <b>{HealthSystem.Health}</b> health left.", gameObject);
-            FPSMaster.FPSCameraShake.AddTrauma(trauma);
 
+            FPSMaster.FPSCameraShake.AddTrauma(HealthSystem.IsDead ? 0.2f : trauma);
             if (!HealthSystem.IsDead)
                 FPSMaster.FPSCameraAnimator.PlayHurtAnimation();
         }
@@ -33,6 +38,9 @@
             // Player death.
 
             FPSMaster.DisableAllComponents();
+            _hitbox.enabled = false;
+
+            FPSMaster.FPSUIController.Hide();
             FPSMaster.FPSHeadBob.SetState(false);
             FPSMaster.FPSCameraAnimator.PlayDeathAnimation();
             FPSMaster.FPSCamera.CamRampsController.FadeToDeathGrayscale(_delay, _desaturationDur, _pauseDur, _fadeToBlackDur);
@@ -41,7 +49,7 @@
         private void Awake()
         {
             // No RequireComponent because the collider type is variable.
-            if (!GetComponent<Collider>())
+            if (!TryGetComponent(out _hitbox))
                 Debug.LogWarning("FPSHealthSystem WARNING: gameObject doesn't have a collider and can't be damaged.", gameObject);
 
             HealthSystem = new RSLib.HealthSystem(_initHealth);

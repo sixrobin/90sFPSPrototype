@@ -1,6 +1,6 @@
 - Exporter la logique des options dans un manager (avec un préfixe de log plus propre du coup).
 - Options:
-	- Ajuster la view selon les scènes (pas de fov si on est dans un menu sans joueur, par exemple).
+	- Ajuster le content de la scroll view selon les scènes (pas de fov si on est dans un menu sans joueur, par exemple).
 	- Binder weapon switch.
 	- Arme à droite ou à gauche.
 	- Input maintenu pour crouch/sprint/visée.
@@ -9,22 +9,30 @@
 		- Position/Size.
 		- Static par rapport au joueur ou non.
 	- Head bob: plutôt un pourcentage qu'un toggle.
+	
 - Changement visuel sur le switch des portes quand on/off.
 - Permettre de tirer sur un switch ce qui l'active mais le rend inutilisable ensuite.
 - Voir pour un feedback au niveau du switch qui ne peut donc plus gérer la porte.
 - Contrôles manette.
 - Occlusion culling.
 - Ouverture de la grande porte avec 4 générateurs.
+
 - IA (v1 débile à base de si raycast, chase, sinon, idle):
 	- Senseurs pour les bruits de tir, valeurs de détection différentes si le joueur est crouched.
 	- Plus tard : FSM.
 	- Stocker la dernière position vue du player pour un chase, et si une fois arrivé à cette position, le player n'est plus vu, retour à l'idle.
+	
 - Night vision (transitions, grayscale, fog, UI).
 - Outline qui ne traverse pas les meshes.
 - Voir si moyen d'écrire un shader unlit à la con plus opti que celui de base ?
 - Si projet prend de l'ampleur, faire une database xml.
-- Tester si plusieurs training workshops fonctionnent (niveau event, terminal, etc.).
 _ Reload de l'arme.
 _ Voir pour cumuler des grayscales et le pixel perfect sans le blur.
 _ Permettre aux ennemis de caser des trucs que le joueur peut lui aussi casser en tirant dessus ?
-_ Bug en build : quand on interagit avec le terminal, l'input le close sur le champ.
+_ Bug en build : l'anim du gun semble bloquée ?
+_ Event OnHealthChanged (sur RSLib).
+_ Trouver une police qui a des 0 plus lisibles.
+
+_ Finir la base du système de chargeur : reload avec anim event et UI.
+	_ Permettre de récupérer des munitions.
+	_ Système de chargeur infini pour l'arme de base, façon Tomb Raider.

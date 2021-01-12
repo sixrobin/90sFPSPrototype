@@ -797,8 +797,8 @@
             public const int LinesSpacing = 20;
 
             public const int EntryBoxHeight = 30;
-            public const int HelpBoxHeight = 200;
-            public const int HistoryBoxHeight = 346;
+            public const int HelpBoxHeight = 96;
+            public const int HistoryBoxHeight = 146;
             public const int Width = 640;
         }
     }

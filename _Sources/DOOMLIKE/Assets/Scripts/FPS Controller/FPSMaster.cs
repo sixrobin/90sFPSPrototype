@@ -17,6 +17,11 @@
         [SerializeField] private FPSHealthSystem _fpsHealthSystem = null;
         [SerializeField] private FPSHeadBob _fpsHeadBob = null;
         [SerializeField] private FPSShoot _fpsShoot = null;
+        [SerializeField] private FPSInteracter _fpsInteracter = null;
+        [SerializeField] private FPSUIController _fpsUIController = null;
+
+        [Header("DEBUG")]
+        [SerializeField] private bool _dbgGodMode = false;
 
         private System.Collections.Generic.List<FPSControllableComponent> _allControllableComponents;
 
@@ -34,7 +39,13 @@
 
         public FPSShoot FPSShoot => _fpsShoot;
 
+        public FPSInteracter FPSInteracter => _fpsInteracter;
+
+        public FPSUIController FPSUIController => _fpsUIController;
+
         public string ConsoleProPrefix => "FPS Master";
+
+        public bool DbgGodMode => _dbgGodMode;
 
         /// <summary>
         /// Enables all the controllable components of the FPS controller.
@@ -67,9 +78,15 @@
         private void OnTerminalScreenToggled(bool state)
         {
             if (state)
+            {
                 DisableAllComponents();
+                FPSUIController.Hide();
+            }
             else
+            {
                 StartCoroutine(EnableAllComponentsAtEndOfFrame());
+                FPSUIController.Show();
+            }
         }
 
         private void Awake()
@@ -84,12 +101,20 @@
             }
 
             Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("tgm", "Toggle God mode.", true, false, DBG_ToggleGodMode));
         }
 
         private void OnDestroy()
         {
             if (Manager.ReferencesHub.Exists())
                 Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
+        }
+
+        [ContextMenu("Toggle God Mode")]
+        private void DBG_ToggleGodMode()
+        {
+            _dbgGodMode = !_dbgGodMode;
+            ConsoleProLogger.Log(this, $"God Mode {(DbgGodMode ? "on" : "off")}.", gameObject);
         }
     }
 }

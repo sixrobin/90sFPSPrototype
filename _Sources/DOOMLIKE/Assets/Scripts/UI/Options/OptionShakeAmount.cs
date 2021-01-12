@@ -4,8 +4,6 @@
 
     public class OptionShakeAmount : OptionRaycasterValues
     {
-        [SerializeField] private FPSCtrl.FPSCameraShake _fpsCameraShake = null;
-
         public override void Init()
         {
         }
@@ -23,7 +21,7 @@
                 return;
             }
 
-            _fpsCameraShake.SetShakePercentage(shakeMult);
+            Manager.ReferencesHub.FPSMaster.FPSCameraShake.SetShakePercentage(shakeMult);
         }
     }
 }

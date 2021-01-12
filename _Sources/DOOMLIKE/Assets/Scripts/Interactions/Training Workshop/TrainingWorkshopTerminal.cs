@@ -32,11 +32,12 @@
             if (!ScreenShattered)
                 _terminalRenderer.material = _terminalOnMaterial;
 
-            ConsoleProLogger.Log(this, $"Opening Training Workshop terminal <b>{transform.name}</b> :", gameObject);
-            ConsoleProLogger.Log(this, $"Tries: {_trainingWorkshop.Tries},\n" +
+            ConsoleProLogger.Log(this, $"Opening Training Workshop terminal <b>{transform.name}</b> for Workshop {TrainingWorkshop.WorkshopIndex} :\n" +
+                $"Tries: {_trainingWorkshop.Tries},\n" +
                 $"Best time: {(_trainingWorkshop.BestTime == float.MaxValue ? 0f : _trainingWorkshop.BestTime)} seconds,\n" +
                 $"Best shots: {(_trainingWorkshop.BestShots == int.MaxValue ? 0 : _trainingWorkshop.BestShots)} shots,\n" +
-                $"Score: {_trainingWorkshop.Score}.", gameObject);
+                $"Score: {_trainingWorkshop.Score}.\n" +
+                $"(If terminal won't open, make sure the terminal screen is listening to this interaction event.)", gameObject);
         }
 
         public void OnShot(Vector3 point)

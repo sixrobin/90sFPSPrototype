@@ -4,7 +4,6 @@
 
     public class OptionAxisSensitivity : OptionRaycasterValues
     {
-        [SerializeField] private FPSCtrl.FPSCamera _fpsCamera = null;
         [SerializeField] private FPSCtrl.FPSCamera.Axis _axis = FPSCtrl.FPSCamera.Axis.None;
 
         public override void Init()
@@ -24,7 +23,7 @@
                 return;
             }
 
-            _fpsCamera.SetAxisSensitivityMultiplier(_axis, sensitivityMult);
+            Manager.ReferencesHub.FPSMaster.FPSCamera.SetAxisSensitivityMultiplier(_axis, sensitivityMult);
         }
     }
 }

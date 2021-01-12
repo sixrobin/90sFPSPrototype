@@ -8,6 +8,7 @@
 
         public event ShootAnimationEventHandler ShootAnimationOver;
         public event ShootAnimationEventHandler ShootFrame;
+        public event ShootAnimationEventHandler ReloadFrame;
 
         // Animation event.
         public void OnShootFrame()
@@ -19,6 +20,12 @@
         public void OnShootAnimationOver()
         {
             ShootAnimationOver();
+        }
+
+        // Animation event.
+        public void OnReloadFrame()
+        {
+            ReloadFrame();
         }
 
         public void Display(bool state)

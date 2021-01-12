@@ -29,11 +29,13 @@
                 _currentInteraction = value;
                 if (_currentInteraction != null)
                 {
-                    ConsoleProLogger.Log(this, $"Focusing <b>{transform.name}</b>.", gameObject);
+                    ConsoleProLogger.Log(this, $"Focusing <b>{_currentInteraction.transform.name}</b>.", _currentInteraction.gameObject);
                     _currentInteraction.Focus();
                 }
             }
         }
+
+        public bool InteractedThisFrame { get; private set; }
 
         public string ConsoleProPrefix => "FPS Interacter";
 
@@ -55,7 +57,7 @@
         {
             if (CurrentInteraction != null)
             {
-                ConsoleProLogger.Log(this, $"Unfocusing <b>{transform.name}</b>.", gameObject);
+                ConsoleProLogger.Log(this, $"Unfocusing <b>{CurrentInteraction.transform.name}</b>.", CurrentInteraction.gameObject);
                 CurrentInteraction.Unfocus();
             }
 
@@ -97,7 +99,7 @@
             if (CurrentInteraction == null)
                 return;
 
-            if (Input.GetButtonDown("Interact"))
+            if (!InteractedThisFrame && Input.GetButtonDown("Interact"))
             {
                 ConsoleProLogger.Log(this, $"Interacting with <b>{transform.name}</b>.", gameObject);
 
@@ -107,7 +109,16 @@
                     _lastInteracted = CurrentInteraction;
                     CurrentInteraction = null;
                 }
+
+                InteractedThisFrame = true;
+                StartCoroutine(ResetInteractedOnEndOfFrameCoroutine());
             }
+        }
+
+        private System.Collections.IEnumerator ResetInteractedOnEndOfFrameCoroutine()
+        {
+            yield return new WaitForEndOfFrame();
+            InteractedThisFrame = false;
         }
 
         private void Update()
@@ -121,7 +132,7 @@
 
         private void OnGUI()
         {
-            if (!_dbg)
+            if (!_dbg || !Manager.DebugManager.DbgViewOn)
                 return;
 
             GUI.Label(new Rect(10, 10, 500, 20), CurrentInteraction != null ? $"Can interact with {CurrentInteraction.transform.name}." : "No interaction possible.");

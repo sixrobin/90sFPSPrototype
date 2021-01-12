@@ -1224,6 +1224,7 @@ MonoBehaviour:
   _canvas: {fileID: 5812796692142336693}
   _screenShatteredView: {fileID: 6287623780210378346}
   _terminals: []
+  _titleText: {fileID: 5812796691354105720}
   _triesText: {fileID: 5812796692726972432}
   _bestShotsText: {fileID: 5812796691850759091}
   _bestTimeText: {fileID: 5812796692028267205}

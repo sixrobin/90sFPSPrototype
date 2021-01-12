@@ -10,6 +10,9 @@
         [SerializeField] private Animator _weaponAnimator = null;
         [SerializeField] private FPSWeaponView _weaponView = null;
 
+        [Header("MAGAZINE")]
+        [SerializeField] private FPSMagazine _initMagazine = new FPSMagazine(300, 30);
+
         [Header("IMPACT")]
         [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
         [SerializeField] private float _shootTrauma = 0.15f;
@@ -22,6 +25,8 @@
         public delegate void ShotEventHandler();
 
         public event ShotEventHandler Shot;
+
+        public FPSMagazine FPSMagazine { get; private set; }
 
         public string ConsoleProPrefix => "FPS Shoot";
 
@@ -37,23 +42,56 @@
             _weaponView.Display(false);
         }
 
+        private void TryReload()
+        {
+            if (FPSMagazine.CanReload && Input.GetButtonDown("Reload"))
+                Reload();
+        }
+
         private void TryShoot()
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                ConsoleProLogger.Log(this, "Triggering shoot animation.", gameObject);
-                _isShooting = true;
-                _weaponAnimator.SetTrigger("Shoot");
+                if (FPSMagazine.IsLoadEmpty)
+                {
+                    if (FPSMagazine.IsCompletelyEmpty)
+                    {
+                        ConsoleProLogger.Log(this, "Trying to shoot with a completely empty magazine.", gameObject);
+                        return;
+                    }
+
+                    ConsoleProLogger.Log(this, "Trying to shoot with an empty magazine load, reloading instead.", gameObject);
+                    Reload();
+                }
+                else
+                {
+                    ConsoleProLogger.Log(this, "Triggering shoot animation.", gameObject);
+                    _isShooting = true;
+                    _weaponAnimator.SetTrigger("Shoot");
+                }
             }
         }
 
-        private void ApplyShoot()
+        private void Reload()
         {
-            ConsoleProLogger.Log(this, "Apply shot.", gameObject);
+            ConsoleProLogger.Log(this, "Reloading magazine.", gameObject);
+            FPSMagazine.Reload();
+            // TODO: Reload animation instead of reload method.
+            // TODO: Actual reload logic should be done on some animation event.
+        }
+
+        private void ApplyShot()
+        {
+            ConsoleProLogger.Log(this, "Applying shot.", gameObject);
+            UnityEngine.Assertions.Assert.IsFalse(FPSMagazine.IsLoadEmpty, "Shoot animation has been allowed with an empty magazine load.");
+
+            FPSMagazine.Shoot();
+
+            ConsoleProLogger.Log(this, $"Magazine state : ({FPSMagazine.CurrLoadCount}/{FPSMagazine.CurrStorehouseCount}).", gameObject);
 
             if (Physics.Raycast(_camTransform.position, _camTransform.forward, out RaycastHit hit, Mathf.Infinity))
             {
-                ConsoleProLogger.Log(this, $"Shot on <b>{hit.transform.name}</b>.", gameObject);
+                ConsoleProLogger.Log(this, $"Shot <b>{hit.transform.name}</b>.", gameObject);
 
                 if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
                     if (hit.collider.TryGetComponent(out shootable))
@@ -104,7 +142,7 @@
 
         private void OnShootFrame()
         {
-            ApplyShoot();
+            ApplyShot();
         }
 
         private void Start()
@@ -112,6 +150,8 @@
             Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
             _weaponView.ShootAnimationOver += OnShootAnimationOver;
             _weaponView.ShootFrame += OnShootFrame;
+
+            FPSMagazine = new FPSMagazine(_initMagazine);
         }
 
         private void Update()
@@ -119,6 +159,7 @@
             if (!Controllable || !_canShoot || _isShooting)
                 return;
 
+            TryReload();
             TryShoot();
             UpdateAnimator();
         }

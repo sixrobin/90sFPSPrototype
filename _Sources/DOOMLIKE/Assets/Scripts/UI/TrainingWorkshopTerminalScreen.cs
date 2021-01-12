@@ -7,6 +7,7 @@
         [SerializeField] private Canvas _canvas = null;
         [SerializeField] private GameObject _screenShatteredView = null;
         [SerializeField] private TrainingWorkshopTerminal[] _terminals = null;
+        [SerializeField] private TMPro.TextMeshProUGUI _titleText = null;
         [SerializeField] private TMPro.TextMeshProUGUI _triesText = null;
         [SerializeField] private TMPro.TextMeshProUGUI _bestShotsText = null;
         [SerializeField] private TMPro.TextMeshProUGUI _bestTimeText = null;
@@ -16,7 +17,7 @@
         public delegate void TerminalScreenToggledEventHandler(bool state);
 
         public event TerminalScreenToggledEventHandler TerminalScreenToggled;
-        
+
         public string ConsoleProPrefix => "Training Workshop";
 
         private void OnTerminalInteracted(FPSCtrl.FPSInteraction interaction)
@@ -30,6 +31,7 @@
             _canvas.enabled = true;
             _screenShatteredView.SetActive(terminal.ScreenShattered);
 
+            _titleText.text = $"Training Workshop {terminal.TrainingWorkshop.WorkshopIndex}";
             _triesText.text = terminal.TrainingWorkshop.Tries.ToString();
             _bestShotsText.text = terminal.TrainingWorkshop.BestShots == int.MaxValue ? "0" : terminal.TrainingWorkshop.BestShots.ToString();
             _bestTimeText.text = terminal.TrainingWorkshop.BestTime == float.MaxValue ? "0.0" : $"{terminal.TrainingWorkshop.BestTime:f2}<size={_bestTimeSecondsTextSize}>s</size>";
@@ -57,7 +59,7 @@
             if (!_canvas.enabled)
                 return;
 
-            if (Input.GetButtonDown("Interact"))
+            if (!Manager.ReferencesHub.FPSMaster.FPSInteracter.InteractedThisFrame && Input.GetButtonDown("Interact"))
                 ShutdownTerminalScreen();
         }
 

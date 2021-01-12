@@ -45,7 +45,7 @@
         private float _currSpeed;
         private float _refSpeed;
 
-        private bool _dbgNoCollisionsMode; // Debug.
+        private bool _dbgNoCollisionsMode;
 
         public FPSStaminaManager StaminaManager { get; set; }
 

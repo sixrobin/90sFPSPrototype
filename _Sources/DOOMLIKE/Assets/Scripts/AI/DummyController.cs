@@ -67,17 +67,15 @@
             if (_currState == AIState.Death)
                 return;
 
-            HealthSystem.Damage(34); // TMP hard coded value.
+            if (Manager.ReferencesHub.FPSMaster.DbgGodMode)
+                HealthSystem.Kill(); // Damages should be passed in as an OnShot() method argument.
+            else
+                HealthSystem.Damage(34); // TMP hard coded value.
 
             if (HealthSystem.IsDead)
-            {
                 SetState(AIState.Death);
-            }
-            else
-            {
-                if (_currState != AIState.Hurt)
-                    SetState(AIState.Hurt);
-            }
+            else if (_currState != AIState.Hurt)
+                SetState(AIState.Hurt);
 
             Transform bloodSplashInstance = Instantiate(_bloodSplashPrefab, point, Quaternion.identity).transform;
             bloodSplashInstance.forward = transform.position - _target.position;
@@ -117,8 +115,9 @@
                 return;
 
             ConsoleProLogger.Log(this, $"Setting state to {newState}.");
+            _currState = newState;
 
-            switch (newState)
+            switch (_currState)
             {
                 case AIState.Idle:
                 {
@@ -160,12 +159,12 @@
                     _navMeshAgent.enabled = false;
                     _pathView.enabled = false;
                     LookAtPlayer();
+                    _animator.ResetTrigger("Hurt");
                     _animator.SetTrigger("Death");
                     break;
                 }
             }
 
-            _currState = newState;
             if (_currState != AIState.Death)
                 _navMeshAgent.isStopped = _currState == AIState.Attack || _currState == AIState.Hurt;
         }
@@ -277,8 +276,8 @@
             AdjustAnimatorMoveSpeed();
             Act();
 
-            _pathView.enabled = _dbgModeOn;
-            if (_dbgModeOn)
+            _pathView.enabled = _dbgModeOn && Manager.DebugManager.DbgViewOn;
+            if (_pathView.enabled)
             {
                 _pathView.positionCount = _navMeshAgent.path.corners.Length;
                 for (int i = 0; i < _navMeshAgent.path.corners.Length; ++i)
@@ -288,7 +287,7 @@
 
         private void OnGUI()
         {
-            if (!_dbgModeOn || _currPlayerDistSqr > _dbgDist.Sqr() || _currState == AIState.Death)
+            if (!_dbgModeOn || !Manager.DebugManager.DbgViewOn || _currPlayerDistSqr > _dbgDist.Sqr() || _currState == AIState.Death)
                 return;
 
             Vector3 worldPos = Camera.main.WorldToScreenPoint(_dbgStateTextPivot.position);

@@ -62,6 +62,7 @@ _ Animation events methods are named as an event without necessarily using the p
 _ Debug field are named with the "dbg" prefix (after the underscore).
 _ Debug properties are named with the "DBG_" prefix.
 _ Debug methods are named with the "DBG_" prefix.
+_ Coroutines are named with the "Coroutine" suffix.
 
 _ Some words can be contracted only if there's no possible mistake (ex: dbg for debug, atk for attack, vel for velocity).
 	_ This is NOT valid for method names.
