@@ -31,12 +31,11 @@
             _canvas.enabled = true;
             _screenShatteredView.SetActive(terminal.ScreenShattered);
 
-            _titleText.text = $"Training Workshop {terminal.TrainingWorkshop.WorkshopIndex}";
+            _titleText.text = $"Training\nWorkshop #<size=1.5> </size>{terminal.TrainingWorkshop.WorkshopIndex}";
             _triesText.text = terminal.TrainingWorkshop.Tries.ToString();
             _bestShotsText.text = terminal.TrainingWorkshop.BestShots == int.MaxValue ? "0" : terminal.TrainingWorkshop.BestShots.ToString();
             _bestTimeText.text = terminal.TrainingWorkshop.BestTime == float.MaxValue ? "0.0" : $"{terminal.TrainingWorkshop.BestTime:f2}<size={_bestTimeSecondsTextSize}>s</size>";
-
-            _scoreText.text = "D"; // TMP.
+            _scoreText.text = terminal.TrainingWorkshop.GetBestScoreToString();
 
             TerminalScreenToggled?.Invoke(true);
         }

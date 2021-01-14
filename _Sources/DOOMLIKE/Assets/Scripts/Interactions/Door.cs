@@ -31,6 +31,15 @@
                 _doorRenderers[i].material = _triggerShotMat;
         }
 
+        // Unity event on switch destroyed.
+        public void OpenAndLock()
+        {
+            if (!IsOn)
+                Toggle();
+
+            CanToggle = false;
+        }
+
         public override void Toggle()
         {
             if (!CanToggle)

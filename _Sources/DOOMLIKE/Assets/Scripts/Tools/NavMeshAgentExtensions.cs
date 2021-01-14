@@ -1,4 +1,4 @@
-﻿namespace Doomlike
+﻿namespace Doomlike.Tools
 {
     public static class NavMeshAgentExtensions
     {

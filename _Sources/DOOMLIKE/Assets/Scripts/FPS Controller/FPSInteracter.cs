@@ -26,11 +26,15 @@
             get => _currentInteraction;
             set
             {
+                if (_currentInteraction != null && value != _currentInteraction)
+                    _currentInteraction.InteractionDisallowed -= OnCurrentInteractionDisallowed;
+
                 _currentInteraction = value;
                 if (_currentInteraction != null)
                 {
                     ConsoleProLogger.Log(this, $"Focusing <b>{_currentInteraction.transform.name}</b>.", _currentInteraction.gameObject);
                     _currentInteraction.Focus();
+                    _currentInteraction.InteractionDisallowed += OnCurrentInteractionDisallowed;
                 }
             }
         }
@@ -47,6 +51,11 @@
         protected override void OnControlDisallowed()
         {
             base.OnControlDisallowed();
+            ResetCurrentInteractions();
+        }
+
+        private void OnCurrentInteractionDisallowed(FPSInteraction interaction)
+        {
             ResetCurrentInteractions();
         }
 
@@ -135,7 +144,7 @@
             if (!_dbg || !Manager.DebugManager.DbgViewOn)
                 return;
 
-            GUI.Label(new Rect(10, 10, 500, 20), CurrentInteraction != null ? $"Can interact with {CurrentInteraction.transform.name}." : "No interaction possible.");
+            GUI.Label(new Rect(5, 5, 500, 20), CurrentInteraction != null ? $"Can interact with {CurrentInteraction.transform.name}." : "No interaction possible.");
         }
     }
 }

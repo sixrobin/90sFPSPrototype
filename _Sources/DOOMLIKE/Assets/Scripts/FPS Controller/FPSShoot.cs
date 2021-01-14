@@ -15,18 +15,40 @@
 
         [Header("IMPACT")]
         [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
-        [SerializeField] private float _shootTrauma = 0.15f;
+        [SerializeField, Range(0f, 1f)] private float _shootTrauma = 0.15f;
+
+        [Header("INPUTS DELAY")]
+        [SerializeField, Min(0f)] private float _shootInputDelay = 0.15f;
+        [SerializeField, Min(0f)] private float _reloadInputDelay = 0.15f;
 
         private bool _canShoot = true;
+
+        private bool _shootInput;
+        private bool _reloadInput;
+        private System.Collections.IEnumerator _shootInputDelayCoroutine;
+        private System.Collections.IEnumerator _reloadInputDelayCoroutine;
+
         private bool _isShooting; // Animating running.
+        private bool _isReloading; // Animating running.
 
         private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
 
         public delegate void ShotEventHandler();
+        public delegate void MagazineChangedEventHandler(FPSMagazine magazine);
 
         public event ShotEventHandler Shot;
+        public event MagazineChangedEventHandler MagazineChanged;
 
-        public FPSMagazine FPSMagazine { get; private set; }
+        private FPSMagazine _fpsMagazine;
+        public FPSMagazine FPSMagazine
+        {
+            get => _fpsMagazine;
+            set
+            {
+                _fpsMagazine = value;
+                MagazineChanged(_fpsMagazine);
+            }
+        }
 
         public string ConsoleProPrefix => "FPS Shoot";
 
@@ -44,15 +66,35 @@
 
         private void TryReload()
         {
-            if (FPSMagazine.CanReload && Input.GetButtonDown("Reload"))
-                Reload();
+            if (!_reloadInput && Input.GetButtonDown("Reload"))
+            {
+                ResetReloadInputDelay();
+                ResetShootInputDelay();
+
+                _reloadInput = true;
+                _reloadInputDelayCoroutine = DelayReloadInput();
+                StartCoroutine(_reloadInputDelayCoroutine);
+            }
+
+            if (_reloadInput && FPSMagazine.CanReload && !_isShooting && !_isReloading)
+                TriggerReload();
         }
 
         private void TryShoot()
         {
-            if (Input.GetButtonDown("Fire1"))
+            if (!_shootInput && Input.GetButtonDown("Fire1"))
             {
-                if (FPSMagazine.IsLoadEmpty)
+                ResetShootInputDelay();
+                ResetReloadInputDelay();
+
+                _shootInput = true;
+                _shootInputDelayCoroutine = DelayShootInput();
+                StartCoroutine(_shootInputDelayCoroutine);
+            }
+
+            if (_shootInput && !_isShooting && !_isReloading)
+            {
+                if (FPSMagazine.IsLoadEmpty && !FPSMaster.DbgGodMode)
                 {
                     if (FPSMagazine.IsCompletelyEmpty)
                     {
@@ -61,31 +103,71 @@
                     }
 
                     ConsoleProLogger.Log(this, "Trying to shoot with an empty magazine load, reloading instead.", gameObject);
-                    Reload();
+                    TriggerReload();
+                    ResetShootInputDelay();
                 }
                 else
                 {
                     ConsoleProLogger.Log(this, "Triggering shoot animation.", gameObject);
                     _isShooting = true;
                     _weaponAnimator.SetTrigger("Shoot");
+                    ResetShootInputDelay();
                 }
             }
         }
 
-        private void Reload()
+        private System.Collections.IEnumerator DelayShootInput()
         {
-            ConsoleProLogger.Log(this, "Reloading magazine.", gameObject);
+            yield return RSLib.Yield.SharedYields.WaitForSeconds(_shootInputDelay);
+            _shootInput = false;
+        }
+
+        private void ResetShootInputDelay()
+        {
+            if (_shootInputDelayCoroutine != null)
+                StopCoroutine(_shootInputDelayCoroutine);
+
+            _shootInputDelayCoroutine = null;
+            _shootInput = false;
+        }
+
+        private System.Collections.IEnumerator DelayReloadInput()
+        {
+            yield return RSLib.Yield.SharedYields.WaitForSeconds(_reloadInputDelay);
+            _reloadInput = false;
+        }
+
+        private void ResetReloadInputDelay()
+        {
+            if (_reloadInputDelayCoroutine != null)
+                StopCoroutine(_reloadInputDelayCoroutine);
+
+            _reloadInputDelayCoroutine = null;
+            _reloadInput = false;
+        }
+
+        private void TriggerReload()
+        {
+            ConsoleProLogger.Log(this, "Triggering reload animation.", gameObject);
+            _isReloading = true;
+            _weaponAnimator.SetTrigger("Reload");
+        }
+
+        private void ApplyReload()
+        {
+            ConsoleProLogger.Log(this, "Applying reload.", gameObject);
             FPSMagazine.Reload();
-            // TODO: Reload animation instead of reload method.
-            // TODO: Actual reload logic should be done on some animation event.
         }
 
         private void ApplyShot()
         {
             ConsoleProLogger.Log(this, "Applying shot.", gameObject);
-            UnityEngine.Assertions.Assert.IsFalse(FPSMagazine.IsLoadEmpty, "Shoot animation has been allowed with an empty magazine load.");
 
-            FPSMagazine.Shoot();
+            if (!FPSMaster.DbgGodMode)
+            {
+                UnityEngine.Assertions.Assert.IsFalse(FPSMagazine.IsLoadEmpty, "Shoot animation has been allowed with an empty magazine load.");
+                FPSMagazine.Shoot();
+            }
 
             ConsoleProLogger.Log(this, $"Magazine state : ({FPSMagazine.CurrLoadCount}/{FPSMagazine.CurrStorehouseCount}).", gameObject);
 
@@ -130,6 +212,16 @@
             _weaponAnimator.SetBool("Crouched", FPSMaster.FPSController.Crouched);
         }
 
+        private void SetMagazine(int fullCapacity, int loadCapacity)
+        {
+            FPSMagazine = new FPSMagazine(fullCapacity, loadCapacity);
+        }
+
+        private void SetMagazine(FPSMagazine magazine)
+        {
+            FPSMagazine = new FPSMagazine(magazine);
+        }
+
         private void OnOptionsStateChanged(bool state)
         {
             _canShoot = !state;
@@ -140,23 +232,37 @@
             _isShooting = false;
         }
 
+        private void OnReloadAnimationOver()
+        {
+            _isReloading = false;
+        }
+
         private void OnShootFrame()
         {
             ApplyShot();
+        }
+
+        private void OnReloadFrame()
+        {
+            ApplyReload();
         }
 
         private void Start()
         {
             Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
             _weaponView.ShootAnimationOver += OnShootAnimationOver;
+            _weaponView.ReloadAnimationOver += OnReloadAnimationOver;
             _weaponView.ShootFrame += OnShootFrame;
+            _weaponView.ReloadFrame += OnReloadFrame;
 
-            FPSMagazine = new FPSMagazine(_initMagazine);
+            SetMagazine(_initMagazine);
+
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int, int>("setMagazine", "Sets the weapon a new magazine.", SetMagazine));
         }
 
         private void Update()
         {
-            if (!Controllable || !_canShoot || _isShooting)
+            if (!Controllable || !_canShoot)
                 return;
 
             TryReload();

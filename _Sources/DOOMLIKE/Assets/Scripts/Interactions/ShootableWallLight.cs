@@ -9,7 +9,7 @@
         [SerializeField] private MeshRenderer _wallMeshRenderer = null;
         [SerializeField] private Material _lightOffWallMat = null;
         [SerializeField] private ParticleSystem _breakParticles = null;
-        [SerializeField] private float _traumaOnShot = 0.2f;
+        [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.2f;
 
         private Material _lightOnWallMat = null;
 

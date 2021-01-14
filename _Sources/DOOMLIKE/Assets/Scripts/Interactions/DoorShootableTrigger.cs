@@ -5,7 +5,7 @@
     public class DoorShootableTrigger : MonoBehaviour, FPSCtrl.IFPSShootable
     {
         [SerializeField] private Door _door = null;
-        [SerializeField] private float _traumaOnShot = 0.1f;
+        [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.1f;
 
         public float TraumaOnShot => _traumaOnShot;
 

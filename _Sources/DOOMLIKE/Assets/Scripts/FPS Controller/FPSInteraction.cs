@@ -1,20 +1,20 @@
 ﻿namespace Doomlike.FPSCtrl
 {
     using UnityEngine;
-    using UnityEngine.Events;
 
     /// <summary>
     /// Abstract class for every gameObject in the game that the FPS controller can interact with.
     /// </summary>
     public abstract class FPSInteraction : MonoBehaviour
     {
-        [SerializeField] bool _unfocusedOnInteracted = false;
-        [SerializeField] bool _uniqueInteraction = false;
-        [SerializeField] UnityEvent _onInteracted = null;
+        [SerializeField] private bool _unfocusedOnInteracted = false;
+        [SerializeField] private bool _uniqueInteraction = false;
+        [SerializeField] private UnityEngine.Events.UnityEvent _onInteracted = null;
 
         public delegate void InteractedEventHandler(FPSInteraction interaction);
 
         public event InteractedEventHandler Interacted;
+        public event InteractedEventHandler InteractionDisallowed;
 
         public bool InteractionAllowed { get; private set; } = true;
 
@@ -58,6 +58,12 @@
         public void SetInteractionAvailability(bool state)
         {
             InteractionAllowed = state;
+        }
+
+        protected void DisallowInteraction()
+        {
+            InteractionAllowed = false;
+            InteractionDisallowed?.Invoke(this);
         }
 
         protected virtual void Awake()

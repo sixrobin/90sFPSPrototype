@@ -45,6 +45,7 @@
         private float _currSpeed;
         private float _refSpeed;
 
+        private float _dbgMoveSpeed = -1f;
         private bool _dbgNoCollisionsMode;
 
         public FPSStaminaManager StaminaManager { get; set; }
@@ -138,6 +139,12 @@
         /// </summary>
         private void EvaluateSpeed()
         {
+            if (_dbgMoveSpeed > -1f)
+            {
+                _currSpeed = _dbgMoveSpeed;
+                return;
+            }
+
             float targetSpeed = Sprinting ? _sprintSpeed : (_crouched ? _crouchedSpeed : _baseSpeed);
             _currSpeed = Mathf.SmoothDamp(_currSpeed, targetSpeed, ref _refSpeed, _speedDampingTime);
         }
@@ -188,6 +195,8 @@
             StaminaManager = new FPSStaminaManager(_fullSprintDur, _recoverDur, _fullReloadDur);
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("tcl", "Toggle collisions.", true, false, DBG_ToggleCollisions));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand<float>("setSpeed", "Sets the player movement speed.", true, false, DBG_SetMoveSpeed));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("resetSpeed", "Resets the player movement speed.", true, false, DBG_ResetMoveSpeed));
         }
 
         private void Update()
@@ -203,7 +212,7 @@
             }
 
             if (_canSprint)
-                StaminaManager.Update(Sprinting);
+                StaminaManager.Update(Sprinting && !FPSMaster.DbgGodMode);
 
             if (Controllable)
                 GetInputs();
@@ -212,6 +221,23 @@
         private void FixedUpdate()
         {
             MoveBody();
+        }
+
+        private void DBG_SetMoveSpeed(float speed)
+        {
+            if (speed < 0f)
+            {
+                Console.DebugConsole.LogExternalError("Can not set speed to a negative value.");
+                return;
+            }
+
+            _dbgMoveSpeed = speed;
+        }
+
+        private void DBG_ResetMoveSpeed()
+        {
+            _dbgMoveSpeed = -1f;
+            Console.DebugConsole.LogExternal($"Reset player speed to {_baseSpeed}.");
         }
 
         [ContextMenu("Toggle Collisions")]

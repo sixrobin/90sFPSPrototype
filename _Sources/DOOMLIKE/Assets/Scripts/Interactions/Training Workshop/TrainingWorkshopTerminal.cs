@@ -8,7 +8,7 @@
         [SerializeField] private MeshRenderer _terminalRenderer = null;
         [SerializeField] private Material _terminalOnMaterial = null;
         [SerializeField] private GameObject _screenShatter = null;
-        [SerializeField] private float _traumaOnShot = 0.13f;
+        [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.13f;
 
         private Material _terminalOffMaterial;
         private bool _isOn;
@@ -36,7 +36,7 @@
                 $"Tries: {_trainingWorkshop.Tries},\n" +
                 $"Best time: {(_trainingWorkshop.BestTime == float.MaxValue ? 0f : _trainingWorkshop.BestTime)} seconds,\n" +
                 $"Best shots: {(_trainingWorkshop.BestShots == int.MaxValue ? 0 : _trainingWorkshop.BestShots)} shots,\n" +
-                $"Score: {_trainingWorkshop.Score}.\n" +
+                $"Score: {_trainingWorkshop.GetBestScoreToString()}.\n" +
                 $"(If terminal won't open, make sure the terminal screen is listening to this interaction event.)", gameObject);
         }
 

@@ -1,5 +1,6 @@
 ﻿namespace Doomlike.AI
 {
+    using Doomlike.Tools;
     using RSLib.Extensions;
     using RSLib.Maths;
     using UnityEngine;
@@ -23,13 +24,14 @@
         [SerializeField] private float _detectionDist = 4f;
         [SerializeField] private float _startRunDist = 3f;
         [SerializeField] private float _atkDist = 0.75f;
+        [SerializeField] private float _losePlayerDist = 5.5f;
         [SerializeField] private LayerMask _playerSightMask = 1;
 
         [Header("HEALTH")]
         [SerializeField] private int _initHealth = 100;
 
         [Header("MISC")]
-        [SerializeField] private float _traumaOnShot = 0.2f;
+        [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.2f;
 
         [Header("DEBUG")]
         [SerializeField] private bool _dbgModeOn = true;
@@ -186,7 +188,7 @@
                 {
                     if (_currPlayerDistSqr <= _startRunDist.Sqr())
                         SetState(AIState.RunToPlayer);
-                    else if (_currPlayerDistSqr > _detectionDist.Sqr() || !CanReachTarget())
+                    else if (_currPlayerDistSqr > _losePlayerDist.Sqr() || !CanReachTarget())
                         SetState(AIState.Idle);
 
                     break;

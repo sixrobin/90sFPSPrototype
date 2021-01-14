@@ -8,6 +8,11 @@
         [SerializeField] private int _fullCapacity = 300;
         [SerializeField] private int _loadCapacity = 30;
 
+        public delegate void MagazineValuesChangedEventHandler(FPSMagazine magazine);
+
+        public event MagazineValuesChangedEventHandler MagazineValuesChanged;
+
+        // If set to -1, means an infinite magazine.
         public int FullCapacity
         {
             get => _fullCapacity;
@@ -24,11 +29,13 @@
 
         public int CurrStorehouseCount { get; private set; }
 
-        public bool CanReload => CurrLoadCount < _loadCapacity && CurrStorehouseCount > 0;
+        public bool CanReload => CurrLoadCount < _loadCapacity && (CurrStorehouseCount > 0 || IsInfinite);
 
         public bool IsCompletelyEmpty => CurrLoadCount == 0 && CurrStorehouseCount == 0;
 
         public bool IsLoadEmpty => CurrLoadCount == 0;
+
+        public bool IsInfinite => FullCapacity == -1;
 
         public FPSMagazine(int fullCapacity, int loadCapacity)
         {
@@ -52,6 +59,7 @@
                 return;
 
             CurrLoadCount--;
+            MagazineValuesChanged?.Invoke(this);
         }
 
         public void Reload()
@@ -60,16 +68,21 @@
                 return;
 
             int availableLoadSpace = LoadCapacity - CurrLoadCount;
-            int reloadCount = UnityEngine.Mathf.Min(availableLoadSpace, CurrStorehouseCount);
+            int reloadCount = IsInfinite ? availableLoadSpace : Mathf.Min(availableLoadSpace, CurrStorehouseCount);
 
             CurrLoadCount += reloadCount;
-            CurrStorehouseCount -= reloadCount;
+            if (!IsInfinite)
+                CurrStorehouseCount -= reloadCount;
+
+            MagazineValuesChanged?.Invoke(this);
         }
 
         public void Fulfill()
         {
             CurrStorehouseCount = FullCapacity;
             CurrLoadCount = LoadCapacity;
+
+            MagazineValuesChanged?.Invoke(this);
         }
     }
 }

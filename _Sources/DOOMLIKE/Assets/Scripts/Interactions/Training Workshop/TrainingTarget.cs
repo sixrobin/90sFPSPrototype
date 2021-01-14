@@ -7,7 +7,7 @@
         [SerializeField] private Animator _animator = null;
         [SerializeField] private Collider _collider = null;
         [SerializeField] private GameObject _hitPrefab = null;
-        [SerializeField] private float _traumaOnShot = 0.25f;
+        [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.25f;
 
         private bool _isDown;
 

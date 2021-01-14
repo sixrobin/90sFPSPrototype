@@ -1,5 +1,6 @@
 ﻿namespace Doomlike.FPSCtrl
 {
+    using RSLib.Extensions;
     using UnityEngine;
 
     /// <summary>
@@ -33,6 +34,8 @@
         private Vector3 _camDest;
         private Vector3 _currCamPos;
         private Vector3 _currCamEulerAngles;
+
+        private bool _recentering;
 
         private float _xAxisSensiMult = 1f;
         private float _yAxisSensiMult = 1f;
@@ -95,6 +98,11 @@
             _maxPitch = _pitchClamped ? _initMaxPitch : 90f;
         }
 
+        public void Recenter(float dur)
+        {
+            StartCoroutine(RecenterCoroutine(dur));
+        }
+
         protected override void OnControlAllowed()
         {
             base.OnControlAllowed();
@@ -129,14 +137,17 @@
             _rawCamInput.y *= _yawSpeed;
             _rawCamInput *= Time.deltaTime;
 
-            _currCamEulerAngles.y += _rawCamInput.y * (_xAxisReversed ? -1 : 1) * _yAxisSensiMult;
-            _currCamEulerAngles.x += _rawCamInput.x * (_yAxisReversed ? 1 : -1) * _xAxisSensiMult;
-            _currCamEulerAngles.x = Mathf.Clamp(_currCamEulerAngles.x, -_minPitch, _maxPitch);
+            if (!_recentering)
+            {
+                _currCamEulerAngles.y += _rawCamInput.y * (_xAxisReversed ? -1 : 1) * _yAxisSensiMult;
+                _currCamEulerAngles.x += _rawCamInput.x * (_yAxisReversed ? 1 : -1) * _xAxisSensiMult;
+                _currCamEulerAngles.x = Mathf.Clamp(_currCamEulerAngles.x, -_minPitch, _maxPitch);
 
-            while (_currCamEulerAngles.x > 360f) _currCamEulerAngles.x -= 360f;
-            while (_currCamEulerAngles.y > 360f) _currCamEulerAngles.y -= 360f;
-            while (_currCamEulerAngles.x < -360f) _currCamEulerAngles.x += 360f;
-            while (_currCamEulerAngles.y < -360f) _currCamEulerAngles.y += 360f;
+                while (_currCamEulerAngles.x > 360f) _currCamEulerAngles.x -= 360f;
+                while (_currCamEulerAngles.y > 360f) _currCamEulerAngles.y -= 360f;
+                while (_currCamEulerAngles.x < -360f) _currCamEulerAngles.x += 360f;
+                while (_currCamEulerAngles.y < -360f) _currCamEulerAngles.y += 360f;
+            }
         }
 
         private void Position()
@@ -154,6 +165,21 @@
         private void OnOptionsStateChanged(bool state)
         {
             _scopeVisual.SetActive(!state);
+        }
+
+        private System.Collections.IEnumerator RecenterCoroutine(float degreesPerSecond)
+        {
+            _recentering = true;
+
+            float initXSign = Mathf.Sign(_currCamEulerAngles.x);
+            while (initXSign > 0f ? _currCamEulerAngles.x > 0f : _currCamEulerAngles.x < 0f)
+            {
+                _currCamEulerAngles = _currCamEulerAngles.AddX((initXSign > 0f ? -degreesPerSecond : degreesPerSecond) * Time.deltaTime);
+                yield return null;
+            }
+
+            _currCamEulerAngles = _currCamEulerAngles.WithX(0f);
+            _recentering = false;
         }
 
         private void Awake()

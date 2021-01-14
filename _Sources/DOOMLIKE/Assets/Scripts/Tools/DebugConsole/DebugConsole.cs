@@ -25,16 +25,46 @@
     [DisallowMultipleComponent]
     public class DebugConsole : RSLib.Framework.Singleton<DebugConsole>, IConsoleProLoggable
     {
+        public class HistoryLine
+        {
+            public HistoryLine(string cmd, Validity validity, bool isExternalLog)
+            {
+                Cmd = cmd;
+                CmdValidity = validity;
+                LinesCount = System.Text.RegularExpressions.Regex.Matches(cmd, "\n").Count + 1;
+                IsExternalLog = isExternalLog;
+            }
+
+            public enum Validity
+            {
+                NA,
+                Valid,
+                Invalid,
+                Neutral,
+                Error
+            }
+
+            public string Cmd { get; private set; }
+
+            public Validity CmdValidity { get; private set; }
+
+            public int LinesCount { get; private set; }
+
+            public bool IsExternalLog { get; private set; }
+        }
+
         [Header("Console Datas")]
         [SerializeField] private bool _enabled = true;
         [SerializeField] private Color _consoleColor = new Color(0f, 0f, 0f, 0.9f);
         [SerializeField] private Color _validColor = new Color(0f, 1f, 0f, 1f);
         [SerializeField] private Color _invalidColor = new Color(1f, 0f, 0f, 1f);
+        [SerializeField] private Color _neutralColor = new Color(1f, 1f, 1f, 1f);
 
         private GUIStyle _consoleStyle;
         private GUIStyle _helpTextStyle;
         private GUIStyle _invalidCmdTextStyle;
         private GUIStyle _autoCompletionTextStyle;
+        private GUIStyle _historyLineTextStyle;
 
         private Vector2 _helpScroll;
         private Vector2 _historyScroll;
@@ -47,8 +77,12 @@
         private string _inputStrBeforeAutoComplete;
         private bool _showHelp;
 
-        private List<(string cmd, bool isValid)> _cmdsHistory = new List<(string, bool)>();
+        private bool _textCursorNeedsRefocus;
+
+        private List<HistoryLine> _cmdsHistory = new List<HistoryLine>();
         private List<DebugCommandBase> _registeredCmds = new List<DebugCommandBase>();
+
+        private Dictionary<HistoryLine.Validity, Color> _colorsByValidity;
 
         public delegate void DebugConsoleToggledEventHandler(bool state);
         public event DebugConsoleToggledEventHandler DebugConsoleToggled;
@@ -141,6 +175,39 @@
             }
         }
 
+        /// <summary>
+        /// Logs an entry to the console that is not a command.
+        /// </summary>
+        /// <param name="log">Message to log.</param>
+        public static void LogExternal(string log)
+        {
+            Instance.StartCoroutine(Instance.LogToConsoleCoroutine(log, HistoryLine.Validity.Neutral));
+        }
+
+        /// <summary>
+        /// Logs an entry to the console that is not a command, formatted as an error.
+        /// </summary>
+        /// <param name="log">Message to log.</param>
+        public static void LogExternalError(string log)
+        {
+            Instance.StartCoroutine(Instance.LogToConsoleCoroutine(log, HistoryLine.Validity.Error));
+        }
+
+        private System.Collections.IEnumerator LogToConsoleCoroutine(string log, HistoryLine.Validity validity)
+        {
+            yield return new WaitForEndOfFrame();
+            Instance._cmdsHistory.Add(new HistoryLine(log, validity, true));
+        }
+
+        private float ComputeHistoryHeight()
+        {
+            float h = 0f;
+            for (int i = _cmdsHistory.Count - 1; i >= 0; --i)
+                h += _cmdsHistory[i].LinesCount * Constants.LinesSpacing;
+
+            return h;
+        }
+
         private GUIStyle ComputeConsoleStyle(int h, int w)
         {
             GUIStyle style = new GUIStyle(GUI.skin.box);
@@ -165,7 +232,7 @@
                 return;
 
             for (int i = 0, registeredCommandsCount = _registeredCmds.Count; i < registeredCommandsCount; ++i)
-                if (_registeredCmds[i].Id.StartsWith(_inputStrBeforeAutoComplete))
+                if (_registeredCmds[i].Id.ToLower().StartsWith(_inputStrBeforeAutoComplete.ToLower()))
                     _autoCompletionOptions.Add(_registeredCmds[i]);
         }
 
@@ -189,7 +256,7 @@
             if (string.IsNullOrEmpty(_inputStr) || string.IsNullOrWhiteSpace(_inputStr))
                 return;
 
-            bool isCmdValid = false;
+            HistoryLine.Validity validity = HistoryLine.Validity.Invalid;
 
             DebugCommandBase currentCmd = null;
             string[] inputStrProperties = _inputStr.Split(' ');
@@ -213,7 +280,7 @@
                             if (currentCmd is DebugCommand cmd)
                             {
                                 cmd.Execute();
-                                isCmdValid = true;
+                                validity = HistoryLine.Validity.Valid;
                                 break;
                             }
 
@@ -227,7 +294,7 @@
                                 if (bool.TryParse(inputStrProperties[1], out bool param))
                                 {
                                     cmdBool.Execute(param);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -238,7 +305,7 @@
                                 if (float.TryParse(inputStrProperties[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float param))
                                 {
                                     cmdFloat.Execute(param);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -249,7 +316,7 @@
                                 if (int.TryParse(inputStrProperties[1], out int param))
                                 {
                                     cmdInt.Execute(param);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -258,7 +325,7 @@
                             if (currentCmd is DebugCommand<string> cmdString)
                             {
                                 cmdString.Execute(inputStrProperties[1]);
-                                isCmdValid = true;
+                                validity = HistoryLine.Validity.Valid;
 
                                 break;
                             }
@@ -274,7 +341,7 @@
                                     && bool.TryParse(inputStrProperties[2], out bool param2))
                                 {
                                     cmdBoolBool.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -286,7 +353,7 @@
                                     && float.TryParse(inputStrProperties[2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float param2))
                                 {
                                     cmdBoolFloat.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -298,7 +365,7 @@
                                     && int.TryParse(inputStrProperties[2], out int param2))
                                 {
                                     cmdBoolInt.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -309,7 +376,7 @@
                                 if (bool.TryParse(inputStrProperties[1], out bool param1))
                                 {
                                     cmdBoolString.Execute(param1, inputStrProperties[2]);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -321,7 +388,7 @@
                                     && bool.TryParse(inputStrProperties[2], out bool param2))
                                 {
                                     cmdFloatBool.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -333,7 +400,7 @@
                                     && float.TryParse(inputStrProperties[2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float param2))
                                 {
                                     cmdFloatFloat.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -345,7 +412,7 @@
                                     && int.TryParse(inputStrProperties[2], out int param2))
                                 {
                                     cmdFloatInt.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -356,7 +423,7 @@
                                 if (float.TryParse(inputStrProperties[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float param1))
                                 {
                                     cmdFloatString.Execute(param1, inputStrProperties[2]);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -368,7 +435,7 @@
                                     && bool.TryParse(inputStrProperties[2], out bool param2))
                                 {
                                     cmdIntBool.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -380,7 +447,7 @@
                                     && float.TryParse(inputStrProperties[2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float param2))
                                 {
                                     cmdIntFloat.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -392,7 +459,7 @@
                                     && int.TryParse(inputStrProperties[2], out int param2))
                                 {
                                     cmdIntInt.Execute(param1, param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -403,7 +470,7 @@
                                 if (int.TryParse(inputStrProperties[1], out int param1))
                                 {
                                     cmdIntString.Execute(param1, inputStrProperties[2]);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -414,7 +481,7 @@
                                 if (bool.TryParse(inputStrProperties[2], out bool param2))
                                 {
                                     cmdStringBool.Execute(inputStrProperties[1], param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -425,7 +492,7 @@
                                 if (float.TryParse(inputStrProperties[2], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out float param2))
                                 {
                                     cmdStringFloat.Execute(inputStrProperties[1], param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -436,7 +503,7 @@
                                 if (int.TryParse(inputStrProperties[2], out int param2))
                                 {
                                     cmdStringInt.Execute(inputStrProperties[1], param2);
-                                    isCmdValid = true;
+                                    validity = HistoryLine.Validity.Valid;
                                 }
 
                                 break;
@@ -445,7 +512,7 @@
                             if (currentCmd is DebugCommand<string, string> cmdStringString)
                             {
                                 cmdStringString.Execute(inputStrProperties[1], inputStrProperties[2]);
-                                isCmdValid = true;
+                                validity = HistoryLine.Validity.Valid;
 
                                 break;
                             }
@@ -458,7 +525,7 @@
             }
 
             if (currentCmd == null || currentCmd.ShowInHistory)
-                _cmdsHistory.Add((_inputStr, isCmdValid));
+                _cmdsHistory.Add(new HistoryLine(_inputStr, validity, false));
 
             // Reset console datas.
             _inputStr = string.Empty;
@@ -534,8 +601,20 @@
 
         private void RewindCommandsHistory(int step)
         {
+            int previousHistoryNavIndex = _historyNavIndex;
             _historyNavIndex = Mathf.Clamp(_historyNavIndex + step, -1, _cmdsHistory.Count - 1);
-            _inputStr = _historyNavIndex != -1 ? _cmdsHistory[_cmdsHistory.Count - 1 - _historyNavIndex].cmd : string.Empty;
+
+            while (_historyNavIndex > -1 && _historyNavIndex < _cmdsHistory.Count && _cmdsHistory[_cmdsHistory.Count - 1 - _historyNavIndex].IsExternalLog)
+            {
+                _historyNavIndex = Mathf.Clamp(_historyNavIndex + step, -1, _cmdsHistory.Count - 1);
+                if (_historyNavIndex == _cmdsHistory.Count - 1 && step == 1 && _cmdsHistory[_cmdsHistory.Count - 1 - _historyNavIndex].IsExternalLog)
+                {
+                    _historyNavIndex = previousHistoryNavIndex; // Last cmd of history is an external log, no need to change index.
+                    break;
+                }
+            }
+
+            _inputStr = _historyNavIndex != -1 ? _cmdsHistory[_cmdsHistory.Count - 1 - _historyNavIndex].Cmd : string.Empty;
         }
 
         private void OnGUI()
@@ -582,6 +661,15 @@
                     }
                 };
 
+            if (_historyLineTextStyle == null)
+            {
+                _historyLineTextStyle = new GUIStyle()
+                {
+                    alignment = TextAnchor.UpperLeft
+                };
+                _historyLineTextStyle.normal.textColor = Color.white;
+            }
+
 
             ////////////////////
             //// Input handling.
@@ -601,12 +689,20 @@
             // Return : validate command OR validate autocompletion.
             if (currentEvent.Equals(Event.KeyboardEvent("return")))
             {
-                if (_autoCompletionNavIndex == -1)
-                    HandleInputCommand();
-                else
+                if (_historyNavIndex > -1)
+                {
+                    ResetHistoryNavigation();
+                    _textCursorNeedsRefocus = true;
+                }
+                else if (_autoCompletionNavIndex > -1)
                 {
                     _inputStrBeforeAutoComplete = _inputStr;
                     _autoCompletionNavIndex = -1;
+                    _textCursorNeedsRefocus = true;
+                }
+                else
+                {
+                    HandleInputCommand();
                 }
             }
 
@@ -689,20 +785,19 @@
 
             // History box.
             GUI.Box(new Rect(0f, y - Constants.HistoryBoxHeight - Constants.EntryBoxHeight - Constants.BoxesSpacing, Constants.Width, Constants.HistoryBoxHeight), string.Empty, _consoleStyle);
-            Rect historyViewport = new Rect(0f, 0f, Constants.Width - 30f, Constants.LinesSpacing * _cmdsHistory.Count);
+            Rect historyViewport = new Rect(0f, 0f, Constants.Width - 30f, ComputeHistoryHeight());
             _historyScroll = GUI.BeginScrollView(new Rect(5f, y - Constants.HistoryBoxHeight - 25f, Constants.Width - 10f, Constants.HistoryBoxHeight - 15f), _historyScroll, historyViewport);
 
+            float lineY = ComputeHistoryHeight();
             for (int i = _cmdsHistory.Count - 1; i >= 0; --i)
             {
-                string cmdDisplay = _cmdsHistory[i].isValid
-                    ? string.Format(Constants.ValidCommandFormat, _cmdsHistory[i].cmd).ToColored(_validColor)
-                    : string.Format(Constants.InvalidCommandFormat, _cmdsHistory[i].cmd).ToColored(_invalidColor);
-
+                string cmdDisplay = string.Format(Constants.ValidityFormats[_cmdsHistory[i].CmdValidity], _cmdsHistory[i].Cmd).ToColored(_colorsByValidity[_cmdsHistory[i].CmdValidity]);
                 if (_historyNavIndex != -1 && i == _cmdsHistory.Count - 1 - _historyNavIndex)
                     cmdDisplay += Constants.CurrentNavigatedInHistoryMarker;
 
-                Rect cmdHelpRect = new Rect(5f, Constants.LinesSpacing * i, historyViewport.width - 100f, 20f);
-                GUI.Label(cmdHelpRect, cmdDisplay);
+                lineY -= _cmdsHistory[i].LinesCount * Constants.LinesSpacing;
+                Rect cmdHistoryRect = new Rect(5f, lineY, historyViewport.width - 100f, _cmdsHistory[i].LinesCount * Constants.LinesSpacing);
+                GUI.Label(cmdHistoryRect, cmdDisplay, _historyLineTextStyle);
             }
 
             GUI.EndScrollView();
@@ -716,8 +811,20 @@
             _inputStr = GUI.TextField(logEntryRect, _inputStr);
             GUI.FocusControl(Constants.ControlName);
 
+            if (_textCursorNeedsRefocus)
+            {
+                TextEditor textEditor = (TextEditor)GUIUtility.GetStateObject(typeof(TextEditor), GUIUtility.keyboardControl);
+                if (textEditor != null && !string.IsNullOrEmpty(_inputStr))
+                {
+                    textEditor.cursorIndex = _inputStr.Length;
+                    textEditor.SelectNone();
+                }
+
+                _textCursorNeedsRefocus = false;
+            }
+
             // Reset history navigation if something has been typed.
-            if (_historyNavIndex != -1 && _inputStr != _cmdsHistory[_cmdsHistory.Count - 1 - _historyNavIndex].cmd)
+            if (_historyNavIndex != -1 && _inputStr != _cmdsHistory[_cmdsHistory.Count - 1 - _historyNavIndex].Cmd)
                 ResetHistoryNavigation();
 
             // Reset autocompletion navigation if something has been typed.
@@ -750,6 +857,15 @@
                 return;
 
             UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+
+            _colorsByValidity = new Dictionary<HistoryLine.Validity, Color>(new RSLib.Framework.CustomComparers.EnumComparer<HistoryLine.Validity>())
+            {
+                { HistoryLine.Validity.Valid, _validColor },
+                { HistoryLine.Validity.Invalid, _invalidColor },
+                { HistoryLine.Validity.Neutral, _neutralColor },
+                { HistoryLine.Validity.Error, _invalidColor }
+            };
+
             RegisterNativeCommands();
         }
 
@@ -784,17 +900,23 @@
                 ">>> Use <b>RETURN</b> to validate autocompletion and <b>BACKSPACE</b> to cancel it."
             };
 
+            public static readonly Dictionary<HistoryLine.Validity, string> ValidityFormats = new Dictionary<HistoryLine.Validity, string>(new RSLib.Framework.CustomComparers.EnumComparer<HistoryLine.Validity>())
+            {
+                { HistoryLine.Validity.Valid, "<b>> {0}</b>" },
+                { HistoryLine.Validity.Invalid, "<b>> {0}  -  Invalid command!</b>" },
+                { HistoryLine.Validity.Neutral, "> {0}" },
+                { HistoryLine.Validity.Error, "> <b>CMD ERROR:</b> {0}" }
+            };
+
             public const string AutoCompletionOptionsSplit = "  |  ";
             public const string AutoCompletionSelectedFormat = "<color=white><b>[ {0} ]</b></color>"; // Highlight the autocompletion selection.
             public const string CmdHelpFormat = "<b><i>{0}</i></b>  -  <i>{1}</i>"; // 0 is command format, 1 is description.
             public const string ControlName = "ConsoleInputEntry";
             public const string CurrentNavigatedInHistoryMarker = "<b>  <<<</b>";
             public const string HelpText = "Type <b>\"h\"</b> or <b>\"help\"</b> to display available commands and console hotkeys.";
-            public const string InvalidCommandFormat = "<b>> {0}  -  Invalid command!</b>";
-            public const string ValidCommandFormat = "<b>> {0}</b>";
 
             public const int BoxesSpacing = 1;
-            public const int LinesSpacing = 20;
+            public const int LinesSpacing = 16;
 
             public const int EntryBoxHeight = 30;
             public const int HelpBoxHeight = 96;

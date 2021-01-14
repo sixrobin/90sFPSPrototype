@@ -12,7 +12,7 @@
         {
             base.Awake();
 
-            Console.DebugConsole.AddCommand(new Console.DebugCommand("toggleDebugView", "Toggles debug view on screen.", true, false, DBG_ToggleDebugView));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("toggleDebugView", "Toggles debug view on screen.", true, false, DBG_ToggleDebugView));
         }
 
         [UnityEngine.ContextMenu("Toggle Debug View")]

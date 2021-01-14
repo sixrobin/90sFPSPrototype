@@ -1,0 +1,676 @@
+{
+    "High Cost / Low Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Shader unlit custom pour optimiser celui d'Unity de base.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:41:25.213Z",
+            "comments": []
+        }
+    ],
+    "High Cost / Medium Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Meshes de canalisation au plafond pour diriger le joueur.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T08:50:55.932Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Versions cassées des meshes pour le shoot.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T08:51:11.512Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Que se passe-t-il si on casse un tuyau sur 2 cases ? Faire attention à ce qu'il n'y ait pas de morceaux qui volent tout seul.",
+                    "created": "2021-01-14T18:00:39.249Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Meshes pour les armes, prévues pour l'animation de reload.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T17:55:02.150Z",
+            "comments": []
+        }
+    ],
+    "High Cost / High Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Database XML.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:36:16.105Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Permettre de cumuler les grayscales + pixel perfect.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:36:30.074Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Toggle night vision, sans transition (grayscale, fog, UI).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:47:17.021Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Finite State Machine.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T18:58:22.119Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Assets UI en version night vision.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T22:57:52.422Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Gestion des slopes.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T08:56:41.669Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Implique du travail sur le FPSController et sur l'enviro (textures + réflexion sur les angles pour s'y retrouver dans l'enviro \"voxel\").",
+                    "created": "2021-01-14T08:57:30.642Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Système de checkpoints (avec sauvegarde).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T12:06:53.983Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "3 armes : base, pompe et rifle, et pickup + changement d'armes.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T12:28:35.353Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Prévoir un model 3D pour chaque, avec anim de reload et de tir. Setup également les types de magazines avec la recharge qui va avec.",
+                    "created": "2021-01-14T12:29:34.039Z"
+                },
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Prévoir une debug command pour se générer toutes les armes.",
+                    "created": "2021-01-14T15:34:35.960Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Level design pour proto testable.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T16:28:36.407Z",
+            "comments": []
+        }
+    ],
+    "Medium Cost / Low Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Designs des différentes tailles pour le crosshair et l'option qui suit.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:41:51.238Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Event head bob down pour les bruits de bas (gérer selon l'intensité/état du head bob).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T10:41:37.591Z",
+            "comments": []
+        }
+    ],
+    "Medium Cost / Medium Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Transition night vision on/off.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:47:31.411Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Environnement extinguible (pour la night vision) et éclairable rapidement  en tirant",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:58:43.102Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Système de pooling.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T20:34:45.289Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Regrouper les textes de debug à l'écran dans le DebugManager.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T18:34:44.063Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Rester dans OnGUI, et avoir une méthode \"GetRect\" dans le Manager ?",
+                    "created": "2021-01-14T22:40:20.061Z"
+                }
+            ]
+        }
+    ],
+    "Medium Cost / High Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Outline qui ne traverse pas les meshes.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:36:02.415Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Contrôles manette.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:39:57.256Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Setup pour l'occlusion culling et tools potentiels.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:40:12.270Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Input maintenu \nou un seul appui pour crouch/sprint etc.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:42:08.747Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Restart après la mort.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T17:00:17.176Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Porte qui s'ouvre avec plusieurs switches.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T08:44:34.485Z",
+            "comments": []
+        }
+    ],
+    "Low Cost / Low Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Option Head bob : remplacer le toggle par un pourcentage et rename \"bob\" en \"movement\".",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:50:24.284Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Setup un prefab de showcase des VFX",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T21:21:17.695Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "VFX de destruction des écrans des terminaux.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T22:56:49.971Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Constantes pour les inputs et paramètres d'animators.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T18:56:48.312Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Reset ou mettre un pause un workshop quand on ouvre son terminal.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:25:10.869Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : ajuster la scroll view pour toujours être en bas par défaut.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T20:44:42.600Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "https://forum.unity.com/threads/how-do-i-make-my-scroll-view-scroll-to-the-bottom.146371/",
+                    "created": "2021-01-14T22:36:39.267Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : rendre la navigation dans l'autocomplete cyclique.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T22:56:44.126Z",
+            "comments": []
+        }
+    ],
+    "Low Cost / Medium Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Event quand les PV d'un HealthSystem changent.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:37:03.519Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Display du timer des workshops quand ils sont en cours.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:20:06.762Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Attention à ne pas pouvoir faire 2 workshops en même temps.",
+                    "created": "2021-01-14T19:20:32.653Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Dans le DebugManager, système de points de TP linkés à une commande.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:24:31.919Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Feedback sur l'UI des munitions quand plus de munitions.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T23:02:03.050Z",
+            "comments": []
+        }
+    ],
+    "Low Cost / High Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Permettre de récupérer des munitions, et clamper.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:45:53.844Z",
+            "comments": []
+        }
+    ],
+    "OTHER": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Coroutine qui recentre la caméra.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:36:45.968Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Score des training workshop (logique et view).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:39:30.282Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "VFX de fumée noire en tirant dans un switch.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:40:36.762Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Remplacer la font par une autre avec des zéros lisibles.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:41:04.968Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Système de chargeur infini pour l'arme de base.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:46:19.446Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Set le FullCapacity à -1, et utiliser une property IsInfinitelyCharged pour ajuster le code nécessaire.",
+                    "created": "2021-01-13T22:54:14.626Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "UI des magazines, lier le reload à l'animation de l'arme.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:46:44.501Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Munitions infinies quand tgm actif.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:51:12.137Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Dummy : distance de perte plus grande que distance de détection.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:51:36.194Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "TraumaOnShot sous forme de range 0-1.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T20:32:34.063Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "FPSShoot : faciliter l'input en le testant sur plusieurs frames après.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T22:05:39.204Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Visualisation des FPS (si Toggle Debug View).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T12:35:43.815Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Visualisation des valeurs des jauges (si Toggle Debug View).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T17:59:33.454Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Fix le bug de l'animation du gun qui se bloque quand on interagit avec un terminal.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:23:55.145Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : \nNe pas les prendre en compte en naviguant dans l'historique.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T22:36:30.596Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : mettre le curseur à la fin quand on valide une auto complétion.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T22:36:34.311Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : permettre de log des messages externes.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T22:36:54.778Z",
+            "comments": []
+        }
+    ]
+}

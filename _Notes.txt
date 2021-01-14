@@ -37,6 +37,8 @@
 - Ce serait quand même trop bien qu'il y ait des réactions de NPC ou autre si on met énormément de balles dans une porte ou autre (du genre "ça ne s'ouvrira pas comme ça !").
 - Code couleur pour les éléments bonus sur lesquels on peut tirer ?
 
+- Tirer pourrait éclairer brièvement autour de soi si on est dans le noir sans la night vision.
+
 - Le joueur pourrait à un moment clef de l'histoire, se faire contaminer mais sans mourir, ce qui le rendrait fou petit à petit. Il deviendrait le vaisseau du mal et deviendrait l'ennemi des hommes.
 - Possibilité de soigner ce mal voire de se protéger à l'avance pour éviter la contamination ?
 - Possibilité d'utiliser la contamination, la réguler et l'utiliser pour obtenir une force capable de percer les défenses des aliens.

@@ -42,6 +42,7 @@
 
             FPSMaster.FPSUIController.Hide();
             FPSMaster.FPSHeadBob.SetState(false);
+            FPSMaster.FPSCamera.Recenter(180f);
             FPSMaster.FPSCameraAnimator.PlayDeathAnimation();
             FPSMaster.FPSCamera.CamRampsController.FadeToDeathGrayscale(_delay, _desaturationDur, _pauseDur, _fadeToBlackDur);
         }

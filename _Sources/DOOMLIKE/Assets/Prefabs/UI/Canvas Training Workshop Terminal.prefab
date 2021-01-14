@@ -66,8 +66,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tries
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -198,10 +198,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Training Workshop 1
+  m_text: 'Training
+
+    Workshop #<size=1.5> </size>0'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -226,8 +228,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 3.6
-  m_fontSizeBase: 3.6
+  m_fontSize: 3.36
+  m_fontSizeBase: 3.36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -238,7 +240,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -18.85
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -334,8 +336,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Best time
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -503,10 +505,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '>>> Score'
+  m_text: _ Score
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -639,8 +641,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -773,8 +775,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Best shots
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -907,8 +909,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: none
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1039,10 +1041,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0.0<size=2.5>s</size>
+  m_text: 0,0<size=2.5>s</size>
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1263,7 +1265,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 54.075043, y: 3.4907513}
+  m_SizeDelta: {x: 54.075043, y: 4.827635}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5812796692726972446
 GameObject:
@@ -1331,8 +1333,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 974266b69772e9347ab0fd235fd6aa2e, type: 2}
-  m_sharedMaterial: {fileID: 8279369226143206484, guid: 974266b69772e9347ab0fd235fd6aa2e,
+  m_fontAsset: {fileID: 11400000, guid: b33a0bdd8ca96a94082bcf82f4ee171a, type: 2}
+  m_sharedMaterial: {fileID: -3275580220580337038, guid: b33a0bdd8ca96a94082bcf82f4ee171a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1474,8 +1476,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -3.84}
-  m_SizeDelta: {x: -17.924957, y: -20.918114}
+  m_AnchoredPosition: {x: 0, y: -5.16}
+  m_SizeDelta: {x: -17.924957, y: -23.56733}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5812796692820808466
 MonoBehaviour:
@@ -1495,7 +1497,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0.4
+  m_Spacing: -0.49
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0

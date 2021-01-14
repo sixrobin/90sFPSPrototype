@@ -16,8 +16,17 @@
         [SerializeField] private Image _staminaFill = null;
         [SerializeField] private float _staminaHideDelay = 2f;
 
+        [Header("MAGAZINE")]
+        [SerializeField] private TMPro.TextMeshProUGUI _magazineValuesText = null;
+
+        [Header("DEBUG")]
+        [SerializeField] private TMPro.TextMeshProUGUI _dbgHealthValueText = null;
+        [SerializeField] private TMPro.TextMeshProUGUI _dbgStaminaPercentageText = null;
+
         private float _staminaHideTimer;
         private bool _staminaHidden;
+
+        private FPSMagazine _fpsMagazine;
 
         public void Show()
         {
@@ -27,6 +36,23 @@
         public void Hide()
         {
             _canvas.enabled = false;
+        }
+
+        public void OnMagazineChanged(FPSMagazine magazine)
+        {
+            if (_fpsMagazine != null && magazine != _fpsMagazine)
+                _fpsMagazine.MagazineValuesChanged -= OnMagazineValuesChanged;
+
+            _fpsMagazine = magazine;
+            if (_fpsMagazine != null)
+                _fpsMagazine.MagazineValuesChanged += OnMagazineValuesChanged;
+
+            OnMagazineValuesChanged(_fpsMagazine);
+        }
+
+        private void OnMagazineValuesChanged(FPSMagazine magazine)
+        {
+            _magazineValuesText.text = $"{magazine.CurrLoadCount} / {(magazine.IsInfinite ? "X" : magazine.CurrStorehouseCount.ToString())}";
         }
 
         private void ShowStamina()
@@ -58,16 +84,20 @@
 
                 _staminaHideTimer += Time.deltaTime;
                 if (_staminaHideTimer > _staminaHideDelay)
-                    Hide();
+                    HideStamina();
             }
             else
             {
                 _staminaHideTimer = 0f;
                 if (_staminaHidden)
-                    Show();
+                    ShowStamina();
             }
         }
 
+        private void Awake()
+        {
+            FPSMaster.FPSShoot.MagazineChanged += OnMagazineChanged;
+        }
 
         private void Start()
         {
@@ -78,6 +108,9 @@
         {
             UpdateHealthView();
             UpdateStaminaView();
+
+            _dbgHealthValueText.text = Manager.DebugManager.DbgViewOn ? $"{FPSMaster.FPSHealthSystem.HealthSystem.Health} / {FPSMaster.FPSHealthSystem.HealthSystem.MaxHealth}" : string.Empty;
+            _dbgStaminaPercentageText.text = Manager.DebugManager.DbgViewOn ? $"{(FPSMaster.FPSController.StaminaManager.CurrentCharge * 100).ToString("f2")}%" : string.Empty;
         }
     }
 }
