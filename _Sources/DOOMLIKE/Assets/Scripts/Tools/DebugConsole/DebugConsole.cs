@@ -53,8 +53,11 @@
             public bool IsExternalLog { get; private set; }
         }
 
-        [Header("Console Datas")]
+        [Header("CONSOLE DATAS")]
         [SerializeField] private bool _enabled = true;
+        [SerializeField] private bool _logsMuted = false;
+
+        [Header("COLORS")]
         [SerializeField] private Color _consoleColor = new Color(0f, 0f, 0f, 0.9f);
         [SerializeField] private Color _validColor = new Color(0f, 1f, 0f, 1f);
         [SerializeField] private Color _invalidColor = new Color(1f, 0f, 0f, 1f);
@@ -99,6 +102,8 @@
         }
 
         public string ConsoleProPrefix => "Debug Console";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public static void AddCommand(DebugCommandBase cmd, bool overrideIfCmdExists = false)
         {
@@ -536,7 +541,9 @@
 
         private void NavigateThroughAutoCompletionOptions(int step)
         {
-            _autoCompletionNavIndex = Mathf.Clamp(_autoCompletionNavIndex + step, -1, _autoCompletionOptions.Count - 1);
+            _autoCompletionNavIndex = (_autoCompletionNavIndex + step) % _autoCompletionOptions.Count;
+            _autoCompletionNavIndex = Mathf.Clamp(_autoCompletionNavIndex, -1, _autoCompletionOptions.Count - 1);
+
             _inputStr = _autoCompletionNavIndex == -1
                 ? _inputStrBeforeAutoComplete
                 : _inputStr = _autoCompletionOptions[_autoCompletionNavIndex].Id;
@@ -584,14 +591,23 @@
             AddCommand(new DebugCommand("r", "Reloads the currently active scene.", true, true,
                 () => UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex)));
 
-            AddCommand(new DebugCommand("reloadActiveScene", "Reloads the currently active scene.", true, true,
-                () => UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex)));
+            //AddCommand(new DebugCommand("reloadActiveScene", "Reloads the currently active scene.", true, true,
+            //    () => UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex)));
 
             AddCommand(new DebugCommand<string>("loadSceneByName", "Loads a scene by its name.", true, true,
                 (sceneName) => UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName)));
 
             AddCommand(new DebugCommand<int>("loadSceneByIndex", "Loads a scene by its build settings index.", true, true,
                 (sceneIndex) => UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex)));
+
+            AddCommand(new DebugCommand("q", "Quits application.", false, true, () =>
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+            }));
         }
 
         private void ResetHistoryNavigation()

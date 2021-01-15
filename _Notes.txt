@@ -16,6 +16,8 @@
 
 - Peut-être commencer en extérieur car la base est déjà désertée/entièrement contaminée ?
 
+- Switch qui en apparence n'ouvre qu'une porte, mais agit également sur un élément précédent du LD (récompenser exploration/rollback).
+
 - Ramasser sur les corps des enregistrements audio qui correspondraient aux communications entre le soldat et une base militaire (on imagine qu'elles seraient enregistrées pour x raison).
 	- Les bunkers ont des téléphones utilisés par les militaires qui s'étaient perdus pour demander des indications "je suis à tel numéro, où dois-je aller ?".
 - Ennemi qui n'évolue que dans le noir, donc à affronter en vision nocturne seulement.

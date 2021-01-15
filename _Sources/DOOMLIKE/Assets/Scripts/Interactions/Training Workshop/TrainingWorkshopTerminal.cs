@@ -10,6 +10,9 @@
         [SerializeField] private GameObject _screenShatter = null;
         [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.13f;
 
+        [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
+
         private Material _terminalOffMaterial;
         private bool _isOn;
 
@@ -20,6 +23,8 @@
         public float TraumaOnShot => _traumaOnShot;
 
         public string ConsoleProPrefix => "Training Workshop";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public override void Interact()
         {

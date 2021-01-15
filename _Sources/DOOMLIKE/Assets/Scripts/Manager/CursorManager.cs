@@ -4,7 +4,11 @@
 
     public class CursorManager : MonoBehaviour, IConsoleProLoggable
     {
+        [SerializeField] private bool _logsMuted = false;
+
         public string ConsoleProPrefix => "Cursor Manager";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         private void OnOptionsStateChanged(bool state)
         {

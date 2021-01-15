@@ -12,11 +12,16 @@
         [SerializeField] private float _pauseDur = 0.15f;
         [SerializeField] private float _fadeToBlackDur = 2.3f;
 
+        [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
+
         private Collider _hitbox;
 
         public RSLib.HealthSystem HealthSystem { get; private set; }
 
         public string ConsoleProPrefix => "FPS Health System";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public void Damage(int dmg, float trauma)
         {

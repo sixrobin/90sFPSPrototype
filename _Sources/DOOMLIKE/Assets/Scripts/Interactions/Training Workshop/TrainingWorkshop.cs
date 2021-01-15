@@ -14,6 +14,9 @@
         [SerializeField, Min(0f)] private float _timeSecondThreshold = 1f;
         [SerializeField] private int _shotsFirstThreshold = 0;
 
+        [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
+
         private bool _inProgress;
         private int _targetsShot;
         private float _timer;
@@ -38,6 +41,8 @@
         public int WorkshopIndex => _workshopIndex;
 
         public string ConsoleProPrefix => "Training Workshop";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         [ContextMenu("Reset Score")]
         public void ResetScore()

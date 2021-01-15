@@ -21,6 +21,9 @@
         [SerializeField, Min(0f)] private float _shootInputDelay = 0.15f;
         [SerializeField, Min(0f)] private float _reloadInputDelay = 0.15f;
 
+        [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
+
         private bool _canShoot = true;
 
         private bool _shootInput;
@@ -51,6 +54,13 @@
         }
 
         public string ConsoleProPrefix => "FPS Shoot";
+
+        public bool ConsoleProMuted => _logsMuted;
+
+        public bool TryLoadCartridge(Cartridge cartridge)
+        {
+            return FPSMagazine.TryLoadCartridge(cartridge);
+        }
 
         protected override void OnControlAllowed()
         {
@@ -258,6 +268,13 @@
             SetMagazine(_initMagazine);
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int, int>("setMagazine", "Sets the weapon a new magazine.", SetMagazine));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("fulfillMagazine", "Fulfills the weapon magazine.", DBG_FulfillMagazine));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("emptyMagazine", "Empties the weapon magazine.", DBG_EmptyMagazine));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int>("loadCartridge", "Loads a cartridge into the weapon magazine.", (capacity) =>
+            {
+                if (!TryLoadCartridge(new Cartridge(capacity)))
+                    Console.DebugConsole.LogExternal("Magazine is already full.");
+            }));
         }
 
         private void Update()
@@ -277,6 +294,16 @@
 
             _weaponView.ShootAnimationOver -= OnShootAnimationOver;
             _weaponView.ShootFrame -= OnShootFrame;
+        }
+
+        private void DBG_FulfillMagazine()
+        {
+            FPSMagazine.Fulfill();
+        }
+
+        private void DBG_EmptyMagazine()
+        {
+            FPSMagazine.Empty();
         }
     }
 }

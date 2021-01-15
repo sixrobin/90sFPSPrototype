@@ -28,6 +28,8 @@
 
         public string ConsoleProPrefix => "FPS Stamina Manager";
 
+        public bool ConsoleProMuted => Manager.ReferencesHub.FPSMaster.ConsoleProMuted;
+
         public FPSStaminaManager()
         {
             SetSettings(5f, 2f, 15f);

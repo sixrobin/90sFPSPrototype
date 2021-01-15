@@ -35,5 +35,23 @@
             yield return RSLib.Yield.SharedYields.WaitForEndOfFrame;
             _destroyed = true;
         }
+
+        private void OnDrawGizmosSelected()
+        {
+            if (_onDestroyed == null)
+                return;
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 0.1f);
+
+            for (int i = _onDestroyed.GetPersistentEventCount() - 1; i >= 0; --i)
+            {
+                if (!(_onDestroyed.GetPersistentTarget(i) is Component listener))
+                    continue;
+
+                Gizmos.DrawLine(transform.position, listener.transform.position);
+                Gizmos.DrawWireSphere(listener.transform.position, 0.1f);
+            }
+        }
     }
 }

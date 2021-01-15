@@ -4,7 +4,11 @@
 
     public class TimeManager : MonoBehaviour, IConsoleProLoggable
     {
+        [SerializeField] private bool _logsMuted = false;
+
         public string ConsoleProPrefix => "Time Manager";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public void Freeze()
         {

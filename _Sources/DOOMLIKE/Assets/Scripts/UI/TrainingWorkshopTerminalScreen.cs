@@ -14,11 +14,16 @@
         [SerializeField] private TMPro.TextMeshProUGUI _scoreText = null;
         [SerializeField] private float _bestTimeSecondsTextSize = 2.5f;
 
+        [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
+
         public delegate void TerminalScreenToggledEventHandler(bool state);
 
         public event TerminalScreenToggledEventHandler TerminalScreenToggled;
 
         public string ConsoleProPrefix => "Training Workshop";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         private void OnTerminalInteracted(FPSCtrl.FPSInteraction interaction)
         {

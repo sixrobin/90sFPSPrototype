@@ -21,6 +21,7 @@
         [SerializeField] private FPSUIController _fpsUIController = null;
 
         [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
         [SerializeField] private bool _dbgGodMode = false;
 
         private System.Collections.Generic.List<FPSControllableComponent> _allControllableComponents;
@@ -44,6 +45,8 @@
         public FPSUIController FPSUIController => _fpsUIController;
 
         public string ConsoleProPrefix => "FPS Master";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public bool DbgGodMode => _dbgGodMode;
 

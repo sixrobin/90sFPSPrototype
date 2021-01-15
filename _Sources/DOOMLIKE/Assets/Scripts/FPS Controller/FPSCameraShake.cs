@@ -5,10 +5,13 @@
     public class FPSCameraShake : FPSCameraExtraMovement, IConsoleProLoggable
     {
         [SerializeField] private Shake.ShakeSettings _settings = Shake.ShakeSettings.Default;
+        [SerializeField] private bool _logsMuted = false;
 
         private Shake _shake = null;
 
         public string ConsoleProPrefix => "FPS Camera";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public override void ApplyMovement()
         {

@@ -2,11 +2,14 @@
 {
     public class DebugManager : RSLib.Framework.Singleton<DebugManager>, IConsoleProLoggable
     {
+        [UnityEngine.SerializeField] private bool _logsMuted = false;
         [UnityEngine.SerializeField] private bool _dbgViewOn = false;
 
         public static bool DbgViewOn => Instance._dbgViewOn;
 
         public string ConsoleProPrefix => "Debug Manager";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         protected override void Awake()
         {

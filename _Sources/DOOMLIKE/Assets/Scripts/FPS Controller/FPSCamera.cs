@@ -26,6 +26,9 @@
         [SerializeField, Range(0f, 90f)] private float _minPitch = 60f;
         [SerializeField, Range(0f, 90f)] private float _maxPitch = 60f;
 
+        [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
+
         private bool _pitchClamped = true;
         private float _initMinPitch;
         private float _initMaxPitch;
@@ -48,6 +51,8 @@
         }
 
         public string ConsoleProPrefix => "FPS Camera";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public CameraRampsController CamRampsController => _camRampsController;
 

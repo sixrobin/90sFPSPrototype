@@ -16,6 +16,7 @@
         [SerializeField] private LayerMask _interactionMask = 0;
 
         [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
         [SerializeField] private bool _dbg = true;
 
         private FPSInteraction _lastInteracted;
@@ -42,6 +43,8 @@
         public bool InteractedThisFrame { get; private set; }
 
         public string ConsoleProPrefix => "FPS Interacter";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         protected override void OnControlAllowed()
         {
@@ -110,7 +113,7 @@
 
             if (!InteractedThisFrame && Input.GetButtonDown("Interact"))
             {
-                ConsoleProLogger.Log(this, $"Interacting with <b>{transform.name}</b>.", gameObject);
+                ConsoleProLogger.Log(this, $"Interacting with <b>{CurrentInteraction.transform.name}</b>.", gameObject);
 
                 CurrentInteraction.Interact();
                 if (CurrentInteraction && CurrentInteraction.UnfocusedOnInteracted)

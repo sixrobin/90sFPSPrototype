@@ -37,7 +37,7 @@
 
         public void SetState(bool state)
         {
-            ConsoleProLogger.LogMisc($"Toggling head bob to {state}.");
+            ConsoleProLogger.Log(Manager.ReferencesHub.FPSMaster.FPSCamera, $"Toggling head bob to {state}.");
 
             if (!state)
                 ResetBobValues();

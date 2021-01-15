@@ -31,6 +31,7 @@
         [SerializeField] private LayerMask _groundMask = 0;
 
         [Header("DEBUG")]
+        [SerializeField] private bool _logsMuted = false;
         [SerializeField] private bool _dbg = true;
 
         private Rigidbody _rb;
@@ -88,6 +89,8 @@
         }
 
         public string ConsoleProPrefix => "FPS Controller";
+
+        public bool ConsoleProMuted => _logsMuted;
 
         public bool CheckGround()
         {
