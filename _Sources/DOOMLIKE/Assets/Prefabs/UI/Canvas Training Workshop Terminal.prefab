@@ -1232,6 +1232,7 @@ MonoBehaviour:
   _bestTimeText: {fileID: 5812796692028267205}
   _scoreText: {fileID: 5812796691940542842}
   _bestTimeSecondsTextSize: 2.5
+  _logsMuted: 0
 --- !u!1 &5812796692405028904
 GameObject:
   m_ObjectHideFlags: 0

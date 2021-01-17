@@ -9,6 +9,8 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
+        public bool ShotThrough => false;
+
         public void OnShot(Vector3 point)
         {
             _door.ShootTrigger();

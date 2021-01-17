@@ -40,6 +40,7 @@
         /// Called when the player interacts with the gameObject.
         /// Calls related events after some more checks.
         /// </summary>
+        [ContextMenu("Interact")]
         public virtual void Interact()
         {
             if (!InteractionAllowed)

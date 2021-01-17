@@ -14,6 +14,8 @@
 
         public float TraumaOnShot => _destroyed ? 0f : _traumaOnShot;
 
+        public bool ShotThrough => false;
+
         public void OnShot(Vector3 point)
         {
             if (_destroyed)

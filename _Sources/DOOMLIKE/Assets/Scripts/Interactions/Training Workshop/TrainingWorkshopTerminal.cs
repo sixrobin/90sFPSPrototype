@@ -22,6 +22,8 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
+        public bool ShotThrough => false;
+
         public string ConsoleProPrefix => "Training Workshop";
 
         public bool ConsoleProMuted => _logsMuted;

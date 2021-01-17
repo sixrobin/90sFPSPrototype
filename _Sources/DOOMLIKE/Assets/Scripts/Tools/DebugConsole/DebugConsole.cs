@@ -541,6 +541,9 @@
 
         private void NavigateThroughAutoCompletionOptions(int step)
         {
+            if (_autoCompletionOptions.Count == 0)
+                return;
+
             _autoCompletionNavIndex = (_autoCompletionNavIndex + step) % _autoCompletionOptions.Count;
             _autoCompletionNavIndex = Mathf.Clamp(_autoCompletionNavIndex, -1, _autoCompletionOptions.Count - 1);
 
@@ -858,6 +861,10 @@
 
                 ComputeAutoCompletion();
                 GUI.Label(logEntryRect, ConvertAutoCompletionToString(), _autoCompletionTextStyle);
+            }
+            else
+            {
+                _autoCompletionOptions.Clear();
             }
 
             // Display help tooltip message.

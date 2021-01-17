@@ -59,13 +59,15 @@
 
         public RSLib.HealthSystem HealthSystem { get; private set; }
 
+        public float TraumaOnShot => _traumaOnShot;
+
+        public bool ShotThrough => false;
+
         public bool DbgModeOn => _dbgModeOn;
 
         public string ConsoleProPrefix => "Dummy";
 
         public bool ConsoleProMuted => _logsMuted;
-
-        public float TraumaOnShot => _traumaOnShot;
 
         public void OnShot(Vector3 point)
         {
@@ -75,7 +77,7 @@
             if (Manager.ReferencesHub.FPSMaster.DbgGodMode)
                 HealthSystem.Kill(); // Damages should be passed in as an OnShot() method argument.
             else
-                HealthSystem.Damage(34); // TMP hard coded value.
+                HealthSystem.Damage(26); // TMP hard coded value.
 
             if (HealthSystem.IsDead)
                 SetState(AIState.Death);

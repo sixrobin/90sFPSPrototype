@@ -171,43 +171,61 @@
 
         private void ApplyShot()
         {
-            ConsoleProLogger.Log(this, "Applying shot.", gameObject);
-
             if (!FPSMaster.DbgGodMode)
             {
                 UnityEngine.Assertions.Assert.IsFalse(FPSMagazine.IsLoadEmpty, "Shoot animation has been allowed with an empty magazine load.");
                 FPSMagazine.Shoot();
             }
 
-            ConsoleProLogger.Log(this, $"Magazine state : ({FPSMagazine.CurrLoadCount}/{FPSMagazine.CurrStorehouseCount}).", gameObject);
+            ConsoleProLogger.Log(this, $"Applying shot. Magazine state : ({FPSMagazine.CurrLoadCount}/{FPSMagazine.CurrStorehouseCount}).", gameObject);
 
-            if (Physics.Raycast(_camTransform.position, _camTransform.forward, out RaycastHit hit, Mathf.Infinity))
+            RaycastHit[] hits = Physics.RaycastAll(_camTransform.position, _camTransform.forward, 100f);
+            if (hits.Length > 0)
             {
-                ConsoleProLogger.Log(this, $"Shot <b>{hit.transform.name}</b>.", gameObject);
-
-                if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
-                    if (hit.collider.TryGetComponent(out shootable))
-                        _knownShootables.Add(hit.collider, shootable);
-
-                if (shootable != null)
+                System.Array.Sort(hits, delegate (RaycastHit hitA, RaycastHit hitB)
                 {
-                    shootable.OnShot(hit.point);
-                    FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
-                }
+                    return (hitA.point - _camTransform.position).sqrMagnitude.CompareTo((hitB.point - _camTransform.position).sqrMagnitude);
+                });
 
-                // Bullet impacts.
-                if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
+                string shotsInLineStr = "Shots in line : ";
+                for (int i = 0; i < hits.Length; ++i)
+                    shotsInLineStr += $"{hits[i].transform.name}{(i == hits.Length - 1 ? "" : " | ")}";
+                ConsoleProLogger.Log(this, shotsInLineStr, gameObject);
+
+                RaycastHit hit;
+                for (int i = 0; i < hits.Length; ++i)
                 {
-                    ConsoleProLogger.Log(this, $"Instantiating bullet impact.", gameObject);
+                    hit = hits[i];
+                    ConsoleProLogger.Log(this, $"Shot <b>{hit.transform.name}</b>.", hit.transform.gameObject);
 
-                    Transform bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform).transform;
-                    bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
-                    bulletImpactInstance.forward = -hit.normal;
-                    bulletImpactInstance.Rotate(0f, 0f, Random.Range(0, 4) * 90);
+                    if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
+                        if (hit.collider.TryGetComponent(out shootable))
+                            _knownShootables.Add(hit.collider, shootable);
 
-                    Vector3 scale = bulletImpactInstance.localScale;
-                    scale.Scale(new Vector3(1f / hit.transform.localScale.x, 1f / hit.transform.localScale.y, 1f / hit.transform.localScale.z));
-                    bulletImpactInstance.localScale = scale;
+                    if (shootable != null)
+                    {
+                        shootable.OnShot(hit.point);
+                        FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
+                    }
+
+                    // Bullet impacts.
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
+                    {
+                        ConsoleProLogger.Log(this, $"Instantiating bullet impact.", gameObject);
+
+                        Transform bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform).transform;
+                        bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
+                        bulletImpactInstance.forward = -hit.normal;
+                        bulletImpactInstance.Rotate(0f, 0f, Random.Range(0, 4) * 90);
+
+                        Vector3 scale = bulletImpactInstance.localScale;
+                        scale.Scale(new Vector3(1f / hit.transform.localScale.x, 1f / hit.transform.localScale.y, 1f / hit.transform.localScale.z));
+                        bulletImpactInstance.localScale = scale;
+                    }
+
+                    // Don't shoot on further hits if bullet can not cross the current one.
+                    if (shootable == null || !shootable.ShotThrough)
+                        break;
                 }
             }
 
@@ -267,6 +285,11 @@
 
             SetMagazine(_initMagazine);
 
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("reload", "Reloads weapon.", () =>
+            {
+                if (FPSMagazine.CanReload && !_isShooting && !_isReloading)
+                    TriggerReload();
+            }));
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int, int>("setMagazine", "Sets the weapon a new magazine.", SetMagazine));
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("fulfillMagazine", "Fulfills the weapon magazine.", DBG_FulfillMagazine));
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("emptyMagazine", "Empties the weapon magazine.", DBG_EmptyMagazine));
