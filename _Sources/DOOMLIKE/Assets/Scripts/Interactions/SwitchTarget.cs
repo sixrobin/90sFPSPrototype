@@ -10,9 +10,9 @@
 
         public virtual bool CanToggle { get; protected set; } = true;
 
-        public string ConsoleProPrefix => "Switch Target";
+        public virtual string ConsoleProPrefix => "Switch Target";
 
-        public bool ConsoleProMuted => _logsMuted;
+        public virtual bool ConsoleProMuted => _logsMuted;
 
         public virtual void Toggle()
         {

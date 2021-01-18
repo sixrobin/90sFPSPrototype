@@ -248,6 +248,7 @@
         {
             _dbgNoCollisionsMode = !_dbgNoCollisionsMode;
             ConsoleProLogger.Log(this, $"Collisions {(_dbgNoCollisionsMode ? "off" : "on")}.", gameObject);
+            Console.DebugConsole.LogExternal($"Collisions {(_dbgNoCollisionsMode ? "off" : "on")}.");
 
             _rb.isKinematic = _dbgNoCollisionsMode;
             _capsule.enabled = !_dbgNoCollisionsMode;

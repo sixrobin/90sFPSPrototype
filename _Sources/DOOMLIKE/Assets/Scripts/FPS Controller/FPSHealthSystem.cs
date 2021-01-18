@@ -38,6 +38,20 @@
                 FPSMaster.FPSCameraAnimator.PlayHurtAnimation();
         }
 
+        public void Heal(int amount)
+        {
+            UnityEngine.Assertions.Assert.IsFalse(HealthSystem.IsDead, "Healing a dead health system owner.");
+            HealthSystem.Heal(amount);
+
+            ConsoleProLogger.Log(this, $"Healed by <b>{amount}</b> points, <b>{HealthSystem.Health}</b> health left.", gameObject);
+        }
+
+        public void HealFull()
+        {
+            UnityEngine.Assertions.Assert.IsFalse(HealthSystem.IsDead, "Healing a dead health system owner.");
+            HealthSystem.HealFull();
+        }
+
         private void OnKilled()
         {
             // Player death.
@@ -62,6 +76,18 @@
             HealthSystem.Killed += OnKilled;
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("killPlayer", "Instantly kills the player.", true, false, OnKilled));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("healFullPlayer", "Fully heals the player.", true, false, HealFull));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int>("healPlayer", "Heals the player.", true, false, (amount) =>
+            {
+                Heal(amount);
+                Console.DebugConsole.LogExternal($"{HealthSystem.Health} health left.");
+
+            }));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int>("damagePlayer", "Damages the player.", true, false, (dmg) =>
+            {
+                Damage(dmg, 0f);
+                Console.DebugConsole.LogExternal($"{HealthSystem.Health} health left.");
+            }));
         }
     }
 }

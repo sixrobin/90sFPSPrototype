@@ -60,7 +60,6 @@
                 return;
 
             Camera mainCamera = Camera.main;
-
             if ((mainCamera.transform.position - transform.position).sqrMagnitude > 4f)
                 return;
 
@@ -68,19 +67,8 @@
             if (worldPos.z < 0f)
                 return;
 
-            GUIStyle dbgStyle = new GUIStyle()
-            {
-                alignment = TextAnchor.MiddleLeft,
-                fontStyle = FontStyle.Bold,
-                fontSize = 12,
-                normal = new GUIStyleState()
-                {
-                    textColor = new Color(1f, 1f, 1f, 1f)
-                }
-            };
-
             worldPos.y = Screen.height - worldPos.y;
-            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"Ammos: {(_capacity == -1 ? "X" : _capacity.ToString())}", dbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"Ammos: {(_capacity == -1 ? "X" : _capacity.ToString())}", Manager.DebugManager.WorldSpaceDbgStyle);
         }
     }
 }

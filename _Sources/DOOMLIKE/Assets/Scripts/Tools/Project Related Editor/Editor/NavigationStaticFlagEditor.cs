@@ -11,7 +11,7 @@
 			Transform[] sceneTransforms = GameObject.FindObjectsOfType<Transform>();
 
 			for (int i = sceneTransforms.Length - 1; i >= 0; --i)
-				if (sceneTransforms[i].name.Contains("Ground"))
+				if (sceneTransforms[i].name.Contains("Ground") && !sceneTransforms[i].name.Contains("Roof"))
                 {
 					StaticEditorFlags flags = GameObjectUtility.GetStaticEditorFlags(sceneTransforms[i].gameObject);
 					flags |= StaticEditorFlags.NavigationStatic;

@@ -118,6 +118,7 @@
         {
             _dbgGodMode = !_dbgGodMode;
             ConsoleProLogger.Log(this, $"God Mode {(DbgGodMode ? "on" : "off")}.", gameObject);
+            Console.DebugConsole.LogExternal($"God Mode {(DbgGodMode ? "on" : "off")}.");
         }
     }
 }

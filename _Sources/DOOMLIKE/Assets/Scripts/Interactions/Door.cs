@@ -8,21 +8,32 @@
         [SerializeField] private MeshRenderer[] _doorRenderers = null;
         [SerializeField] private Material _triggerShotMat = null;
 
+        public override string ConsoleProPrefix => "Door";
+
+        private bool _openCoroutineRunning;
+
         private bool _canToggle = true;
         public override bool CanToggle
         {
-            get => _canToggle;
+            get => _canToggle || _openCoroutineRunning;
             protected set
             {
                 _canToggle = value;
-                if (!_canToggle && !IsOn)
-                    Debug.Log("Locking a door state while it is closed, it then won't open anymore.");
+                if (!_canToggle && !IsOn && !_openCoroutineRunning)
+                    ConsoleProLogger.LogWarning(this, "Locking a door state while it is closed, it then won't open anymore.");
             }
         }
 
         public void ShootTrigger()
         {
             ConsoleProLogger.Log(this, "Toggling door by shooting its trigger.", gameObject);
+
+            if (_openCoroutineRunning)
+            {
+                StopAllCoroutines();
+                _openCoroutineRunning = false;
+                CanToggle = true;
+            }
 
             Toggle();
             CanToggle = false;
@@ -32,21 +43,34 @@
         }
 
         // Unity event on switch destroyed.
-        public void OpenAndLock()
+        public void OpenAndLock(float delay = 0f)
         {
-            if (!IsOn)
-                Toggle();
+            ConsoleProLogger.Log(this, $"Opening <b>{transform.name}</b> with a delay of {delay}s.");
+
+            if (!IsOn && CanToggle)
+                StartCoroutine(OpenAndLockCoroutine(delay));
 
             CanToggle = false;
         }
 
         public override void Toggle()
         {
-            if (!CanToggle)
+            ConsoleProLogger.Log(this, $"Toggling <b>{transform.name}</b>.");
+
+            if (!CanToggle && !_openCoroutineRunning)
                 return;
 
             base.Toggle();
+            ConsoleProLogger.Log(this, $"Triggering animator parameter \"<b>{(IsOn ? "Open" : "Close")}</b>\".");
             _animator.SetTrigger(IsOn ? "Open" : "Close");
+        }
+
+        private System.Collections.IEnumerator OpenAndLockCoroutine(float delay)
+        {
+            _openCoroutineRunning = true;
+            yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
+            Toggle();
+            _openCoroutineRunning = false;
         }
     }
 }

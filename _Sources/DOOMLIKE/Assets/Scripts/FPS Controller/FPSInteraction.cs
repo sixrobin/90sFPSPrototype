@@ -59,6 +59,8 @@
         public void SetInteractionAvailability(bool state)
         {
             InteractionAllowed = state;
+            if (!state)
+                InteractionDisallowed?.Invoke(this);
         }
 
         protected void DisallowInteraction()
