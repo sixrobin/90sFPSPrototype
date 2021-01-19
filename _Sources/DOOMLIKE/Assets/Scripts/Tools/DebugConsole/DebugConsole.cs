@@ -575,12 +575,12 @@
                     _registeredCmds.Sort();
             }));
 
-            AddCommand(new DebugCommand("help", "Shows available commands and hotkeys.", false, true, () =>
-            {
-                _showHelp = !_showHelp;
-                if (_showHelp)
-                    _registeredCmds.Sort();
-            }));
+            //AddCommand(new DebugCommand("help", "Shows available commands and hotkeys.", false, true, () =>
+            //{
+            //    _showHelp = !_showHelp;
+            //    if (_showHelp)
+            //        _registeredCmds.Sort();
+            //}));
 
             AddCommand(new DebugCommand("c", "Clears commands history.", false, true, () => _cmdsHistory.Clear()));
             AddCommand(new DebugCommand("clear", "Clears commands history.", false, true, () => _cmdsHistory.Clear()));
@@ -936,7 +936,7 @@
             public const string CmdHelpFormat = "<b><i>{0}</i></b>  -  <i>{1}</i>"; // 0 is command format, 1 is description.
             public const string ControlName = "ConsoleInputEntry";
             public const string CurrentNavigatedInHistoryMarker = "<b>  <<<</b>";
-            public const string HelpText = "Type <b>\"h\"</b> or <b>\"help\"</b> to display available commands and console hotkeys.";
+            public const string HelpText = "Type <b>\"h\"</b> to display available commands and console hotkeys.";
 
             public const int BoxesSpacing = 1;
             public const int LinesSpacing = 16;

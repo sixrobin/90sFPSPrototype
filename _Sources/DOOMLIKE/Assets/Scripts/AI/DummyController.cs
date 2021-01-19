@@ -297,7 +297,11 @@
             if (!_dbgModeOn || !Manager.DebugManager.DbgViewOn || _currPlayerDistSqr > _dbgDist.Sqr() || _currState == AIState.Death)
                 return;
 
-            Vector3 worldPos = Camera.main.WorldToScreenPoint(_dbgStateTextPivot.position);
+            Camera mainCamera = Camera.main;
+            if ((mainCamera.transform.position - transform.position).sqrMagnitude > 16f)
+                return;
+
+            Vector3 worldPos = mainCamera.WorldToScreenPoint(_dbgStateTextPivot.position);
             if (worldPos.z < 0f)
                 return;
 

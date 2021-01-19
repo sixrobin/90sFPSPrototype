@@ -67,9 +67,8 @@
             _staminaHidden = true;
         }
 
-        private void UpdateHealthView()
+        private void OnHealthChanged(int newHealth)
         {
-            // TODO: Event HealthChanged(previous, new)
             _healthFill.fillAmount = FPSMaster.FPSHealthSystem.HealthSystem.HealthPercentage;
         }
 
@@ -97,6 +96,7 @@
         private void Awake()
         {
             FPSMaster.FPSShoot.MagazineChanged += OnMagazineChanged;
+            FPSMaster.FPSHealthSystem.HealthSystem.HealthChanged += OnHealthChanged;
         }
 
         private void Start()
@@ -106,11 +106,16 @@
 
         private void Update()
         {
-            UpdateHealthView();
             UpdateStaminaView();
 
             _dbgHealthValueText.text = Manager.DebugManager.DbgViewOn ? $"{FPSMaster.FPSHealthSystem.HealthSystem.Health} / {FPSMaster.FPSHealthSystem.HealthSystem.MaxHealth}" : string.Empty;
             _dbgStaminaPercentageText.text = Manager.DebugManager.DbgViewOn ? $"{(FPSMaster.FPSController.StaminaManager.CurrentCharge * 100).ToString("f2")}%" : string.Empty;
+        }
+
+        private void OnDestroy()
+        {
+            FPSMaster.FPSShoot.MagazineChanged -= OnMagazineChanged;
+            FPSMaster.FPSHealthSystem.HealthSystem.HealthChanged -= OnHealthChanged;
         }
     }
 }
