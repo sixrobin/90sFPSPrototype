@@ -13,6 +13,7 @@ _ Use for loops instead of foreach loop whenever it's possible.
 _ Float values are written with the "f" suffix even if their value is whole.
 _ Debug.Log should have a context if possible.
 _ Else statements require curly brackets only if the related if statement have brackets.
+_ Assertions must come with a message.
 
 
 
