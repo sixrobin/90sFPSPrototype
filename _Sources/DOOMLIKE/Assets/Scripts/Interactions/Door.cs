@@ -20,13 +20,13 @@
             {
                 _canToggle = value;
                 if (!_canToggle && !IsOn && !_openCoroutineRunning)
-                    ConsoleProLogger.LogWarning(this, "Locking a door state while it is closed, it then won't open anymore.");
+                    this.Log("Locking a door state while it is closed, it then won't open anymore.");
             }
         }
 
         public void ShootTrigger()
         {
-            ConsoleProLogger.Log(this, "Toggling door by shooting its trigger.", gameObject);
+            this.Log("Toggling door by shooting its trigger.", gameObject);
 
             if (_openCoroutineRunning)
             {
@@ -45,7 +45,7 @@
         // Unity event on switch destroyed.
         public void OpenAndLock(float delay = 0f)
         {
-            ConsoleProLogger.Log(this, $"Opening <b>{transform.name}</b> with a delay of {delay}s.");
+            this.Log($"Opening <b>{transform.name}</b> with a delay of {delay}s.");
 
             if (!IsOn && CanToggle)
                 StartCoroutine(OpenAndLockCoroutine(delay));
@@ -55,13 +55,13 @@
 
         public override void Toggle()
         {
-            ConsoleProLogger.Log(this, $"Toggling <b>{transform.name}</b>.");
+            this.Log($"Toggling <b>{transform.name}</b>.");
 
             if (!CanToggle && !_openCoroutineRunning)
                 return;
 
             base.Toggle();
-            ConsoleProLogger.Log(this, $"Triggering animator parameter \"<b>{(IsOn ? "Open" : "Close")}</b>\".");
+            this.Log($"Triggering animator parameter \"<b>{(IsOn ? "Open" : "Close")}</b>\".");
             _animator.SetTrigger(IsOn ? "Open" : "Close");
         }
 

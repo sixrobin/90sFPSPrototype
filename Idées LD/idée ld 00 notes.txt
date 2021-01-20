@@ -1,0 +1,4 @@
+ouverture vers le workshop basse -> devoir crouch
+bloquer l'accès au workshop (pillars?) sinon le joueur pourra se coller aux cibles et voir le billboard de façon un peu trop moche
+
+attention à ne pas faire remonter le joueur derrière la trappe sinon ça ne sert à rien, ou lui donner une façon de la refermer

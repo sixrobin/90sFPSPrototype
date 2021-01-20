@@ -135,17 +135,17 @@
         /// <returns>True if space has been found to load, else false.</returns>
         public bool TryLoadCartridge(Cartridge cartridge)
         {
-            ConsoleProLogger.Log(this, $"Loading a cartridge with a capacity of {cartridge.Capacity}.");
+            this.Log($"Loading a cartridge with a capacity of {cartridge.Capacity}.");
 
             if (IsFull)
             {
-                ConsoleProLogger.Log(this, "Magazine is already full and won't get loaded by cartridge.");
+                this.Log("Magazine is already full and won't get loaded by cartridge.");
                 return false;
             }
 
             if (cartridge.IsInfinite)
             {
-                ConsoleProLogger.Log(this, "Cartridge is infinite, fulfilling magazine.");
+                this.Log("Cartridge is infinite, fulfilling magazine.");
                 Fulfill();
                 return true;
             }
@@ -159,7 +159,7 @@
             int leftToUse = cartridge.Capacity;
             int availableStorehouseSpace = FullCapacity - CurrStorehouseCount;
 
-            ConsoleProLogger.Log(this, $"Adding {Mathf.Min(leftToUse, availableStorehouseSpace)} bullets from cartridge to storehouse.");
+            this.Log($"Adding {Mathf.Min(leftToUse, availableStorehouseSpace)} bullets from cartridge to storehouse.");
             CurrStorehouseCount += Mathf.Min(leftToUse, availableStorehouseSpace);
             leftToUse = Mathf.Max(0, leftToUse - availableStorehouseSpace);
 
@@ -167,12 +167,12 @@
             {
                 int availableLoadSpace = LoadCapacity - CurrLoadCount;
 
-                ConsoleProLogger.Log(this, $"Adding {Mathf.Min(leftToUse, availableLoadSpace)} bullets from cartridge to load.");
+                this.Log($"Adding {Mathf.Min(leftToUse, availableLoadSpace)} bullets from cartridge to load.");
                 CurrLoadCount += Mathf.Min(leftToUse, availableLoadSpace);
                 leftToUse = Mathf.Max(0, leftToUse - availableLoadSpace);
             }
 
-            ConsoleProLogger.Log(this, $"{leftToUse} bullet(s) left in cartridge.");
+            this.Log($"{leftToUse} bullet(s) left in cartridge.");
 
             MagazineValuesChanged?.Invoke(this);
             return true;

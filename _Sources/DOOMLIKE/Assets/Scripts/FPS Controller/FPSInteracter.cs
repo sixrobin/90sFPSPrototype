@@ -8,6 +8,8 @@
     /// </summary>
     public class FPSInteracter : FPSControllableComponent, IConsoleProLoggable
     {
+        private const string INPUT_INTERACT = "Interact";
+
         [Header("REFERENCES")]
         [SerializeField] private Transform _camTransform = null;
 
@@ -33,7 +35,6 @@
                 _currentInteraction = value;
                 if (_currentInteraction != null)
                 {
-                    ConsoleProLogger.Log(this, $"Focusing <b>{_currentInteraction.transform.name}</b>.", _currentInteraction.gameObject);
                     _currentInteraction.Focus();
                     _currentInteraction.InteractionDisallowed += OnCurrentInteractionDisallowed;
                 }
@@ -69,7 +70,6 @@
         {
             if (CurrentInteraction != null)
             {
-                ConsoleProLogger.Log(this, $"Unfocusing <b>{CurrentInteraction.transform.name}</b>.", CurrentInteraction.gameObject);
                 CurrentInteraction.Unfocus();
             }
 
@@ -111,9 +111,9 @@
             if (CurrentInteraction == null)
                 return;
 
-            if (!InteractedThisFrame && Input.GetButtonDown("Interact"))
+            if (!InteractedThisFrame && Input.GetButtonDown(INPUT_INTERACT))
             {
-                ConsoleProLogger.Log(this, $"Interacting with <b>{CurrentInteraction.transform.name}</b>.", gameObject);
+                this.Log($"Interacting with <b>{CurrentInteraction.transform.name}</b>.", gameObject);
 
                 CurrentInteraction.Interact();
                 if (CurrentInteraction && CurrentInteraction.UnfocusedOnInteracted)

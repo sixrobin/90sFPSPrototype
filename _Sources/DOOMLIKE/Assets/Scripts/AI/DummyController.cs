@@ -92,7 +92,7 @@
         public void OnAttackFrame()
         {
             if (_dbgModeOn)
-                ConsoleProLogger.Log(this, $"<b>{transform.name}</b> attacking.", gameObject);
+                this.Log($"<b>{transform.name}</b> attacking.", gameObject);
 
             _atkController.Attack();
         }
@@ -121,7 +121,7 @@
             if (_currState == AIState.Death)
                 return;
 
-            ConsoleProLogger.Log(this, $"Setting state to {newState}.");
+            this.Log($"Setting state to {newState}.");
             _currState = newState;
 
             switch (_currState)
@@ -271,6 +271,9 @@
             _navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             _atkController.SetDummyController(this);
             HealthSystem = new RSLib.HealthSystem(_initHealth);
+
+            if (_losePlayerDist < _detectionDist)
+                this.Log($"LosePlayerDist ({_losePlayerDist}) is less than DetectionDist({_detectionDist}).");
         }
 
         private void Update()

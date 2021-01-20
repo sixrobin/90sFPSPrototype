@@ -23,15 +23,15 @@
 
         public bool ConsoleProMuted => _logsMuted;
 
-        public void Damage(int dmg, float trauma)
+        public void Damage(int dmg, float trauma, bool dbg = false)
         {
-            if (FPSMaster.DbgGodMode)
+            if (FPSMaster.DbgGodMode && !dbg)
                 return;
 
             UnityEngine.Assertions.Assert.IsFalse(HealthSystem.IsDead, "Damaging an already dead health system owner.");
 
             HealthSystem.Damage(dmg);
-            ConsoleProLogger.Log(this, $"Received <b>{dmg}</b> damages, <b>{HealthSystem.Health}</b> health left.", gameObject);
+            this.Log($"Received <b>{dmg}</b> damages, <b>{HealthSystem.Health}</b> health left.", gameObject);
 
             FPSMaster.FPSCameraShake.AddTrauma(HealthSystem.IsDead ? 0.2f : trauma);
             if (!HealthSystem.IsDead)
@@ -43,7 +43,7 @@
             UnityEngine.Assertions.Assert.IsFalse(HealthSystem.IsDead, "Healing a dead health system owner.");
             HealthSystem.Heal(amount);
 
-            ConsoleProLogger.Log(this, $"Healed by <b>{amount}</b> points, <b>{HealthSystem.Health}</b> health left.", gameObject);
+            this.Log($"Healed by <b>{amount}</b> points, <b>{HealthSystem.Health}</b> health left.", gameObject);
         }
 
         public void HealFull()
@@ -85,7 +85,7 @@
             }));
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int>("damagePlayer", "Damages the player.", true, false, (dmg) =>
             {
-                Damage(dmg, 0f);
+                Damage(dmg, 0f, true);
                 Console.DebugConsole.LogExternal($"{HealthSystem.Health} health left.");
             }));
         }

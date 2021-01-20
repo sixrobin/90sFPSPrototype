@@ -4,6 +4,9 @@
 
     public class TrainingTarget : WorldSpaceBillboard, FPSCtrl.IFPSShootable
     {
+        private const string ANM_PARAM_SHOT = "Shot";
+        private const string ANM_PARAM_RESET = "Reset";
+
         [SerializeField] private Animator _animator = null;
         [SerializeField] private Collider _collider = null;
         [SerializeField] private GameObject _hitPrefab = null;
@@ -23,7 +26,7 @@
         {
             _billboardEnabled = false;
             _animator.enabled = true;
-            _animator.SetTrigger("Shot");
+            _animator.SetTrigger(ANM_PARAM_SHOT);
 
             _collider.enabled = false;
 
@@ -43,7 +46,7 @@
 
             _isDown = false;
 
-            _animator.SetTrigger("Reset");
+            _animator.SetTrigger(ANM_PARAM_RESET);
             _billboardEnabled = true;
             _collider.enabled = true; // Requires to make sure player is not overlapping.
 

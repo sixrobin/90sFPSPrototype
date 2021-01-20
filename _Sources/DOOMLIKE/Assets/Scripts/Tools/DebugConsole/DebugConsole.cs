@@ -186,7 +186,8 @@
         /// <param name="log">Message to log.</param>
         public static void LogExternal(string log)
         {
-            Instance.StartCoroutine(Instance.LogToConsoleCoroutine(log, HistoryLine.Validity.Neutral));
+            if (Instance.IsOpen)
+                Instance.StartCoroutine(Instance.LogToConsoleCoroutine(log, HistoryLine.Validity.Neutral));
         }
 
         /// <summary>
@@ -195,7 +196,8 @@
         /// <param name="log">Message to log.</param>
         public static void LogExternalError(string log)
         {
-            Instance.StartCoroutine(Instance.LogToConsoleCoroutine(log, HistoryLine.Validity.Error));
+            if (Instance.IsOpen)
+                Instance.StartCoroutine(Instance.LogToConsoleCoroutine(log, HistoryLine.Validity.Error));
         }
 
         private System.Collections.IEnumerator LogToConsoleCoroutine(string log, HistoryLine.Validity validity)
@@ -583,7 +585,7 @@
             //}));
 
             AddCommand(new DebugCommand("c", "Clears commands history.", false, true, () => _cmdsHistory.Clear()));
-            AddCommand(new DebugCommand("clear", "Clears commands history.", false, true, () => _cmdsHistory.Clear()));
+            //AddCommand(new DebugCommand("clear", "Clears commands history.", false, true, () => _cmdsHistory.Clear()));
             //AddCommand(new DebugCommand<string, int>("removeCmd", "Removes a registered command by ID and parameters count.", true, true, (id, paramsCount) => RemoveCommand(id, paramsCount)));
 
 
@@ -778,7 +780,7 @@
                 float helpBoxPosY = y - Constants.HelpBoxHeight - Constants.EntryBoxHeight - Constants.HistoryBoxHeight - Constants.BoxesSpacing * 2;
 
                 GUI.Box(new Rect(0f, helpBoxPosY, Constants.Width, Constants.HelpBoxHeight), string.Empty, _consoleStyle);
-                Rect helpViewport = new Rect(0f, 0f, Constants.Width - 30f, Constants.LinesSpacing * (_registeredCmds.Count + Constants.HotkeyHelps.Length + 1));
+                Rect helpViewport = new Rect(0f, 0f, Constants.Width - 30f, Constants.LinesSpacing * 0.5f + Constants.LinesSpacing * (_registeredCmds.Count + Constants.HotkeyHelps.Length + 1));
 
                 float helpScrollPosY = y - Constants.HelpBoxHeight - 25f - Constants.HistoryBoxHeight;
 

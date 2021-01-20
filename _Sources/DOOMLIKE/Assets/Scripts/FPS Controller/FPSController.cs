@@ -6,6 +6,11 @@
     [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
     public class FPSController : FPSControllableComponent, IConsoleProLoggable
     {
+        private const string INPUT_HOR = "Horizontal";
+        private const string INPUT_VER = "Vertical";
+        private const string INPUT_CROUCH = "Crouch";
+        private const string INPUT_SPRINT = "Sprint";
+
         [Header("CONTROLLER OPTIONS")]
         [SerializeField] private bool _canSprint = true;
         [SerializeField] private bool _canCrouch = true;
@@ -45,6 +50,8 @@
         private Vector3 _currVel;
         private float _currSpeed;
         private float _refSpeed;
+
+        //private bool _falling;
 
         private float _dbgMoveSpeed = -1f;
         private bool _dbgNoCollisionsMode;
@@ -128,13 +135,13 @@
         /// </summary>
         private void GetInputs()
         {
-            _rawMovementInput.x = Input.GetAxisRaw("Horizontal");
-            _rawMovementInput.z = Input.GetAxisRaw("Vertical");
+            _rawMovementInput.x = Input.GetAxisRaw(INPUT_HOR);
+            _rawMovementInput.z = Input.GetAxisRaw(INPUT_VER);
             _currMovementInput = Vector3.SmoothDamp(_currMovementInput, _rawMovementInput.normalized, ref _refMovementInput, _inputDamping);
 
             // TODO: Change behaviour if some option is set to Get button down for sprinting and crouching.
-            Sprinting = _canSprint && !Crouched && !StaminaManager.IsEmpty && Input.GetButton("Sprint");
-            Crouched = _canCrouch && Input.GetButton("Crouch");
+            Sprinting = _canSprint && !Crouched && !StaminaManager.IsEmpty && Input.GetButton(INPUT_SPRINT);
+            Crouched = _canCrouch && Input.GetButton(INPUT_CROUCH);
         }
 
         /// <summary>
@@ -187,6 +194,25 @@
             transform.Translate(_currVel * Time.deltaTime);
         }
 
+        //private void UpdateFall()
+        //{
+        //    bool grounded = CheckGround();
+
+        //    if (_falling && grounded)
+        //        this.Log($"Fell on ground with a Y velocity of <b>{-_rb.velocity.y}</b>.");
+
+        //    _falling = _rb.velocity.y < 0f && !grounded;
+        //}
+
+        private void UpdateRigidbodyConstraints()
+        {
+            RigidbodyConstraints constraints = RigidbodyConstraints.FreezeRotation;
+            if (!CheckMovement() && CheckGround())
+                constraints |= RigidbodyConstraints.FreezePositionY;
+
+            _rb.constraints = constraints;
+        }
+
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
@@ -224,6 +250,8 @@
         private void FixedUpdate()
         {
             MoveBody();
+            //UpdateFall();
+            UpdateRigidbodyConstraints();
         }
 
         private void DBG_SetMoveSpeed(float speed)
@@ -247,7 +275,7 @@
         private void DBG_ToggleCollisions()
         {
             _dbgNoCollisionsMode = !_dbgNoCollisionsMode;
-            ConsoleProLogger.Log(this, $"Collisions {(_dbgNoCollisionsMode ? "off" : "on")}.", gameObject);
+            this.Log($"Collisions {(_dbgNoCollisionsMode ? "off" : "on")}.", gameObject);
             Console.DebugConsole.LogExternal($"Collisions {(_dbgNoCollisionsMode ? "off" : "on")}.");
 
             _rb.isKinematic = _dbgNoCollisionsMode;

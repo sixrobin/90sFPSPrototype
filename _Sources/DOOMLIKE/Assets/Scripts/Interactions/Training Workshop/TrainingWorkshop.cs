@@ -24,9 +24,7 @@
         private int _shots;
         private int _score;
 
-        private string[] _scoresString = new string[] { "S", "A", "B", "C", "D" }; // 01234 = SABCD.
-
-        public delegate void WorkshopCompleteEventHandler();
+        public delegate void WorkshopCompleteEventHandler(int score);
 
         public event WorkshopCompleteEventHandler WorkshopComplete;
 
@@ -55,12 +53,6 @@
             BestScore = 4;
         }
 
-        public string GetBestScoreToString()
-        {
-            UnityEngine.Assertions.Assert.IsTrue(BestScore >= 0 && BestScore < _scoresString.Length, $"Score value {BestScore} is out of score strings array bounds (length of {_scoresString.Length}).");
-            return _scoresString[BestScore];
-        }
-
         private void OnTargetShot(TrainingTarget target)
         {
             if (_shots == 0)
@@ -75,8 +67,8 @@
             {
                 ConsoleProLogger.Log(this, $"Training Workshop <b>{transform.name}</b> complete.", gameObject);
 
-                WorkshopComplete?.Invoke();
                 RecordScore();
+                WorkshopComplete?.Invoke(_score);
                 StartCoroutine(ResetWorkshopCoroutine());
             }
         }

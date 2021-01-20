@@ -5,10 +5,22 @@
 
     public class FPSShoot : FPSControllableComponent, IConsoleProLoggable
     {
+        private const string INPUT_SHOOT = "Fire1";
+        private const string INPUT_RELOAD = "Reload";
+
+        private const string ANM_PARAM_MOVING = "Moving";
+        private const string ANM_PARAM_SPRINTING = "Sprinting";
+        private const string ANM_PARAM_CROUCHED = "Crouched";
+        private const string ANM_PARAM_SHOOT = "Shoot";
+        private const string ANM_PARAM_RELOAD = "Reload";
+
         [Header("REFERENCES")]
         [SerializeField] private Transform _camTransform = null;
         [SerializeField] private Animator _weaponAnimator = null;
         [SerializeField] private FPSWeaponView _weaponView = null;
+
+        [Header("MASK")]
+        [SerializeField] private LayerMask _shootableMask = 0;
 
         [Header("MAGAZINE")]
         [SerializeField] private FPSMagazine _initMagazine = new FPSMagazine(300, 30);
@@ -37,10 +49,22 @@
         private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
 
         public delegate void ShotEventHandler();
+        public delegate void TriedShotEventHandler(ShootInputResult result);
+        public delegate void CartridgeLoadedEventHandler(bool result);
         public delegate void MagazineChangedEventHandler(FPSMagazine magazine);
 
         public event ShotEventHandler Shot;
+        public event TriedShotEventHandler TriedShot;
+        public event CartridgeLoadedEventHandler CartridgeLoaded;
         public event MagazineChangedEventHandler MagazineChanged;
+
+        public enum ShootInputResult
+        {
+            None,
+            Success,
+            Reload,
+            Failure
+        }
 
         private FPSMagazine _fpsMagazine;
         public FPSMagazine FPSMagazine
@@ -49,7 +73,7 @@
             set
             {
                 _fpsMagazine = value;
-                MagazineChanged(_fpsMagazine);
+                MagazineChanged?.Invoke(_fpsMagazine);
             }
         }
 
@@ -59,7 +83,10 @@
 
         public bool TryLoadCartridge(Cartridge cartridge)
         {
-            return FPSMagazine.TryLoadCartridge(cartridge);
+            // Change to an enum if there're more than 2 possible results.
+            bool result = FPSMagazine.TryLoadCartridge(cartridge);
+            CartridgeLoaded?.Invoke(result);
+            return result;
         }
 
         protected override void OnControlAllowed()
@@ -76,7 +103,7 @@
 
         private void TryReload()
         {
-            if (!_reloadInput && Input.GetButtonDown("Reload"))
+            if (!_reloadInput && Input.GetButtonDown(INPUT_RELOAD))
             {
                 ResetReloadInputDelay();
                 ResetShootInputDelay();
@@ -92,7 +119,7 @@
 
         private void TryShoot()
         {
-            if (!_shootInput && Input.GetButtonDown("Fire1"))
+            if (!_shootInput && Input.GetButtonDown(INPUT_SHOOT))
             {
                 ResetShootInputDelay();
                 ResetReloadInputDelay();
@@ -108,20 +135,23 @@
                 {
                     if (FPSMagazine.IsCompletelyEmpty)
                     {
-                        ConsoleProLogger.Log(this, "Trying to shoot with a completely empty magazine.", gameObject);
+                        this.Log("Trying to shoot with a completely empty magazine.", gameObject);
+                        _shootInput = false;
+                        TriedShot?.Invoke(ShootInputResult.Failure);
                         return;
                     }
 
-                    ConsoleProLogger.Log(this, "Trying to shoot with an empty magazine load, reloading instead.", gameObject);
+                    this.Log("Trying to shoot with an empty magazine load, reloading instead.", gameObject);
                     TriggerReload();
                     ResetShootInputDelay();
+                    TriedShot?.Invoke(ShootInputResult.Reload);
                 }
                 else
                 {
-                    ConsoleProLogger.Log(this, "Triggering shoot animation.", gameObject);
                     _isShooting = true;
-                    _weaponAnimator.SetTrigger("Shoot");
+                    _weaponAnimator.SetTrigger(ANM_PARAM_SHOOT);
                     ResetShootInputDelay();
+                    TriedShot?.Invoke(ShootInputResult.Success);
                 }
             }
         }
@@ -158,14 +188,12 @@
 
         private void TriggerReload()
         {
-            ConsoleProLogger.Log(this, "Triggering reload animation.", gameObject);
             _isReloading = true;
-            _weaponAnimator.SetTrigger("Reload");
+            _weaponAnimator.SetTrigger(ANM_PARAM_RELOAD);
         }
 
         private void ApplyReload()
         {
-            ConsoleProLogger.Log(this, "Applying reload.", gameObject);
             FPSMagazine.Reload();
         }
 
@@ -177,9 +205,9 @@
                 FPSMagazine.Shoot();
             }
 
-            ConsoleProLogger.Log(this, $"Applying shot. Magazine state : ({FPSMagazine.CurrLoadCount}/{FPSMagazine.CurrStorehouseCount}).", gameObject);
+            this.Log($"Applying shot. Magazine state : ({FPSMagazine.CurrLoadCount}/{FPSMagazine.CurrStorehouseCount}).", gameObject);
 
-            RaycastHit[] hits = Physics.RaycastAll(_camTransform.position, _camTransform.forward, 100f);
+            RaycastHit[] hits = Physics.RaycastAll(_camTransform.position, _camTransform.forward, 100f, _shootableMask);
             if (hits.Length > 0)
             {
                 System.Array.Sort(hits, delegate (RaycastHit hitA, RaycastHit hitB)
@@ -187,16 +215,16 @@
                     return (hitA.point - _camTransform.position).sqrMagnitude.CompareTo((hitB.point - _camTransform.position).sqrMagnitude);
                 });
 
-                string shotsInLineStr = "Shots in line : ";
-                for (int i = 0; i < hits.Length; ++i)
-                    shotsInLineStr += $"{hits[i].transform.name}{(i == hits.Length - 1 ? "" : " | ")}";
-                ConsoleProLogger.Log(this, shotsInLineStr, gameObject);
+                //string shotsInLineStr = "Shots in line : ";
+                //for (int i = 0; i < hits.Length; ++i)
+                //    shotsInLineStr += $"{hits[i].transform.name}{(i == hits.Length - 1 ? "" : " | ")}";
+                //this.Log(shotsInLineStr, gameObject);
 
                 RaycastHit hit;
                 for (int i = 0; i < hits.Length; ++i)
                 {
                     hit = hits[i];
-                    ConsoleProLogger.Log(this, $"Shot <b>{hit.transform.name}</b>.", hit.transform.gameObject);
+                    this.Log($"Shot <b>{hit.transform.name}</b>.", hit.transform.gameObject);
 
                     if (!_knownShootables.TryGetValue(hit.collider, out IFPSShootable shootable))
                         if (hit.collider.TryGetComponent(out shootable))
@@ -211,8 +239,6 @@
                     // Bullet impacts.
                     if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
                     {
-                        ConsoleProLogger.Log(this, $"Instantiating bullet impact.", gameObject);
-
                         Transform bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform).transform;
                         bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
                         bulletImpactInstance.forward = -hit.normal;
@@ -235,9 +261,9 @@
 
         private void UpdateAnimator()
         {
-            _weaponAnimator.SetBool("Moving", FPSMaster.FPSController.CheckMovement());
-            _weaponAnimator.SetBool("Sprinting", FPSMaster.FPSController.Sprinting);
-            _weaponAnimator.SetBool("Crouched", FPSMaster.FPSController.Crouched);
+            _weaponAnimator.SetBool(ANM_PARAM_MOVING, FPSMaster.FPSController.CheckMovement());
+            _weaponAnimator.SetBool(ANM_PARAM_SPRINTING, FPSMaster.FPSController.Sprinting);
+            _weaponAnimator.SetBool(ANM_PARAM_CROUCHED, FPSMaster.FPSController.Crouched);
         }
 
         private void SetMagazine(int fullCapacity, int loadCapacity)
@@ -277,7 +303,9 @@
 
         private void Start()
         {
-            Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+
             _weaponView.ShootAnimationOver += OnShootAnimationOver;
             _weaponView.ReloadAnimationOver += OnReloadAnimationOver;
             _weaponView.ShootFrame += OnShootFrame;

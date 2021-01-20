@@ -9,6 +9,9 @@
     /// </summary>
     public class FPSCamera : FPSControllableComponent, IConsoleProLoggable
     {
+        private const string INPUT_MOUSEX = "Mouse X";
+        private const string INPUT_MOUSEY = "Mouse Y";
+
         [Header("REFERENCES")]
         [SerializeField] private FPSController _fpsController = null;
         [SerializeField] private FPSCameraExtraMovement[] _extraMovements = null;
@@ -32,6 +35,7 @@
         private bool _pitchClamped = true;
         private float _initMinPitch;
         private float _initMaxPitch;
+        private float _initHeight;
 
         private Vector3 _rawCamInput;
         private Vector3 _camDest;
@@ -124,8 +128,8 @@
 
         private void GetInputs()
         {
-            _rawCamInput.x = Input.GetAxisRaw("Mouse Y");
-            _rawCamInput.y = Input.GetAxisRaw("Mouse X");
+            _rawCamInput.x = Input.GetAxisRaw(INPUT_MOUSEY);
+            _rawCamInput.y = Input.GetAxisRaw(INPUT_MOUSEX);
         }
 
         private void EvaluateDestination()
@@ -189,11 +193,16 @@
 
         private void Awake()
         {
-            Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
 
             _currCamEulerAngles = transform.localEulerAngles;
             _initMinPitch = _minPitch;
             _initMaxPitch = _maxPitch;
+            _initHeight = _height;
+
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand<float>("camHeight", "Sets the camera height.", true, false, DBG_SetHeight));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("resetCamHeight", "Resets the camera height.", true, false, DBG_ResetHeight));
         }
 
         private void Update()
@@ -215,6 +224,16 @@
         {
             if (Manager.ReferencesHub.Exists())
                 Manager.ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+        }
+
+        private void DBG_SetHeight(float h)
+        {
+            _height = h;
+        }
+
+        private void DBG_ResetHeight()
+        {
+            _height = _initHeight;
         }
     }
 }

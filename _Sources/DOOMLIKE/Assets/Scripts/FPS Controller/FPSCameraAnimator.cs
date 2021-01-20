@@ -5,6 +5,9 @@
     [RequireComponent(typeof(Animator))]
     public class FPSCameraAnimator : FPSComponent
     {
+        private const string ANM_PARAM_DEATH = "Death";
+        private const string ANM_PARAM_HURT = "Hurt";
+
         private Animator _animator;
 
         // Animation event.
@@ -15,12 +18,12 @@
 
         public void PlayDeathAnimation()
         {
-            _animator.SetTrigger("Death");
+            _animator.SetTrigger(ANM_PARAM_DEATH);
         }
 
         public void PlayHurtAnimation()
         {
-            _animator.SetTrigger("Hurt");
+            _animator.SetTrigger(ANM_PARAM_HURT);
         }
 
         private void Awake()

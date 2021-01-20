@@ -29,6 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 6851498863697048940}
   - {fileID: 85410700155841579}
   - {fileID: 85410701045727504}
   - {fileID: 85410700902868261}
@@ -64,6 +65,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _glassCollider: {fileID: 85410699444010098}
   _glassRenderer: {fileID: 85410700155841577}
+  _glassShatterParticles: {fileID: 1646684724106084665}
   _traumaOnShot: 0.25
 --- !u!1 &85410699781232338
 GameObject:
@@ -175,7 +177,7 @@ Transform:
   m_Children:
   - {fileID: 85410699781232339}
   m_Father: {fileID: 85410699444010101}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &85410699797205114
 MeshFilter:
@@ -254,7 +256,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.25, z: 0.3}
   m_Children: []
   m_Father: {fileID: 85410699444010101}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &85410700155841574
 MeshFilter:
@@ -512,8 +514,8 @@ MonoBehaviour:
   _outline: {fileID: 85410700538423972}
   _healAmount: 50
   _healScaler: {fileID: 85410701045727504}
-  _scaleDownDur: 0.5
-  _scaleDownCurve: 19
+  _scaleDownDur: 0.6
+  _scaleDownCurve: 17
 --- !u!1 &85410700902868260
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +547,7 @@ Transform:
   m_Children:
   - {fileID: 85410700439634787}
   m_Father: {fileID: 85410699444010101}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &85410700902868256
 MeshFilter:
@@ -623,5 +625,91 @@ Transform:
   m_Children:
   - {fileID: 85410700538423979}
   m_Father: {fileID: 85410699444010101}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &50993286525969475
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 85410699444010101}
+    m_Modifications:
+    - target: {fileID: 1616538380175713658, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4411206883417175089, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_Name
+      value: Healing Capsule Glass Particles
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 95ac2ef8e92f7154589f877f30517587, type: 3}
+--- !u!198 &1646684724106084665 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1616538380175713658, guid: 95ac2ef8e92f7154589f877f30517587,
+    type: 3}
+  m_PrefabInstance: {fileID: 50993286525969475}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6851498863697048940 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6890582152994935087, guid: 95ac2ef8e92f7154589f877f30517587,
+    type: 3}
+  m_PrefabInstance: {fileID: 50993286525969475}
+  m_PrefabAsset: {fileID: 0}

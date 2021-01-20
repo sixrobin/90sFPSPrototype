@@ -103,7 +103,9 @@
                     _allControllableComponents.Add(controllableComponent);
             }
 
-            Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.Exists())
+                Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("tgm", "Toggle God mode.", true, false, DBG_ToggleGodMode));
         }
 

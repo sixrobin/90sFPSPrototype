@@ -28,7 +28,7 @@
 
         public string ConsoleProPrefix => "FPS Stamina Manager";
 
-        public bool ConsoleProMuted => Manager.ReferencesHub.FPSMaster.ConsoleProMuted;
+        public bool ConsoleProMuted => Manager.ReferencesHub.Exists() && Manager.ReferencesHub.FPSMaster.ConsoleProMuted;
 
         public FPSStaminaManager()
         {

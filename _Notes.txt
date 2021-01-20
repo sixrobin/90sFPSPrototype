@@ -63,17 +63,26 @@
 - Capsules de téléportation entre checkpoints avec charges limitées (et unlock d'un truc qui rend la TP illimitée).
 - Utiliser le crouch pour certains passages du LD.
 
+- Idée de LD : faire tomber le joueur entre 4 vitres, complètement entouré d'ennemis qui restent passifs jusqu'à ce qu'il décide de tirer.
+
 - Plusieurs training workshops de plus en plus durs avec un reward à chaque fois.
 - Fake training workshop ? Tirer sur une cible explose un truc ou autre.
+
+- Animations des red lights pour attirer l'attention/donner envie de shoot ?
 
 - Capsules pour stocker l'inventaire comme les coffres de Undertale ?
 - Briser des vitres, certaines à travers lesquelles on peut voir dans un sens mais pas dans l'autre.
 - Barrels explosifs.
 - Salle de contrôle de caméras qu'on peut utiliser pour voir des salles à l'avance.
 
+- Salle avec énormément d'ennemis, et une vitre au centre à casser pour se laisser tomber.
+
+- Quand les colliders sont ajustés pour que le perso ne soit pas bloqué (game feel tout ça), faire attention à ce qu'aucun objet physiqué ne puisse sortir de la map.
+
 - Entraînement accessible via un couloir (qu'on peut voir depuis le training mais pas y accéder du coup, demande de faire un détour).
 - Possibilité de changer le style du scope (gagner des scopes différents).
 - Penser à l'orientation des éléments d'enviro pour la direction à suivre.
+- Penser à enable le fog avant de build.
 
 - Perks/Stats potentielles :
 	- Attack speed.

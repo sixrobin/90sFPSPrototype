@@ -8,6 +8,7 @@
         [SerializeField] private MeshRenderer _terminalRenderer = null;
         [SerializeField] private Material _terminalOnMaterial = null;
         [SerializeField] private GameObject _screenShatter = null;
+        [SerializeField] private ParticleSystem _screenShatterParticles = null;
         [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.13f;
 
         [Header("DEBUG")]
@@ -43,7 +44,7 @@
                 $"Tries: {_trainingWorkshop.Tries},\n" +
                 $"Best time: {(_trainingWorkshop.BestTime == float.MaxValue ? 0f : _trainingWorkshop.BestTime)} seconds,\n" +
                 $"Best shots: {(_trainingWorkshop.BestShots == int.MaxValue ? 0 : _trainingWorkshop.BestShots)} shots,\n" +
-                $"Score: {_trainingWorkshop.GetBestScoreToString()}.\n" +
+                $"Score: {_trainingWorkshop.BestScore}.\n" +
                 $"(If terminal won't open, make sure the terminal screen is listening to this interaction event.)", gameObject);
         }
 
@@ -55,6 +56,7 @@
             ConsoleProLogger.Log(this, $"Shattering Training Workshop terminal <b>{transform.name}</b>'s screen.", gameObject);
             ScreenShattered = true;
             _screenShatter.SetActive(true);
+            _screenShatterParticles.Play();
         }
 
         public void ShutdownTerminal()

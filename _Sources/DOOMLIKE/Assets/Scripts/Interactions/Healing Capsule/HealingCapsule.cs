@@ -11,7 +11,7 @@
         [Header("USE ANIMATION")]
         [SerializeField] private Transform _healScaler = null;
         [SerializeField, Min(0f)] private float _scaleDownDur = 1f;
-        [SerializeField, Min(0f)] private RSLib.EasingCurves.Curve _scaleDownCurve = RSLib.EasingCurves.Curve.InOutSine;
+        [SerializeField] private RSLib.EasingCurves.Curve _scaleDownCurve = RSLib.EasingCurves.Curve.InOutSine;
 
         public override void Interact()
         {
@@ -20,8 +20,8 @@
             if (_healAmount == -1)
                 Manager.ReferencesHub.FPSMaster.FPSHealthSystem.HealFull();
             else
-               Manager.ReferencesHub.FPSMaster.FPSHealthSystem.Heal(_healAmount);
-    
+                Manager.ReferencesHub.FPSMaster.FPSHealthSystem.Heal(_healAmount);
+
             StartCoroutine(ScaleDownCoroutine());
         }
 
@@ -37,7 +37,7 @@
         {
             for (float t = 0; t < 1f; t += Time.deltaTime / _scaleDownDur)
             {
-                _healScaler.SetScaleY(1f - t);
+                _healScaler.SetScaleY(1f - RSLib.EasingCurves.Easing.Ease(t, _scaleDownCurve));
                 yield return null;
             }
 

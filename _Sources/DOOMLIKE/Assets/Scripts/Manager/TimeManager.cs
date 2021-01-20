@@ -12,13 +12,13 @@
 
         public void Freeze()
         {
-            ConsoleProLogger.Log(this, "Freezing time (setting time scale to 0).", gameObject);
+            this.Log("Freezing time (setting time scale to 0).", gameObject);
             Time.timeScale = 0f;
         }
 
         public void Unfreeze()
         {
-            ConsoleProLogger.Log(this, "Unfreezing time (setting time scale to 1).", gameObject);
+            this.Log("Unfreezing time (setting time scale to 1).", gameObject);
             Time.timeScale = 1f;
         }
 
@@ -33,6 +33,7 @@
         private void Awake()
         {
             Console.DebugConsole.Instance.DebugConsoleToggled += OnDebugConsoleToggled;
+            Time.timeScale = 1f; // Useful if scene is loaded from debug console.
         }
 
         private void OnDestroy()

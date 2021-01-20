@@ -1231,6 +1231,7 @@ MonoBehaviour:
   _bestShotsText: {fileID: 5812796691850759091}
   _bestTimeText: {fileID: 5812796692028267205}
   _scoreText: {fileID: 5812796691940542842}
+  _scoreHighlightColor: {r: 0, g: 0.93725497, b: 0.4431373, a: 1}
   _bestTimeSecondsTextSize: 2.5
   _logsMuted: 0
 --- !u!1 &5812796692405028904

@@ -9,7 +9,7 @@
 
         private GUIStyle _worldSpaceDbgStyle;
 
-        public static bool DbgViewOn => Instance._dbgViewOn;
+        public static bool DbgViewOn => DebugManager.Exists() ? Instance._dbgViewOn : false;
 
         public static GUIStyle WorldSpaceDbgStyle => Instance._worldSpaceDbgStyle;
 
@@ -35,7 +35,7 @@
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("toggleDebugView", "Toggles debug view on screen.", true, false, DBG_ToggleDebugView));
         }
 
-        [UnityEngine.ContextMenu("Toggle Debug View")]
+        [ContextMenu("Toggle Debug View")]
         private void DBG_ToggleDebugView()
         {
             _dbgViewOn = !_dbgViewOn;

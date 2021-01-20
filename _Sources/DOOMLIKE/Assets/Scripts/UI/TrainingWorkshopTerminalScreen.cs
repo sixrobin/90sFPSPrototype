@@ -1,5 +1,6 @@
 ﻿namespace Doomlike.UI
 {
+    using RSLib.Extensions;
     using UnityEngine;
 
     public class TrainingWorkshopTerminalScreen : MonoBehaviour, IConsoleProLoggable
@@ -12,10 +13,14 @@
         [SerializeField] private TMPro.TextMeshProUGUI _bestShotsText = null;
         [SerializeField] private TMPro.TextMeshProUGUI _bestTimeText = null;
         [SerializeField] private TMPro.TextMeshProUGUI _scoreText = null;
+        [SerializeField] private Color _scoreHighlightColor = Color.white;
         [SerializeField] private float _bestTimeSecondsTextSize = 2.5f;
 
         [Header("DEBUG")]
         [SerializeField] private bool _logsMuted = false;
+
+        private string[] _scoresString = new string[] { "S", "A", "B", "C", "D" }; // 01234 = SABCD.
+        private Color _scoreBaseColor;
 
         public delegate void TerminalScreenToggledEventHandler(bool state);
 
@@ -27,7 +32,7 @@
 
         private void OnTerminalInteracted(FPSCtrl.FPSInteraction interaction)
         {
-            ConsoleProLogger.Log(this, $"Turning on Training Workshop terminal screen.");
+            this.Log($"Turning on Training Workshop terminal screen.");
 
             // TODO: Dictionary<Interaction, Terminal> to avoid cast?
             TrainingWorkshopTerminal terminal = interaction as TrainingWorkshopTerminal;
@@ -40,7 +45,12 @@
             _triesText.text = terminal.TrainingWorkshop.Tries.ToString();
             _bestShotsText.text = terminal.TrainingWorkshop.BestShots == int.MaxValue ? "0" : terminal.TrainingWorkshop.BestShots.ToString();
             _bestTimeText.text = terminal.TrainingWorkshop.BestTime == float.MaxValue ? "0.0" : $"{terminal.TrainingWorkshop.BestTime:f2}<size={_bestTimeSecondsTextSize}>s</size>";
-            _scoreText.text = terminal.TrainingWorkshop.GetBestScoreToString();
+
+            string scoreStr = string.Empty;
+            for (int i = 0; i < _scoresString.Length; ++i)
+                scoreStr += $"{_scoresString[i].ToColoredIf(_scoreHighlightColor, terminal.TrainingWorkshop.Tries > 0 && terminal.TrainingWorkshop.BestScore == i)}" +
+                    $"{(i == _scoresString.Length - 1 ? "" : " ")}";
+            _scoreText.text = scoreStr;
 
             TerminalScreenToggled?.Invoke(true);
         }
@@ -56,6 +66,8 @@
         {
             for (int i = _terminals.Length - 1; i >= 0; --i)
                 _terminals[i].Interacted += OnTerminalInteracted;
+
+            _scoreBaseColor = _scoreText.color;
         }
 
         private void Update()
