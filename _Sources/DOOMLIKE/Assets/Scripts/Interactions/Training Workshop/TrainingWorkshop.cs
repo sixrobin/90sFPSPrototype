@@ -53,6 +53,16 @@
             BestScore = 4;
         }
 
+        public void ResetWorkshopInstantly()
+        {
+            if (!_inProgress)
+                return;
+
+            _noShotsTimer = 0f;
+            _inProgress = false;
+            StartCoroutine(ResetWorkshopCoroutine(true));
+        }
+
         private void OnTargetShot(TrainingTarget target)
         {
             if (_shots == 0)
@@ -69,7 +79,7 @@
 
                 RecordScore();
                 WorkshopComplete?.Invoke(_score);
-                StartCoroutine(ResetWorkshopCoroutine());
+                StartCoroutine(ResetWorkshopCoroutine(false));
             }
         }
 
@@ -97,9 +107,10 @@
             BestScore = Mathf.Min(BestScore, _score);
         }
 
-        private System.Collections.IEnumerator ResetWorkshopCoroutine()
+        private System.Collections.IEnumerator ResetWorkshopCoroutine(bool instantly)
         {
-            yield return RSLib.Yield.SharedYields.WaitForSeconds(_resetDelayAfterCompletion);
+            if (!instantly)
+                yield return RSLib.Yield.SharedYields.WaitForSeconds(_resetDelayAfterCompletion);
 
             ConsoleProLogger.Log(this, $"Reseting Training Workshop <b>{transform.name}</b>.", gameObject);
             for (int i = _targets.Length - 1; i >= 0; --i)
@@ -141,10 +152,7 @@
             if (_noShotsTimer > _resetDelayAfterNoShot)
             {
                 ConsoleProLogger.Log(this, $"Resetting Training Workshop <b>{transform.name}</b> while in progress.");
-
-                _noShotsTimer = 0f;
-                _inProgress = false;
-                StartCoroutine(ResetWorkshopCoroutine());
+                ResetWorkshopInstantly();
             }
         }
 

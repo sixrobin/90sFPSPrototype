@@ -5,15 +5,22 @@
     public class CameraRampsController : MonoBehaviour
     {
         [SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _deathGrayscale = null;
-        [SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _nightVisionGrayscale = null;
+        [SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _whiteScreenGrayscale = null;
+        //[SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _nightVisionGrayscale = null;
 
-        public void FadeToDeathGrayscale(float delay, float desaturationDur, float pauseDur, float fadeToBlackDur)
+        public void FadeToDeathGrayscale(float delay, float desaturationDur, float pauseDur, float fadeToBlackDur, System.Action callback = null)
         {
-            StartCoroutine(FadeToDeathGrayscaleCoroutine(delay, desaturationDur, pauseDur, fadeToBlackDur));
+            StartCoroutine(FadeToDeathGrayscaleCoroutine(delay, desaturationDur, pauseDur, fadeToBlackDur, callback));
         }
 
-        private System.Collections.IEnumerator FadeToDeathGrayscaleCoroutine(float delay, float desaturationDur, float pauseDur, float fadeToBlackDur)
+        public void FadeToWhiteScreenGrayscale(float delay, float fadeToWhiteDur, float delayAfter, System.Action callback = null)
         {
+            StartCoroutine(FadeToWhitScreenGrayscaleCoroutine(delay, fadeToWhiteDur, delayAfter, callback));
+        }
+
+        private System.Collections.IEnumerator FadeToDeathGrayscaleCoroutine(float delay, float desaturationDur, float pauseDur, float fadeToBlackDur, System.Action callback = null)
+        {
+            _deathGrayscale.enabled = true;
             yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
 
             for (float t = 0f; t < 1f; t += Time.deltaTime / desaturationDur)
@@ -40,6 +47,24 @@
             }
 
             _deathGrayscale.rampOffset = -1f;
+            callback?.Invoke();
+        }
+
+        private System.Collections.IEnumerator FadeToWhitScreenGrayscaleCoroutine(float delay, float fadeToWhiteDur, float delayAfter, System.Action callback = null)
+        {
+            _whiteScreenGrayscale.enabled = true;
+            yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
+
+            for (float t = 0f; t < 1f; t += Time.deltaTime / fadeToWhiteDur)
+            {
+                _whiteScreenGrayscale.weight = RSLib.EasingCurves.Easing.Ease(t, RSLib.EasingCurves.Curve.InOutSine);
+                yield return null;
+            }
+
+            _whiteScreenGrayscale.weight = 1f;
+            yield return RSLib.Yield.SharedYields.WaitForSeconds(delayAfter);
+
+            callback?.Invoke();
         }
     }
 }

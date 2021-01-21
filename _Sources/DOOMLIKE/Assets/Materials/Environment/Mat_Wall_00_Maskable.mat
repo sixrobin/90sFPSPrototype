@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Training-Workshop_Reward-Capsule_00
-  m_Shader: {fileID: 4800000, guid: 259a627701e26aa41877d4e069e22661, type: 3}
+  m_Name: Mat_Wall_00_Maskable
+  m_Shader: {fileID: 4800000, guid: b2ed42d0b5ae4b9408d9e2618c8e8474, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2002
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 5d851c85acc79ce4a863a4dac8d250cb, type: 3}
+        m_Texture: {fileID: 2800000, guid: eb077eaa4c052c544a2de86d6b0fb107, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:

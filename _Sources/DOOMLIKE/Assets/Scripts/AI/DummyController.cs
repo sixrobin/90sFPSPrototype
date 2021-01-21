@@ -166,7 +166,11 @@
                     _navMeshAgent.enabled = false;
                     _pathView.enabled = false;
                     LookAtPlayer();
-                    _animator.ResetTrigger("Hurt");
+
+                    foreach (AnimatorControllerParameter anmParam in _animator.parameters)
+                        if (anmParam.type == AnimatorControllerParameterType.Trigger)
+                            _animator.ResetTrigger(anmParam.name);
+
                     _animator.SetTrigger("Death");
                     break;
                 }
@@ -210,10 +214,7 @@
                 }
 
                 default:
-                {
-                    // Hurt/Atk/Death, nothing to do.
-                    break;
-                }
+                    break; // Hurt/Atk/Death, nothing to do.
             }
         }
 

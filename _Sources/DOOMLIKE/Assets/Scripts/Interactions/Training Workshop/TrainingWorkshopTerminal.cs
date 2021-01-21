@@ -40,6 +40,8 @@
             if (!ScreenShattered)
                 _terminalRenderer.material = _terminalOnMaterial;
 
+            _trainingWorkshop.ResetWorkshopInstantly();
+
             ConsoleProLogger.Log(this, $"Opening Training Workshop terminal <b>{transform.name}</b> for Workshop {TrainingWorkshop.WorkshopIndex} :\n" +
                 $"Tries: {_trainingWorkshop.Tries},\n" +
                 $"Best time: {(_trainingWorkshop.BestTime == float.MaxValue ? 0f : _trainingWorkshop.BestTime)} seconds,\n" +

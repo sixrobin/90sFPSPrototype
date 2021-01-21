@@ -2247,6 +2247,7 @@ GameObject:
   - component: {fileID: 8788388082494117015}
   - component: {fileID: 8788388082494117000}
   - component: {fileID: 8788388082494117002}
+  - component: {fileID: 6739577412238197576}
   m_Layer: 8
   m_Name: Camera POV
   m_TagString: Untagged
@@ -2344,7 +2345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deathGrayscale: {fileID: 8788388082494117002}
-  _nightVisionGrayscale: {fileID: 8788388082494117000}
+  _whiteScreenGrayscale: {fileID: 6739577412238197576}
 --- !u!114 &8788388082494117000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2369,7 +2370,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8788388082494117005}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1bfa82eac123024ba0eae7597f96238, type: 3}
   m_Name: 
@@ -2377,6 +2378,23 @@ MonoBehaviour:
   shader: {fileID: 4800000, guid: fdc754089aae4ab478d3031fbe8f7ebb, type: 3}
   textureRamp: {fileID: 2800000, guid: 0df87a54aa0d4954ea555c74d5074362, type: 3}
   rampOffset: 0.12
+  weight: 0
+  inverted: 0
+--- !u!114 &6739577412238197576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8788388082494117005}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1bfa82eac123024ba0eae7597f96238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: 4800000, guid: fdc754089aae4ab478d3031fbe8f7ebb, type: 3}
+  textureRamp: {fileID: 2800000, guid: 0df87a54aa0d4954ea555c74d5074362, type: 3}
+  rampOffset: -1
   weight: 0
   inverted: 0
 --- !u!1 &8788388082686976752

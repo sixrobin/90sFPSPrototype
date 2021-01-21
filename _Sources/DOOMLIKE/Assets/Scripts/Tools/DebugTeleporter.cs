@@ -38,7 +38,7 @@
         private void Awake()
         {
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int>(
-                "teleportAtIndex",
+                "tpAtIndex",
                 "Teleports the player to debug position at specified index.",
                 true,
                 false,
