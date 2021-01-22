@@ -50,7 +50,7 @@
                 $"(If terminal won't open, make sure the terminal screen is listening to this interaction event.)", gameObject);
         }
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             if (ScreenShattered)
                 return;

@@ -25,24 +25,23 @@
         private float _refAmplitude;
         private float _refSpeed;
 
-        public bool IsOn { get; private set; } = true;
+        private float _offset;
+        private bool _goingDown;
+
+        public delegate void BobDirectionChangedEventHandler(int nextDir);
+        public event BobDirectionChangedEventHandler BobDirectionChanged;
+
+        public float Multiplier { get; private set; } = 1f;
 
         public override void ApplyMovement()
         {
-            if (!IsOn)
-                return;
-
             Bob();
         }
 
-        public void SetState(bool state)
+        public void SetPercentage(float mult)
         {
-            ConsoleProLogger.Log(Manager.ReferencesHub.FPSMaster.FPSCamera, $"Toggling head bob to {state}.");
-
-            if (!state)
-                ResetBobValues();
-
-            IsOn = state;
+            ConsoleProLogger.Log(Manager.ReferencesHub.FPSMaster.FPSCamera, $"Setting head bob percentage to {mult}%.");
+            Multiplier = mult * 0.01f;
         }
 
         /// <summary>
@@ -77,8 +76,17 @@
         private void Bob()
         {
             EvaluateBobbingValues();
+
             _sineTimer += Time.deltaTime * _currSpeed;
-            transform.position += new Vector3(0f, Mathf.Sin(_sineTimer) * _currAmplitude);
+            float nextOffset = Mathf.Sin(_sineTimer) * _currAmplitude;
+
+            if (_goingDown != nextOffset < _offset)
+                BobDirectionChanged?.Invoke((int)Mathf.Sign(nextOffset - _offset));
+
+            _goingDown = nextOffset < _offset;
+            _offset = nextOffset;
+
+            transform.position += new Vector3(0f, nextOffset * Multiplier);
         }
 
         private void ResetBobValues()

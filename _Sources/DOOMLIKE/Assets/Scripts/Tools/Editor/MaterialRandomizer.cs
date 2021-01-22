@@ -76,7 +76,7 @@
             _filter = EditorGUILayout.TextField("Filter : ", _filter, EditorStyles.miniTextField, GUILayout.ExpandWidth(true));
             _materialsLength = EditorGUILayout.IntField("Materials Length : ", _materialsLength, EditorStyles.miniTextField, GUILayout.ExpandWidth(true));
 
-            if (_previousLength != _materialsLength)
+            if (_materials != null && _previousLength != _materialsLength)
             {
                 Object[] copy = new Object[_materials.Length];
                 System.Array.Copy(_materials, copy, _materials.Length);
@@ -88,6 +88,9 @@
 
                 _previousLength = _materialsLength;
             }
+
+            if (_materials == null)
+                _materials = new Object[_materialsLength];
 
             EditorGUILayout.LabelField("Materials", EditorStyles.boldLabel);
             for (int i = 0; i < _materialsLength; ++i)

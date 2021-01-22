@@ -232,7 +232,7 @@
 
                     if (shootable != null)
                     {
-                        shootable.OnShot(hit.point);
+                        shootable.OnShot(new FPSShotDatas(hit));
                         FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
                     }
 

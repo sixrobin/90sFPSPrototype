@@ -17,7 +17,7 @@
 
         public bool ShotThrough => true;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             for (int i = _wallMeshRenderers.Length - 1; i >= 0; --i)
                 _wallMeshRenderers[i].material = _brokenGlassWallMat;
@@ -26,7 +26,7 @@
             if (_navMeshObstacle)
                 _navMeshObstacle.enabled = false;
 
-            _glassShatterParticles.transform.position = point;
+            _glassShatterParticles.transform.position = shotDatas.Point;
             _glassShatterParticles.Play();
         }
 

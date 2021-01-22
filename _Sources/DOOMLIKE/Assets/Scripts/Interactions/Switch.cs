@@ -16,7 +16,7 @@
 
         public bool ShotThrough => false;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             if (_destroyed)
                 return;
@@ -26,9 +26,9 @@
 
             _onDestroyed?.Invoke();
 
-            _smokeParticles.transform.position = point;
+            _smokeParticles.transform.position = shotDatas.Point;
             _smokeParticles.Play();
-            Instantiate(_sparksParticles, point, _sparksParticles.transform.rotation);
+            Instantiate(_sparksParticles, shotDatas.Point, _sparksParticles.transform.rotation);
         }
 
         private System.Collections.IEnumerator SetAsDestroyedAtEndOfFrame()

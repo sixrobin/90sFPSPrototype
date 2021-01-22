@@ -6,6 +6,6 @@
 
         float TraumaOnShot { get; }
 
-        void OnShot(UnityEngine.Vector3 point);
+        void OnShot(FPSShotDatas shotDatas);
     }
 }

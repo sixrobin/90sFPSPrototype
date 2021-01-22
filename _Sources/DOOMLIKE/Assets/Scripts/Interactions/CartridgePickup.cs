@@ -31,7 +31,7 @@
             }
         }
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             float rndX = Random.Range(0.5f, 1f);
             float rndZ = Random.Range(0.5f, 1f);
@@ -41,7 +41,7 @@
 
             for (int i = 0; i < 3; ++i)
             {
-                _rb.AddExplosionForce(3f, point.AddY(-0.2f), 1f, 3f);
+                _rb.AddExplosionForce(3f, shotDatas.Point.AddY(-0.2f), 1f, 3f);
                 _rb.velocity = transform.TransformDirection(new Vector3(rndX, 10f, rndZ));
             }
         }

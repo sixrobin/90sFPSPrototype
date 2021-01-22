@@ -69,7 +69,7 @@
 
         public bool ConsoleProMuted => _logsMuted;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             if (_currState == AIState.Death)
                 return;
@@ -84,7 +84,7 @@
             else if (_currState != AIState.Hurt)
                 SetState(AIState.Hurt);
 
-            Transform bloodSplashInstance = Instantiate(_bloodSplashPrefab, point, Quaternion.identity).transform;
+            Transform bloodSplashInstance = Instantiate(_bloodSplashPrefab, shotDatas.Point, Quaternion.identity).transform;
             bloodSplashInstance.forward = transform.position - _target.position;
         }
 

@@ -22,7 +22,7 @@
 
         public bool ShotThrough => false;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             _billboardEnabled = false;
             _animator.enabled = true;
@@ -30,7 +30,7 @@
 
             _collider.enabled = false;
 
-            Transform hitInstanceTransform = Instantiate(_hitPrefab, point, Quaternion.identity).transform;
+            Transform hitInstanceTransform = Instantiate(_hitPrefab, shotDatas.Point, Quaternion.identity).transform;
             hitInstanceTransform.forward = hitInstanceTransform.position - BillboardCam.position;
 
             _isDown = true;

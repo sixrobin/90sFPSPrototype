@@ -11,7 +11,7 @@
 
         public bool ShotThrough => false;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             _door.ShootTrigger();
             gameObject.SetActive(false);

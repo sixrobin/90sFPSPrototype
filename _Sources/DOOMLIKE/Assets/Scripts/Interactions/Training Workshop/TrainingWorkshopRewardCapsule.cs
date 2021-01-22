@@ -26,7 +26,7 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             _currRotSpeed = _shotRotSpeed;
             StopAllCoroutines();

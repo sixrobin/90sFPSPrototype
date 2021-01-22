@@ -17,7 +17,7 @@
 
         public bool ShotThrough => false;
 
-        public void OnShot(Vector3 point)
+        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             _light.SetActive(false);
             _wallMeshRenderer.material = _lightOffWallMat;

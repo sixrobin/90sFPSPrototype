@@ -9,6 +9,26 @@
             "group": null,
             "votes": 0,
             "date": "2021-01-13T16:41:25.213Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "https://forum.unity.com/threads/solved-ambient-occlusion-showing-through-unlit-texture.694804/",
+                    "created": "2021-01-21T11:55:32.243Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Ecran de stats (ennemis tués, lumières détruites, etc.).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T10:48:00.928Z",
             "comments": []
         }
     ],
@@ -62,7 +82,7 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Database XML.",
+            "content": "Database XML ? Réfléchir en tout cas à la pertinence.",
             "group": null,
             "votes": 0,
             "date": "2021-01-13T16:36:16.105Z",
@@ -88,7 +108,16 @@
             "group": null,
             "votes": 0,
             "date": "2021-01-13T16:47:17.021Z",
-            "comments": []
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Interface ou classe abstraite NightVisionTogglable ? FogController ?",
+                    "created": "2021-01-17T22:30:54.277Z"
+                }
+            ]
         },
         {
             "author": {
@@ -106,42 +135,20 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Assets UI en version night vision.",
+            "content": "Système de checkpoints (avec sauvegarde).",
             "group": null,
             "votes": 0,
-            "date": "2021-01-13T22:57:52.422Z",
-            "comments": []
-        },
-        {
-            "author": {
-                "name": "Robin SIX",
-                "email": "r.six@le-cccp.com"
-            },
-            "content": "Gestion des slopes.",
-            "group": null,
-            "votes": 0,
-            "date": "2021-01-14T08:56:41.669Z",
+            "date": "2021-01-14T12:06:53.983Z",
             "comments": [
                 {
                     "author": {
                         "name": "Robin SIX",
                         "email": "r.six@le-cccp.com"
                     },
-                    "content": "Implique du travail sur le FPSController et sur l'enviro (textures + réflexion sur les angles pour s'y retrouver dans l'enviro \"voxel\").",
-                    "created": "2021-01-14T08:57:30.642Z"
+                    "content": "Et la commande qui va avec pour s'y TP.",
+                    "created": "2021-01-15T08:13:13.065Z"
                 }
             ]
-        },
-        {
-            "author": {
-                "name": "Robin SIX",
-                "email": "r.six@le-cccp.com"
-            },
-            "content": "Système de checkpoints (avec sauvegarde).",
-            "group": null,
-            "votes": 0,
-            "date": "2021-01-14T12:06:53.983Z",
-            "comments": []
         },
         {
             "author": {
@@ -176,10 +183,65 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Level design pour proto testable.",
+            "content": "Système d'ascenseurs.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-14T16:28:36.407Z",
+            "date": "2021-01-15T18:08:17.085Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Sauvegarder des datas sur les objets ramassés et actions faites si test envoyé à quelqu'un.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-18T09:30:03.825Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Barrils explosifs (graph, VFX, damages).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-18T12:32:28.701Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Ennemi qui attaque à distance et essaie de rester loin du joueur.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-19T15:58:36.919Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Fall animation et dégâts, et bloquer le controller pendant l'anim.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-19T18:51:15.271Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Stab (ou autre attaque càc en cas de manque de munitions).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-19T21:24:05.393Z",
             "comments": []
         }
     ],
@@ -200,11 +262,31 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Event head bob down pour les bruits de bas (gérer selon l'intensité/état du head bob).",
+            "content": "Textures de portes qui coïncident avec les animations.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-14T10:41:37.591Z",
+            "date": "2021-01-20T20:30:55.715Z",
             "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Animation d'apparition du reward dans les capsules.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T21:43:13.400Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Rotation qui s'accélère, opacité de la capsule qui augmente, et pop d'un coup avec le reward.",
+                    "created": "2021-01-20T21:43:49.633Z"
+                }
+            ]
         }
     ],
     "Medium Cost / Medium Value": [
@@ -239,7 +321,16 @@
             "group": null,
             "votes": 0,
             "date": "2021-01-13T20:34:45.289Z",
-            "comments": []
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Voir si RSLib suffit ou si ce serait bien d'en créer un custom pour en faire un logger, et avoir une méthode qui instantie les objets si pas dans la pool + logwarning ?",
+                    "created": "2021-01-20T19:31:06.824Z"
+                }
+            ]
         },
         {
             "author": {
@@ -260,20 +351,31 @@
                     "created": "2021-01-14T22:40:20.061Z"
                 }
             ]
-        }
-    ],
-    "Medium Cost / High Value": [
+        },
         {
             "author": {
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Outline qui ne traverse pas les meshes.",
+            "content": "Main Menu / anim de caméra pour le début du jeu.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-13T16:36:02.415Z",
+            "date": "2021-01-15T12:31:40.214Z",
             "comments": []
         },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Material randomizer : option pour spécifier des materials à ne pas remplacer.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-22T23:06:44.920Z",
+            "comments": []
+        }
+    ],
+    "Medium Cost / High Value": [
         {
             "author": {
                 "name": "Robin SIX",
@@ -301,7 +403,7 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Input maintenu \nou un seul appui pour crouch/sprint etc.",
+            "content": "Toggle crouch, toggle sprint.",
             "group": null,
             "votes": 0,
             "date": "2021-01-13T16:42:08.747Z",
@@ -328,6 +430,39 @@
             "votes": 0,
             "date": "2021-01-14T08:44:34.485Z",
             "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Système de points vitaux sur les ennemis.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-15T18:02:34.348Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Portes qu'on peut entrouvrir en tirant dessus, mais pas entièrement, besoin du levier.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T20:23:59.086Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Main menu, et un bouton in game pour y revenir.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-18T09:29:33.132Z",
+            "comments": []
         }
     ],
     "Low Cost / Low Value": [
@@ -336,10 +471,10 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Option Head bob : remplacer le toggle par un pourcentage et rename \"bob\" en \"movement\".",
+            "content": "Meilleur VFX pour le tir (essayer un mélange de sprite sheet et particles system).",
             "group": null,
             "votes": 0,
-            "date": "2021-01-13T16:50:24.284Z",
+            "date": "2021-01-14T23:08:19.161Z",
             "comments": []
         },
         {
@@ -347,7 +482,96 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Setup un prefab de showcase des VFX",
+            "content": "Feedback sur l'UI des munitions quand plus de munitions -> version night vision.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T11:31:46.942Z",
+            "comments": []
+        }
+    ],
+    "Low Cost / Medium Value": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Display du timer des workshops quand ils sont en cours.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:20:06.762Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Attention à ne pas pouvoir faire 2 workshops en même temps.",
+                    "created": "2021-01-14T19:20:32.653Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Classe générique avec events on trigger enter (et option pour disable, etc.).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T22:11:08.466Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Caisses dans lesquelles on peut tirer pour les bump un peu.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-19T09:03:51.942Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Voir s'il serait pertinent d'exporter la logique des bumps des cartridges pour la mettre en tant que component indépendant sur n'importe quel game object.",
+                    "created": "2021-01-19T09:04:44.904Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Textures des walls moitié moins haute pour les conduits crouched.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T19:29:52.290Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "IFPSShootable : boolean pour savoir si les impacts devraient avoir un collider ou non.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-22T23:02:07.706Z",
+            "comments": []
+        }
+    ],
+    "Low Cost / High Value": [],
+    "OTHER": [
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Setup un prefab/une scène de showcase des VFX",
             "group": null,
             "votes": 0,
             "date": "2021-01-13T21:21:17.695Z",
@@ -358,32 +582,10 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "VFX de destruction des écrans des terminaux.",
+            "content": "Level design pour proto testable.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-13T22:56:49.971Z",
-            "comments": []
-        },
-        {
-            "author": {
-                "name": "Robin SIX",
-                "email": "r.six@le-cccp.com"
-            },
-            "content": "Constantes pour les inputs et paramètres d'animators.",
-            "group": null,
-            "votes": 0,
-            "date": "2021-01-14T18:56:48.312Z",
-            "comments": []
-        },
-        {
-            "author": {
-                "name": "Robin SIX",
-                "email": "r.six@le-cccp.com"
-            },
-            "content": "Reset ou mettre un pause un workshop quand on ouvre son terminal.",
-            "group": null,
-            "votes": 0,
-            "date": "2021-01-14T19:25:10.869Z",
+            "date": "2021-01-14T16:28:36.407Z",
             "comments": []
         },
         {
@@ -411,23 +613,10 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Debug Console : rendre la navigation dans l'autocomplete cyclique.",
+            "content": "Debug Console : box pour ne pas faire dépasser l'auto\ncomplétion.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-14T22:56:44.126Z",
-            "comments": []
-        }
-    ],
-    "Low Cost / Medium Value": [
-        {
-            "author": {
-                "name": "Robin SIX",
-                "email": "r.six@le-cccp.com"
-            },
-            "content": "Event quand les PV d'un HealthSystem changent.",
-            "group": null,
-            "votes": 0,
-            "date": "2021-01-13T16:37:03.519Z",
+            "date": "2021-01-15T21:43:19.990Z",
             "comments": []
         },
         {
@@ -435,30 +624,10 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Display du timer des workshops quand ils sont en cours.",
+            "content": "Penser à retirer les commandes de la console en quittant la scène.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-14T19:20:06.762Z",
-            "comments": [
-                {
-                    "author": {
-                        "name": "Robin SIX",
-                        "email": "r.six@le-cccp.com"
-                    },
-                    "content": "Attention à ne pas pouvoir faire 2 workshops en même temps.",
-                    "created": "2021-01-14T19:20:32.653Z"
-                }
-            ]
-        },
-        {
-            "author": {
-                "name": "Robin SIX",
-                "email": "r.six@le-cccp.com"
-            },
-            "content": "Dans le DebugManager, système de points de TP linkés à une commande.",
-            "group": null,
-            "votes": 0,
-            "date": "2021-01-14T19:24:31.919Z",
+            "date": "2021-01-17T18:17:17.802Z",
             "comments": []
         },
         {
@@ -466,27 +635,67 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Feedback sur l'UI des munitions quand plus de munitions.",
+            "content": "NPC / terminal pour expliquer ce qu'il se passe et comment ouvrir la porte.",
             "group": null,
             "votes": 0,
-            "date": "2021-01-14T23:02:03.050Z",
+            "date": "2021-01-20T22:18:14.570Z",
             "comments": []
-        }
-    ],
-    "Low Cost / High Value": [
+        },
         {
             "author": {
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
-            "content": "Permettre de récupérer des munitions, et clamper.",
+            "content": "4 couloirs à emprunter, avec une barrière en mode \"à venir\".",
             "group": null,
             "votes": 0,
-            "date": "2021-01-13T16:45:53.844Z",
+            "date": "2021-01-20T22:18:27.044Z",
             "comments": []
-        }
-    ],
-    "OTHER": [
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Polisher à fond ce qui existe déjà.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T22:18:55.612Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "A penser avant de faire un build :",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-21T08:36:44.111Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Enable le fog.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-21T08:36:54.829Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Randomizer les murs (dont certains avec flèches).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-21T08:37:03.553Z",
+            "comments": []
+        },
         {
             "author": {
                 "name": "Robin SIX",
@@ -496,6 +705,17 @@
             "group": null,
             "votes": 0,
             "date": "2021-01-13T16:36:45.968Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Event quand les PV d'un HealthSystem changent.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:37:03.519Z",
             "comments": []
         },
         {
@@ -536,6 +756,17 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
+            "content": "Permettre de récupérer des munitions, et clamper.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:45:53.844Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
             "content": "Système de chargeur infini pour l'arme de base.",
             "group": null,
             "votes": 0,
@@ -560,6 +791,17 @@
             "group": null,
             "votes": 0,
             "date": "2021-01-13T16:46:44.501Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Option Head bob : remplacer le toggle par un pourcentage et rename \"bob\" en \"movement\".",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T16:50:24.284Z",
             "comments": []
         },
         {
@@ -611,6 +853,39 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
+            "content": "VFX de destruction des écrans des terminaux.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T22:56:49.971Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Assets UI en version night vision.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-13T22:57:52.422Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Event head bob down pour les bruits de bas (gérer selon l'intensité/état du head bob).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T10:41:37.591Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
             "content": "Visualisation des FPS (si Toggle Debug View).",
             "group": null,
             "votes": 0,
@@ -633,10 +908,43 @@
                 "name": "Robin SIX",
                 "email": "r.six@le-cccp.com"
             },
+            "content": "Constantes pour les inputs et paramètres d'animators.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T18:56:48.312Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
             "content": "Fix le bug de l'animation du gun qui se bloque quand on interagit avec un terminal.",
             "group": null,
             "votes": 0,
             "date": "2021-01-14T19:23:55.145Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Dans le DebugManager, système de points de TP linkés à une commande.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:24:31.919Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Reset ou mettre en pause un workshop quand on ouvre son terminal.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T19:25:10.869Z",
             "comments": []
         },
         {
@@ -670,6 +978,345 @@
             "group": null,
             "votes": 0,
             "date": "2021-01-14T22:36:54.778Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : rendre la navigation dans l'autocomplete cyclique.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T22:56:44.126Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Feedback sur l'UI des munitions quand plus de munitions.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-14T23:02:03.050Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Réaction des cartridges en tirant dedans (rigidbody force random ?).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-15T23:05:38.443Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Feedback quand on ne peut pas ramasser une cartridge car plus de place.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-15T23:07:08.947Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Debug Console : lignes de la box \"Help\" coupées.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-15T23:08:44.328Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Système de heal.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T16:55:35.445Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "VFX pour les vitres à casser (particules physiquées qui restent au sol).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T18:01:51.554Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Graph de trappes (doors au sol).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T20:05:37.349Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Permettre de tirer à travers une vitre (en plus de la détruire).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T20:41:53.666Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Permettre de tirer dans les cartridges pour les faire sauter partout.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T21:44:33.004Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Layer mask pour les objets non shootables (bullet impacts par exemple ou particles planes).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T21:49:37.773Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Textures variantes pour le ground et le roof.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T22:00:40.551Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Trouver une façon fonctionnelle de ne pas déclencher un path sur les dummies quand ils ne PEUVENT pas atteindre le joueur.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-17T22:13:48.504Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Reload avec un clic molette.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-18T12:37:24.083Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Meilleurs prefabs pour créer l'environnement (couloirs, chutes, 1  wall, corner, wall double sided, etc.)",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-18T16:04:25.319Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Check sur la concordance des distances de détection des dummies.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-19T12:40:50.850Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Contrôles claviers anglais.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-19T20:26:31.748Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Feedback sur la barre de vie quand sa valeur est modifiée.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T09:51:51.025Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Système de reward des training workshop.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T19:07:03.541Z",
+            "comments": [
+                {
+                    "author": {
+                        "name": "Robin SIX",
+                        "email": "r.six@le-cccp.com"
+                    },
+                    "content": "Capsule qui tourne, qui accélère sa rotation en tirant dedans.",
+                    "created": "2021-01-20T19:55:12.712Z"
+                }
+            ]
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Meilleure UI pour les scores des workshops (tous les scores affichés et un seul highlighté ?).",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T19:07:27.320Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Fin de proto avec message et ouvrir de AppData/LocalLow/... pour envoyer les logs.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T21:45:47.188Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "On peut contourner la trappe ouverte en passant dans le conduit ou en sprintant par dessus.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T23:06:24.235Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Dans les logs, récupérer le temps de jeu.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-21T14:37:00.627Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "La caméra fait un lerp trop visible à l'init.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-15T23:04:15.553Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "La caméra peut traverser les murs durant l'anim de mort.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T23:11:39.849Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Parfois, les dummies ne meurent pas visuellement bien qu'en état Death.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T23:11:52.808Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Il est possible de bump les cartridges hors de portée.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T23:14:15.663Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Sprinter en haut d'une pente fait voler brièvement le joueur.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T23:16:57.099Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Les outlines apparaissent au dessus de tout.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-20T23:17:25.079Z",
+            "comments": []
+        },
+        {
+            "author": {
+                "name": "Robin SIX",
+                "email": "r.six@le-cccp.com"
+            },
+            "content": "Très peu grave : on ne peut pas tirer à travers les masks.",
+            "group": null,
+            "votes": 0,
+            "date": "2021-01-21T22:14:27.566Z",
             "comments": []
         }
     ]
