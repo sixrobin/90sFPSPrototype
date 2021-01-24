@@ -63,6 +63,8 @@
 
         public bool ShotThrough => false;
 
+        public bool IsBulletImpactCrossable => false;
+
         public bool DbgModeOn => _dbgModeOn;
 
         public string ConsoleProPrefix => "Dummy";

@@ -24,5 +24,23 @@
         public static UI.TrainingWorkshopTerminalScreen TrainingWorkshopTerminalScreen => Instance._trainingWorkshopTerminalScreen;
 
         public static GameObject PrototypeEndCanvas => Instance._prototypeEndCanvas;
+
+        public static bool TryGetOptionsManager(out OptionsManager optionsManager)
+        {
+            optionsManager = Exists() ? OptionsManager : null;
+            return optionsManager != null;
+        }
+
+        public static bool TryGetCursorManager(out CursorManager cursorManager)
+        {
+            cursorManager = Exists() ? CursorManager : null;
+            return cursorManager != null;
+        }
+
+        public static bool TryGetTrainingWorkshopTerminalScreen(out UI.TrainingWorkshopTerminalScreen terminalScreen)
+        {
+            terminalScreen = Exists() ? TrainingWorkshopTerminalScreen : null;
+            return terminalScreen != null;
+        }
     }
 }

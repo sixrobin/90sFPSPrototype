@@ -13,6 +13,8 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
+        public bool IsBulletImpactCrossable => true;
+
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             _animator.SetTrigger(ANM_PARAM_SHOT);

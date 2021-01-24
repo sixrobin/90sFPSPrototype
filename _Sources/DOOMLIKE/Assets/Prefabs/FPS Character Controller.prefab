@@ -792,7 +792,7 @@ MonoBehaviour:
   - {fileID: 8788388081286005873}
   - {fileID: 6768583854264144276}
   _camRampsController: {fileID: 8788388082494117015}
-  _scopeVisual: {fileID: 0}
+  _scopeVisual: {fileID: 2054845099261525761}
   _pitchSpeed: 270
   _yawSpeed: 360
   _height: 0.55
@@ -2227,8 +2227,8 @@ MonoBehaviour:
     _initStorehouseCount: 10
     _initLoadCount: 5
   _bulletImpactPrefabs:
-  - {fileID: 1893956165818864978, guid: b64841333f2b1a24983048e79399cf52, type: 3}
-  - {fileID: 4093460053714054420, guid: 61606f8640d96174eb909be78400056e, type: 3}
+  - {fileID: 8460442152480617201, guid: b64841333f2b1a24983048e79399cf52, type: 3}
+  - {fileID: -8195788133472592010, guid: 61606f8640d96174eb909be78400056e, type: 3}
   _shootTrauma: 0.15
   _shootInputDelay: 0.15
   _reloadInputDelay: 0.15

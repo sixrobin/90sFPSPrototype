@@ -14,6 +14,8 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
+        public bool IsBulletImpactCrossable => false;
+
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             Shot?.Invoke(shotDatas);

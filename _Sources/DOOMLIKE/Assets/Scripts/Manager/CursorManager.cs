@@ -30,7 +30,9 @@
 
         private void Awake()
         {
-            ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            if (ReferencesHub.TryGetOptionsManager(out OptionsManager optionsManager))
+                optionsManager.OptionsStateChanged += OnOptionsStateChanged;
+
             Console.DebugConsole.Instance.DebugConsoleToggled += OnDebugConsoleToggled;
 
             Cursor.visible = false;
@@ -39,8 +41,8 @@
 
         private void OnDestroy()
         {
-            if (ReferencesHub.Exists())
-                ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            if (ReferencesHub.TryGetOptionsManager(out OptionsManager optionsManager))
+                optionsManager.OptionsStateChanged -= OnOptionsStateChanged;
 
             if (Console.DebugConsole.Exists())
                 Console.DebugConsole.Instance.DebugConsoleToggled -= OnDebugConsoleToggled;

@@ -11,6 +11,8 @@
 
         public bool ShotThrough => false;
 
+        public bool IsBulletImpactCrossable => false;
+
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             _door.ShootTrigger();

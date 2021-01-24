@@ -193,8 +193,8 @@
 
         private void Awake()
         {
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            if (Manager.ReferencesHub.TryGetOptionsManager(out Manager.OptionsManager optionsManager))
+                optionsManager.OptionsStateChanged += OnOptionsStateChanged;
 
             _currCamEulerAngles = transform.localEulerAngles;
             _initMinPitch = _minPitch;
@@ -222,8 +222,8 @@
 
         private void OnDestroy()
         {
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            if (Manager.ReferencesHub.TryGetOptionsManager(out Manager.OptionsManager optionsManager))
+                optionsManager.OptionsStateChanged -= OnOptionsStateChanged;
         }
 
         private void DBG_SetHeight(float h)

@@ -103,16 +103,16 @@
                     _allControllableComponents.Add(controllableComponent);
             }
 
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.TryGetTrainingWorkshopTerminalScreen(out UI.TrainingWorkshopTerminalScreen workshopTerminal))
+                workshopTerminal.TerminalScreenToggled += OnTerminalScreenToggled;
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("tgm", "Toggle God mode.", true, false, DBG_ToggleGodMode));
         }
 
         private void OnDestroy()
         {
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.TryGetTrainingWorkshopTerminalScreen(out UI.TrainingWorkshopTerminalScreen workshopTerminal))
+                workshopTerminal.TerminalScreenToggled -= OnTerminalScreenToggled;
         }
 
         [ContextMenu("Toggle God Mode")]

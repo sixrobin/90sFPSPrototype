@@ -25,6 +25,8 @@
 
         public bool ShotThrough => false;
 
+        public bool IsBulletImpactCrossable => false;
+
         public string ConsoleProPrefix => "Training Workshop";
 
         public bool ConsoleProMuted => _logsMuted;
@@ -78,14 +80,16 @@
         {
             base.Awake();
 
-            Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled += OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.TryGetTrainingWorkshopTerminalScreen(out UI.TrainingWorkshopTerminalScreen workshopTerminal))
+                workshopTerminal.TerminalScreenToggled += OnTerminalScreenToggled;
+
             _terminalOffMaterial = _terminalRenderer.material;
         }
 
         private void OnDestroy()
         {
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.TrainingWorkshopTerminalScreen.TerminalScreenToggled -= OnTerminalScreenToggled;
+            if (Manager.ReferencesHub.TryGetTrainingWorkshopTerminalScreen(out UI.TrainingWorkshopTerminalScreen workshopTerminal))
+                workshopTerminal.TerminalScreenToggled -= OnTerminalScreenToggled;
         }
     }
 }

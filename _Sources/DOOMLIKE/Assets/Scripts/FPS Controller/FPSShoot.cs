@@ -26,7 +26,7 @@
         [SerializeField] private FPSMagazine _initMagazine = new FPSMagazine(300, 30);
 
         [Header("IMPACT")]
-        [SerializeField] private GameObject[] _bulletImpactPrefabs = null;
+        [SerializeField] private BulletImpact[] _bulletImpactPrefabs = null;
         [SerializeField, Range(0f, 1f)] private float _shootTrauma = 0.15f;
 
         [Header("INPUTS DELAY")]
@@ -220,6 +220,8 @@
                 //    shotsInLineStr += $"{hits[i].transform.name}{(i == hits.Length - 1 ? "" : " | ")}";
                 //this.Log(shotsInLineStr, gameObject);
 
+                bool throughBulletImpact = false;
+
                 RaycastHit hit;
                 for (int i = 0; i < hits.Length; ++i)
                 {
@@ -234,19 +236,15 @@
                     {
                         shootable.OnShot(new FPSShotDatas(hit));
                         FPSMaster.FPSCameraShake.SetTrauma(shootable.TraumaOnShot);
+                        throughBulletImpact |= shootable is BulletImpact bulletImpact && bulletImpact.ShotThrough;
                     }
 
                     // Bullet impacts.
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
+                    if (!throughBulletImpact && hit.collider.gameObject.layer == LayerMask.NameToLayer("Environment"))
                     {
-                        Transform bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform).transform;
-                        bulletImpactInstance.position = hit.point + hit.normal * 0.01f;
-                        bulletImpactInstance.forward = -hit.normal;
-                        bulletImpactInstance.Rotate(0f, 0f, Random.Range(0, 4) * 90);
-
-                        Vector3 scale = bulletImpactInstance.localScale;
-                        scale.Scale(new Vector3(1f / hit.transform.localScale.x, 1f / hit.transform.localScale.y, 1f / hit.transform.localScale.z));
-                        bulletImpactInstance.localScale = scale;
+                        BulletImpact bulletImpactInstance = Instantiate(_bulletImpactPrefabs.Any(), hit.transform);
+                        bulletImpactInstance.SetTransform(hit);
+                        bulletImpactInstance.SetShotThrough(shootable != null && shootable.IsBulletImpactCrossable);
                     }
 
                     // Don't shoot on further hits if bullet can not cross the current one.
@@ -303,8 +301,8 @@
 
         private void Start()
         {
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.OptionsManager.OptionsStateChanged += OnOptionsStateChanged;
+            if (Manager.ReferencesHub.TryGetOptionsManager(out Manager.OptionsManager optionsManager))
+                optionsManager.OptionsStateChanged += OnOptionsStateChanged;
 
             _weaponView.ShootAnimationOver += OnShootAnimationOver;
             _weaponView.ReloadAnimationOver += OnReloadAnimationOver;
@@ -340,11 +338,13 @@
 
         private void OnDestroy()
         {
-            if (Manager.ReferencesHub.Exists())
-                Manager.ReferencesHub.OptionsManager.OptionsStateChanged -= OnOptionsStateChanged;
+            if (Manager.ReferencesHub.TryGetOptionsManager(out Manager.OptionsManager optionsManager))
+                optionsManager.OptionsStateChanged -= OnOptionsStateChanged;
 
             _weaponView.ShootAnimationOver -= OnShootAnimationOver;
+            _weaponView.ReloadAnimationOver -= OnReloadAnimationOver;
             _weaponView.ShootFrame -= OnShootFrame;
+            _weaponView.ReloadFrame -= OnReloadFrame;
         }
 
         private void DBG_FulfillMagazine()

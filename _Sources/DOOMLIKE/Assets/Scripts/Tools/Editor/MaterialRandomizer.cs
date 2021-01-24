@@ -6,12 +6,6 @@
 
     internal sealed class MaterialRandomizerMenu
     {
-        [MenuItem("Tools/Material Randomizer", true)]
-        private static bool CheckIfAtLeastOneObjectIsSelect()
-        {
-            return Selection.gameObjects.Length > 0;
-        }
-
         [MenuItem("Tools/Material Randomizer")]
         public static void RenameSelectedObjects()
         {
@@ -24,20 +18,26 @@
         private GameObject[] _selection;
         private string _filter;
         private int _materialsLength;
+        private int _materialsToSkipLength;
         private int _previousLength;
+        private int _previousToSkipLength;
         private Object[] _materials;
+        private Object[] _materialsToSkip;
+        private System.Collections.Generic.List<Material> _materialsToSkipList;
         private System.Collections.Generic.List<Material> _rndMaterials;
 
         public delegate void ChildEventHandler(GameObject child);
 
         public static void LaunchRenamer()
         {
-            GetWindow<MaterialRandomizerEditor>("Randomize Materials").Show();
+            GetWindow<MaterialRandomizerEditor>("Material Randomizer").Show();
         }
 
         private void RandomizeMaterial(GameObject go)
         {
-            if (go.name.ToLower().Contains(_filter.ToLower()) && go.TryGetComponent(out MeshRenderer meshRenderer))
+            if (go.name.ToLower().Contains(_filter.ToLower())
+                && go.TryGetComponent(out MeshRenderer meshRenderer)
+                && !_materialsToSkipList.Contains(meshRenderer.sharedMaterial))
                 meshRenderer.material = _rndMaterials.Any() as Material;
         }
 
@@ -74,6 +74,7 @@
             GUILayout.Space(5);
 
             _filter = EditorGUILayout.TextField("Filter : ", _filter, EditorStyles.miniTextField, GUILayout.ExpandWidth(true));
+
             _materialsLength = EditorGUILayout.IntField("Materials Length : ", _materialsLength, EditorStyles.miniTextField, GUILayout.ExpandWidth(true));
 
             if (_materials != null && _previousLength != _materialsLength)
@@ -96,6 +97,30 @@
             for (int i = 0; i < _materialsLength; ++i)
                 _materials[i] = EditorGUILayout.ObjectField(_materials[i], typeof(Material), true);
 
+            EditorGUILayout.Space(15f);
+
+            _materialsToSkipLength = EditorGUILayout.IntField("Materials to Skip Length : ", _materialsToSkipLength, EditorStyles.miniTextField, GUILayout.ExpandWidth(true));
+
+            if (_materialsToSkip != null && _previousToSkipLength != _materialsToSkipLength)
+            {
+                Object[] copy = new Object[_materialsToSkip.Length];
+                System.Array.Copy(_materialsToSkip, copy, _materialsToSkip.Length);
+                _materialsToSkip = new Object[_materialsToSkipLength];
+
+                for (int i = 0; i < _materialsToSkip.Length; ++i)
+                    if (i < copy.Length)
+                        _materialsToSkip[i] = copy[i];
+
+                _previousToSkipLength = _materialsToSkipLength;
+            }
+
+            if (_materialsToSkip == null)
+                _materialsToSkip = new Object[_materialsToSkipLength];
+
+            EditorGUILayout.LabelField("Materials to Skip", EditorStyles.boldLabel);
+            for (int i = 0; i < _materialsToSkipLength; ++i)
+                _materialsToSkip[i] = EditorGUILayout.ObjectField(_materialsToSkip[i], typeof(Material), true);
+
             GUILayout.Space(5);
             EditorGUILayout.EndVertical();
             GUILayout.Space(10);
@@ -112,6 +137,11 @@
                 for (int i = _materials.Length - 1; i >= 0; --i)
                     if (_materials[i] is Material mat)
                         _rndMaterials.Add(mat);
+
+                _materialsToSkipList = new System.Collections.Generic.List<Material>();
+                for (int i = _materialsToSkip.Length - 1; i >= 0; --i)
+                    if (_materialsToSkip[i] is Material mat)
+                        _materialsToSkipList.Add(mat);
 
                 if (_rndMaterials.Count == 0)
                 {

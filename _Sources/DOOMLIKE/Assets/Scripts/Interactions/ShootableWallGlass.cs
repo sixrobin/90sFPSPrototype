@@ -17,6 +17,8 @@
 
         public bool ShotThrough => true;
 
+        public bool IsBulletImpactCrossable => false;
+
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
             for (int i = _wallMeshRenderers.Length - 1; i >= 0; --i)

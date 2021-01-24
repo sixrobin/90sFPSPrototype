@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5032543843709280367}
   - component: {fileID: 4640603497760725054}
   m_Layer: 8
-  m_Name: Double Side
+  m_Name: Wall Double Side
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,6 +1,5 @@
 ﻿namespace Doomlike
 {
-    using RSLib.Extensions;
     using UnityEngine;
 
     [RequireComponent(typeof(Rigidbody))]
@@ -20,6 +19,8 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
+        public bool IsBulletImpactCrossable => false;
+
         public override void Interact()
         {
             base.Interact();
@@ -33,17 +34,7 @@
 
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
-            float rndX = Random.Range(0.5f, 1f);
-            float rndZ = Random.Range(0.5f, 1f);
-
-            if (transform.up.y < 0.5f)
-                transform.up = transform.up.WithY(1f);
-
-            for (int i = 0; i < 3; ++i)
-            {
-                _rb.AddExplosionForce(3f, shotDatas.Point.AddY(-0.2f), 1f, 3f);
-                _rb.velocity = transform.TransformDirection(new Vector3(rndX, 10f, rndZ));
-            }
+            RigidbodyBumper.Bump(_rb, 3f, 1f, -0.2f);
         }
 
         protected override void Awake()

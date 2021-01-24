@@ -4,6 +4,8 @@
     {
         bool ShotThrough { get; }
 
+        bool IsBulletImpactCrossable { get; }
+
         float TraumaOnShot { get; }
 
         void OnShot(FPSShotDatas shotDatas);

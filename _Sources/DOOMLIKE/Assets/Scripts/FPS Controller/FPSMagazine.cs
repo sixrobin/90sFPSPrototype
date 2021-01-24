@@ -60,7 +60,7 @@
 
         public string ConsoleProPrefix => "FPS Magazine";
 
-        public bool ConsoleProMuted => Manager.ReferencesHub.FPSMaster.FPSShoot.ConsoleProMuted;
+        public bool ConsoleProMuted => Manager.ReferencesHub.Exists() && Manager.ReferencesHub.FPSMaster.FPSShoot.ConsoleProMuted;
 
         public FPSMagazine(int fullCapacity, int loadCapacity)
         {

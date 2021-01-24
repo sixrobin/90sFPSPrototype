@@ -77,6 +77,8 @@
 
 - Salle avec énormément d'ennemis, et une vitre au centre à casser pour se laisser tomber.
 
+- Truc ARCHI meta : laisse la console de debug accessible (sans toutes les commandes évidemment) et pouvoir accéder à la scène showcase dans laquelle on peut en faire trouver un niveau (genre shader stencil tout ça derrière une vitre pour un couloir caché et tout).
+
 - Quand les colliders sont ajustés pour que le perso ne soit pas bloqué (game feel tout ça), faire attention à ce qu'aucun objet physiqué ne puisse sortir de la map.
 
 - Entraînement accessible via un couloir (qu'on peut voir depuis le training mais pas y accéder du coup, demande de faire un détour).
