@@ -21,8 +21,17 @@
             _animator.SetTrigger(ANM_PARAM_DEATH);
         }
 
-        public void PlayHurtAnimation()
+        public void PlayHurtAnimation(float delay = 0f)
         {
+            if (delay == 0f)
+                _animator.SetTrigger(ANM_PARAM_HURT);
+            else
+                StartCoroutine(PlayHurtAnimationDelayed(delay));
+        }
+
+        private System.Collections.IEnumerator PlayHurtAnimationDelayed(float delay)
+        {
+            yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
             _animator.SetTrigger(ANM_PARAM_HURT);
         }
 

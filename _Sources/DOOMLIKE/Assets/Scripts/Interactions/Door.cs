@@ -7,6 +7,7 @@
         [SerializeField] private Animator _animator = null;
         [SerializeField] private MeshRenderer[] _doorRenderers = null;
         [SerializeField] private Material _triggerShotMat = null;
+        [SerializeField] private bool _openOnStart = false;
 
         public override string ConsoleProPrefix => "Door";
 
@@ -71,6 +72,12 @@
             yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
             Toggle();
             _openCoroutineRunning = false;
+        }
+
+        private void Start()
+        {
+            if (_openOnStart)
+                Toggle();
         }
     }
 }
