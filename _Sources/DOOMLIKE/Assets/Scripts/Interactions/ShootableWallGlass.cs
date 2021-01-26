@@ -21,6 +21,13 @@
 
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
+            _glassShatterParticles.transform.position = shotDatas.Point;
+            BreakGlass();
+        }
+
+        [ContextMenu("Break Glass")]
+        public void BreakGlass()
+        {
             for (int i = _wallMeshRenderers.Length - 1; i >= 0; --i)
                 _wallMeshRenderers[i].material = _brokenGlassWallMat;
             _collider.enabled = false;
@@ -28,7 +35,6 @@
             if (_navMeshObstacle)
                 _navMeshObstacle.enabled = false;
 
-            _glassShatterParticles.transform.position = shotDatas.Point;
             _glassShatterParticles.Play();
         }
 

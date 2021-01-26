@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Controller.unity
     guid: a147057cd82b2a34daf2a338544c14f0
+  - enabled: 1
+    path: Assets/Scenes/Showcase.unity
+    guid: ea7f68bf9f5629648b351e604201eb7b
   m_configObjects: {}

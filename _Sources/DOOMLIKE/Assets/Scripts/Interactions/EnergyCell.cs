@@ -22,6 +22,12 @@
 
         public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
         {
+            DestroyCell();
+        }
+
+        [ContextMenu("Destroy Cell")]
+        public void DestroyCell()
+        {
             _cellRenderer.enabled = false;
             _collider.enabled = false;
 
