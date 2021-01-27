@@ -81,6 +81,8 @@
 
 - Quand les colliders sont ajustés pour que le perso ne soit pas bloqué (game feel tout ça), faire attention à ce qu'aucun objet physiqué ne puisse sortir de la map.
 
+- Soldat qui te met à 1 hp quand tu lui tires dessus, et te tue si tu recommences.
+
 - Entraînement accessible via un couloir (qu'on peut voir depuis le training mais pas y accéder du coup, demande de faire un détour).
 - Possibilité de changer le style du scope (gagner des scopes différents).
 - Penser à l'orientation des éléments d'enviro pour la direction à suivre.

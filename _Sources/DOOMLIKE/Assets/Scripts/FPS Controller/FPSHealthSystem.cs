@@ -52,6 +52,13 @@
             HealthSystem.HealFull();
         }
 
+        public void Kill(float trauma = 0.2f)
+        {
+            UnityEngine.Assertions.Assert.IsFalse(HealthSystem.IsDead, "Killing a dead health system owner.");
+            HealthSystem.Kill();
+            FPSMaster.FPSCameraShake.AddTrauma(trauma);
+        }
+
         private void OnKilled()
         {
             // Player death.
