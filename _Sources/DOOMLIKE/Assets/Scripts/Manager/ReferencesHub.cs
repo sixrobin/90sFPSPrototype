@@ -9,6 +9,7 @@
         [SerializeField] private TimeManager _timeManager = null;
         [SerializeField] private CursorManager _cursorManager = null;
         [SerializeField] private UI.TrainingWorkshopTerminalScreen _trainingWorkshopTerminalScreen = null;
+        [SerializeField] private DialogueSystem.DialogueController _dialogueController = null;
 
         [Header("MISC")]
         [SerializeField] private GameObject _prototypeEndCanvas = null;
@@ -22,6 +23,8 @@
         public static CursorManager CursorManager => Instance._cursorManager;
 
         public static UI.TrainingWorkshopTerminalScreen TrainingWorkshopTerminalScreen => Instance._trainingWorkshopTerminalScreen;
+
+        public static DialogueSystem.DialogueController DialogueController => Instance._dialogueController;
 
         public static GameObject PrototypeEndCanvas => Instance._prototypeEndCanvas;
 
@@ -41,6 +44,23 @@
         {
             terminalScreen = Exists() ? TrainingWorkshopTerminalScreen : null;
             return terminalScreen != null;
+        }
+
+        public static bool TryGetDialogueController(out DialogueSystem.DialogueController dialogueCtrl)
+        {
+            dialogueCtrl = Exists() ? DialogueController : null;
+            return dialogueCtrl != null;
+        }
+
+        [ContextMenu("Locate References")]
+        private void LocateReferences()
+        {
+            Instance._fpsMaster = FindObjectOfType<FPSCtrl.FPSMaster>();
+            Instance._optionsManager = FindObjectOfType<OptionsManager>();
+            Instance._timeManager = FindObjectOfType<TimeManager>();
+            Instance._cursorManager = FindObjectOfType<CursorManager>();
+            Instance._trainingWorkshopTerminalScreen = FindObjectOfType<UI.TrainingWorkshopTerminalScreen>();
+            Instance._dialogueController = FindObjectOfType<DialogueSystem.DialogueController>();
         }
     }
 }

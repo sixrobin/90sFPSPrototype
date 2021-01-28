@@ -92,6 +92,18 @@
             }
         }
 
+        private void OnDialogueTriggered(DialogueSystem.ISentencesContainer dialogue)
+        {
+            DisableAllComponents();
+            FPSUIController.Hide();
+        }
+
+        private void OnDialogueOver(DialogueSystem.ISentencesContainer dialogue)
+        {
+            StartCoroutine(EnableAllComponentsAtEndOfFrame());
+            FPSUIController.Show();
+        }
+
         private void Awake()
         {
             _allControllableComponents = new System.Collections.Generic.List<FPSControllableComponent>();
@@ -105,6 +117,12 @@
 
             if (Manager.ReferencesHub.TryGetTrainingWorkshopTerminalScreen(out UI.TrainingWorkshopTerminalScreen workshopTerminal))
                 workshopTerminal.TerminalScreenToggled += OnTerminalScreenToggled;
+
+            if (Manager.ReferencesHub.TryGetDialogueController(out DialogueSystem.DialogueController dialogueCtrl))
+            {
+                dialogueCtrl.DialogueTriggered += OnDialogueTriggered;
+                dialogueCtrl.DialogueOver += OnDialogueOver;
+            }
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("tgm", "Toggle God mode.", true, false, DBG_ToggleGodMode));
         }

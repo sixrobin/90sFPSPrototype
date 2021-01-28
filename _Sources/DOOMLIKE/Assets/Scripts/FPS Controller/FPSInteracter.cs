@@ -138,6 +138,9 @@
             if (!Controllable)
                 return;
 
+            if (FPSMaster.FPSShoot.IsShooting)
+                return;
+
             CheckForInteraction();
             TryInteract();
         }

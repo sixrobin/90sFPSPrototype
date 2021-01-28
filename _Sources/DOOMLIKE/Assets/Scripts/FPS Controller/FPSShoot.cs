@@ -43,9 +43,6 @@
         private System.Collections.IEnumerator _shootInputDelayCoroutine;
         private System.Collections.IEnumerator _reloadInputDelayCoroutine;
 
-        private bool _isShooting; // Animating running.
-        private bool _isReloading; // Animating running.
-
         private System.Collections.Generic.Dictionary<Collider, IFPSShootable> _knownShootables = new System.Collections.Generic.Dictionary<Collider, IFPSShootable>();
 
         public delegate void ShotEventHandler();
@@ -57,6 +54,10 @@
         public event TriedShotEventHandler TriedShot;
         public event CartridgeLoadedEventHandler CartridgeLoaded;
         public event MagazineChangedEventHandler MagazineChanged;
+
+        public bool IsShooting { get; private set; } // Animating running.
+
+        public bool IsReloading { get; private set; } // Animating running.
 
         public enum ShootInputResult
         {
@@ -113,7 +114,7 @@
                 StartCoroutine(_reloadInputDelayCoroutine);
             }
 
-            if (_reloadInput && FPSMagazine.CanReload && !_isShooting && !_isReloading)
+            if (_reloadInput && FPSMagazine.CanReload && !IsShooting && !IsReloading)
                 TriggerReload();
         }
 
@@ -129,7 +130,7 @@
                 StartCoroutine(_shootInputDelayCoroutine);
             }
 
-            if (_shootInput && !_isShooting && !_isReloading)
+            if (_shootInput && !IsShooting && !IsReloading)
             {
                 if (FPSMagazine.IsLoadEmpty && !FPSMaster.DbgGodMode)
                 {
@@ -148,7 +149,7 @@
                 }
                 else
                 {
-                    _isShooting = true;
+                    IsShooting = true;
                     _weaponAnimator.SetTrigger(ANM_PARAM_SHOOT);
                     ResetShootInputDelay();
                     TriedShot?.Invoke(ShootInputResult.Success);
@@ -188,7 +189,7 @@
 
         private void TriggerReload()
         {
-            _isReloading = true;
+            IsReloading = true;
             _weaponAnimator.SetTrigger(ANM_PARAM_RELOAD);
         }
 
@@ -281,12 +282,12 @@
 
         private void OnShootAnimationOver()
         {
-            _isShooting = false;
+            IsShooting = false;
         }
 
         private void OnReloadAnimationOver()
         {
-            _isReloading = false;
+            IsReloading = false;
         }
 
         private void OnShootFrame()
@@ -313,7 +314,7 @@
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("reload", "Reloads weapon.", () =>
             {
-                if (FPSMagazine.CanReload && !_isShooting && !_isReloading)
+                if (FPSMagazine.CanReload && !IsShooting && !IsReloading)
                     TriggerReload();
             }));
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand<int, int>("setMagazine", "Sets the weapon a new magazine.", SetMagazine));

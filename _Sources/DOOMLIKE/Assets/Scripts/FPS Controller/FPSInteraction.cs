@@ -30,7 +30,7 @@
         }
 
         /// <summary>
-        /// Called with the player leaves the interactable gameObject.
+        /// Called when the player leaves the interactable gameObject.
         /// </summary>
         public virtual void Unfocus()
         {

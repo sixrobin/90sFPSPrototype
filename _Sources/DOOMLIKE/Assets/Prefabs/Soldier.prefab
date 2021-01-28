@@ -1465,6 +1465,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _outline: {fileID: 7597922676757134048}
+  _initDialogue: {fileID: 11400000, guid: 9c4a0f28ad25c6546a180cfce8111737, type: 2}
   _animator: {fileID: 4482788509962153680}
   _shootsInterval: 0.8
   _bloodParticles: {fileID: 433115479303297949, guid: d979998ef06f1e34d9fd8da2280cb858,

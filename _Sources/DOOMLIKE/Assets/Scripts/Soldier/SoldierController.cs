@@ -10,6 +10,8 @@
         private const string ANM_PARAM_AIM = "Aim";
         private const string ANM_PARAM_LEAN = "Lean";
 
+        [SerializeField] private DialogueSystem.Dialogue _initDialogue = null;
+
         [SerializeField] private Animator _animator = null;
         [SerializeField, Min(0.5f)] private float _shootsInterval = 2f;
         [SerializeField] private GameObject _bloodParticles = null;
@@ -18,12 +20,13 @@
         [SerializeField] private bool _consoleProMuted = false;
 
         private Vector3 _initForward;
-
         private Transform _target;
         private int _hurtCount;
 
         private SoldierState _currState = SoldierState.Idle;
         private float _currStateTimer = 0f;
+
+        private DialogueSystem.DialoguePlaylist _dialoguePlaylist;
 
         public enum SoldierState
         {
@@ -53,7 +56,10 @@
         public override void Interact()
         {
             if (_currState == SoldierState.Idle)
+            {
                 base.Interact();
+                Manager.ReferencesHub.DialogueController?.Play(_dialoguePlaylist.Next());
+            }
         }
 
         // Animation event.
@@ -101,6 +107,7 @@
         {
             base.Awake();
             _initForward = transform.forward;
+            _dialoguePlaylist = new DialogueSystem.DialoguePlaylist(_initDialogue);
         }
 
         private void SetState(SoldierState newState)
@@ -115,10 +122,12 @@
                 case SoldierState.Idle:
                     _animator.SetTrigger(ANM_PARAM_LEAN);
                     transform.forward = _initForward;
+                    SetInteractionAvailability(true);
                     break;
 
                 case SoldierState.Hurt:
                     _hurtCount++;
+                    DisallowInteraction();
                     break;
 
                 case SoldierState.Aim:
