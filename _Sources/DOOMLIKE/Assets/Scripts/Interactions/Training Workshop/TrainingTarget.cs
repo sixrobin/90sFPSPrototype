@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class TrainingTarget : WorldSpaceBillboard, FPSCtrl.IFPSShootable
+    public class TrainingTarget : WorldSpaceBillboard, FPSSystem.IFPSShootable
     {
         private const string ANM_PARAM_SHOT = "Shot";
         private const string ANM_PARAM_RESET = "Reset";
@@ -24,7 +24,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _billboardEnabled = false;
             _animator.enabled = true;

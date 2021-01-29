@@ -3,7 +3,7 @@
     using RSLib.Extensions;
     using UnityEngine;
 
-    public class SoldierController : OutlinedInteraction, FPSCtrl.IFPSShootable, IConsoleProLoggable
+    public class SoldierController : OutlinedInteraction, FPSSystem.IFPSShootable, IConsoleProLoggable
     {
         private const string ANM_PARAM_HURT = "Hurt";
         private const string ANM_PARAM_SHOOT = "Shoot";
@@ -91,7 +91,12 @@
             SetState(SoldierState.Idle);
         }
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OverrideNextDialogue(DialogueSystem.Dialogue nextDialogue)
+        {
+            _dialoguePlaylist.OverrideNextDialogue(nextDialogue);
+        }
+
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             if (_currState != SoldierState.Idle)
                 return;

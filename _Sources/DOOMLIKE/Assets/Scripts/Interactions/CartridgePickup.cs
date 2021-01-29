@@ -3,7 +3,7 @@
     using UnityEngine;
 
     [RequireComponent(typeof(Rigidbody))]
-    public class CartridgePickup : OutlinedInteraction, FPSCtrl.IFPSShootable
+    public class CartridgePickup : OutlinedInteraction, FPSSystem.IFPSShootable
     {
         [Header("-1 FOR FULFILL")]
         [SerializeField] private int _capacity = 100;
@@ -32,7 +32,7 @@
             }
         }
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             RigidbodyBumper.Bump(_rb, 3f, 1f, -0.2f);
         }

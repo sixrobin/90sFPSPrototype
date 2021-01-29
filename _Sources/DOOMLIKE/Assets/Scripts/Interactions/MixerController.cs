@@ -13,7 +13,7 @@
         private Vector3 _initPos = Vector3.zero;
         private Quaternion _initRot = Quaternion.identity;
 
-        private void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        private void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _shake.SetTrauma(_shakeTraumaOnShot);
             Instantiate(_sparksParticles, shotDatas.Point, _sparksParticles.transform.rotation);

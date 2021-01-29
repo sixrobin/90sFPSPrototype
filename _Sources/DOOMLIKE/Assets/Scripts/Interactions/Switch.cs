@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class Switch : OutlinedInteraction, FPSCtrl.IFPSShootable
+    public class Switch : OutlinedInteraction, FPSSystem.IFPSShootable
     {
         [SerializeField, Range(0f, 1f)] private float _traumaOnShot = 0.1f;
         [SerializeField] private ParticleSystem _smokeParticles = null;
@@ -18,7 +18,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             if (_destroyed)
                 return;

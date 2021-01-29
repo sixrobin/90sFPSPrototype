@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class ShootableWallGlass : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class ShootableWallGlass : MonoBehaviour, FPSSystem.IFPSShootable
     {
         [SerializeField] private Collider _collider = null;
         [SerializeField] private MeshRenderer[] _wallMeshRenderers = null;
@@ -19,7 +19,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _glassShatterParticles.transform.position = shotDatas.Point;
             BreakGlass();

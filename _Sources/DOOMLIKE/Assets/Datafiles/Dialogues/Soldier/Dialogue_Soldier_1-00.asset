@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249f80e827ca7094282dcda5e4b76dc0, type: 3}
+  m_Name: Dialogue_Soldier_1-00
+  m_EditorClassIdentifier: 
+  _id: Soldier_1-00
+  _followingDialogue: {fileID: 11400000, guid: d9e536d3c5327dc4989641cd485e2bd6, type: 2}
+  _speakerName: Soldier
+  _sentences:
+  - _text: Well, well, well... one cell down, it seems.
+    _clip: {fileID: 0}
+  - _text: I cannot open all entrances at once. Security things, you know. I'll open
+      the second one.
+    _clip: {fileID: 0}
+  - _text: ...
+    _clip: {fileID: 0}
+  - _text: Watch out, buddy.
+    _clip: {fileID: 0}

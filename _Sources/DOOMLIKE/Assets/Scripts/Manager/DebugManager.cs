@@ -33,6 +33,7 @@
             };
 
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("toggleDebugView", "Toggles debug view on screen.", true, false, DBG_ToggleDebugView));
+            Console.DebugConsole.OverrideCommand(new Console.DebugCommand("completeWorkshops", "Completes all training workshops.", true, false, DBG_AutoCompleteWorkshops));
         }
 
         [ContextMenu("Toggle Debug View")]
@@ -40,6 +41,15 @@
         {
             _dbgViewOn = !_dbgViewOn;
             ConsoleProLogger.Log(this, $"Debug View {(_dbgViewOn ? "on" : "off")}.", gameObject);
+        }
+
+        [ContextMenu("Auto Complete Workshops")]
+        private void DBG_AutoCompleteWorkshops()
+        {
+            TrainingWorkshop[] workshops = FindObjectsOfType<TrainingWorkshop>();
+            ConsoleProLogger.Log(this, $"Auto completing {workshops.Length} training workshops.", gameObject);
+            foreach (TrainingWorkshop workshop in workshops)
+                workshop.DBG_AutoComplete();
         }
     }
 }

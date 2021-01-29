@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class TrainingWorkshopTerminal : OutlinedInteraction, FPSCtrl.IFPSShootable, IConsoleProLoggable
+    public class TrainingWorkshopTerminal : OutlinedInteraction, FPSSystem.IFPSShootable, IConsoleProLoggable
     {
         [SerializeField] private TrainingWorkshop _trainingWorkshop = null;
         [SerializeField] private MeshRenderer _terminalRenderer = null;
@@ -52,7 +52,7 @@
                 $"(If terminal won't open, make sure the terminal screen is listening to this interaction event.)", gameObject);
         }
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             if (ScreenShattered)
                 return;

@@ -25,7 +25,6 @@
         private int _score;
 
         public delegate void WorkshopCompleteEventHandler(int score);
-
         public event WorkshopCompleteEventHandler WorkshopComplete;
 
         public float BestTime { get; private set; } = float.MaxValue;
@@ -163,6 +162,16 @@
 
             for (int i = _targets.Length - 1; i >= 0; --i)
                 _targets[i].TargetShot -= OnTargetShot;
+        }
+
+        [ContextMenu("Auto Complete")]
+        public void DBG_AutoComplete()
+        {
+            BestTime = 0f;
+            BestShots = _targets.Length;
+            BestScore = 0;
+
+            WorkshopComplete?.Invoke(0);
         }
     }
 }

@@ -30,7 +30,7 @@
 
         public bool ConsoleProMuted => _logsMuted;
 
-        private void OnTerminalInteracted(FPSCtrl.FPSInteraction interaction)
+        private void OnTerminalInteracted(FPSSystem.FPSInteraction interaction)
         {
             this.Log($"Turning on Training Workshop terminal screen.");
 

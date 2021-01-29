@@ -5,7 +5,7 @@
 
     public class DialogueController : MonoBehaviour, IConsoleProLoggable
     {
-        public const string SKIP_INPUT_NAME = "Interact";
+        private const string SKIP_INPUT_NAME = "DialogueSkip";
 
         private ISentencesContainer _currDialogue;
         private ISentence _currSentence;

@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class OutlinedInteraction : FPSCtrl.FPSInteraction
+    public class OutlinedInteraction : FPSSystem.FPSInteraction
     {
         [SerializeField] private cakeslice.Outline _outline = null;
 

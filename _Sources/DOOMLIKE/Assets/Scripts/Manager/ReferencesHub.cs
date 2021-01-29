@@ -4,7 +4,7 @@
 
     public class ReferencesHub : RSLib.Framework.Singleton<ReferencesHub>
     {
-        [SerializeField] private FPSCtrl.FPSMaster _fpsMaster = null;
+        [SerializeField] private FPSSystem.FPSMaster _fpsMaster = null;
         [SerializeField] private OptionsManager _optionsManager = null;
         [SerializeField] private TimeManager _timeManager = null;
         [SerializeField] private CursorManager _cursorManager = null;
@@ -14,7 +14,7 @@
         [Header("MISC")]
         [SerializeField] private GameObject _prototypeEndCanvas = null;
 
-        public static FPSCtrl.FPSMaster FPSMaster => Instance._fpsMaster;
+        public static FPSSystem.FPSMaster FPSMaster => Instance._fpsMaster;
 
         public static OptionsManager OptionsManager => Instance._optionsManager;
 
@@ -55,7 +55,7 @@
         [ContextMenu("Locate References")]
         private void LocateReferences()
         {
-            Instance._fpsMaster = FindObjectOfType<FPSCtrl.FPSMaster>();
+            Instance._fpsMaster = FindObjectOfType<FPSSystem.FPSMaster>();
             Instance._optionsManager = FindObjectOfType<OptionsManager>();
             Instance._timeManager = FindObjectOfType<TimeManager>();
             Instance._cursorManager = FindObjectOfType<CursorManager>();

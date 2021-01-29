@@ -4,7 +4,7 @@
 
     public class OptionReverseAxis : OptionRaycasterToggle
     {
-        [SerializeField] private FPSCtrl.FPSCamera.Axis _axis = FPSCtrl.FPSCamera.Axis.None;
+        [SerializeField] private FPSSystem.FPSCamera.Axis _axis = FPSSystem.FPSCamera.Axis.None;
 
         public override void Init()
         {
@@ -12,7 +12,7 @@
 
         public override void OnToggleValueChanged(bool value)
         {
-            if (_axis == FPSCtrl.FPSCamera.Axis.None)
+            if (_axis == FPSSystem.FPSCamera.Axis.None)
             {
                 Debug.LogError("Invalid axis.");
                 return;

@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class EnergyCell : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class EnergyCell : MonoBehaviour, FPSSystem.IFPSShootable
     {
         [SerializeField] private Collider _collider = null;
         [SerializeField] private MeshRenderer _cellRenderer = null;
@@ -20,7 +20,7 @@
 
         public float TraumaOnShot => _traumaOnShot;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             DestroyCell();
         }

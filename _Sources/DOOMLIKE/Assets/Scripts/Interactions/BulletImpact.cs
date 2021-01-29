@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class BulletImpact : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class BulletImpact : MonoBehaviour, FPSSystem.IFPSShootable
     {
         public bool ShotThrough { get; private set; }
 
@@ -10,7 +10,7 @@
 
         public float TraumaOnShot => 0f;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
         }
 

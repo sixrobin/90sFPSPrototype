@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class RoadBlocker : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class RoadBlocker : MonoBehaviour, FPSSystem.IFPSShootable
     {
         private const string ANM_PARAM_SHOT = "Shot";
 
@@ -15,7 +15,7 @@
 
         public bool IsBulletImpactCrossable => true;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _animator.SetTrigger(ANM_PARAM_SHOT);
         }

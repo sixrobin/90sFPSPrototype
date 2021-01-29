@@ -4,7 +4,7 @@
 
     public class OptionAxisSensitivity : OptionRaycasterValues
     {
-        [SerializeField] private FPSCtrl.FPSCamera.Axis _axis = FPSCtrl.FPSCamera.Axis.None;
+        [SerializeField] private FPSSystem.FPSCamera.Axis _axis = FPSSystem.FPSCamera.Axis.None;
 
         public override void Init()
         {

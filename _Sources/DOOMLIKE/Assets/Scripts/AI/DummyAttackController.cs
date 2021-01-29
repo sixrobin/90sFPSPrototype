@@ -10,7 +10,7 @@
         [SerializeField] private float _hitTrauma = 0.5f;
 
         private Collider _fpsHealthSystemCollider;
-        private FPSCtrl.FPSHealthSystem _fpsHealthSystem;
+        private FPSSystem.FPSHealthSystem _fpsHealthSystem;
 
         public DummyController DummyController { get; private set; }
 
@@ -30,7 +30,7 @@
 
             for (int i = _atkResult.Length - 1; i >= 0; --i)
             {
-                FPSCtrl.FPSHealthSystem fpsHealthSystem = null;
+                FPSSystem.FPSHealthSystem fpsHealthSystem = null;
                 if (_atkResult[i] == _fpsHealthSystemCollider || _atkResult[i].TryGetComponent(out fpsHealthSystem))
                 {
                     if (fpsHealthSystem != null)

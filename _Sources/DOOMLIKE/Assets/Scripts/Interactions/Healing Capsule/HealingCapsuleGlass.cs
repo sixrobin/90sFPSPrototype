@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class HealingCapsuleGlass : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class HealingCapsuleGlass : MonoBehaviour, FPSSystem.IFPSShootable
     {
         [SerializeField] private Collider _glassCollider = null;
         [SerializeField] private MeshRenderer _glassRenderer = null;
@@ -15,7 +15,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _glassCollider.enabled = false;
             _glassRenderer.enabled = false;

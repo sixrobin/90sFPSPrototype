@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class TrainingWorkshopRewardCapsule : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class TrainingWorkshopRewardCapsule : MonoBehaviour, FPSSystem.IFPSShootable
     {
         [Header("REFERENCES")]
         [SerializeField] private TrainingWorkshop _trainingWorkshop = null;
@@ -28,7 +28,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _currRotSpeed = _shotRotSpeed;
             StopAllCoroutines();

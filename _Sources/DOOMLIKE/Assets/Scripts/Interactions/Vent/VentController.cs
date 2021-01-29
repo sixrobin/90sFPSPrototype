@@ -11,7 +11,7 @@
 
         private System.Collections.Generic.List<ParticleSystem> _smokes = new System.Collections.Generic.List<ParticleSystem>();
 
-        private void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        private void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             ParticleSystem smokeInstance = Instantiate(_smokeParticlesPrefab, transform);
             smokeInstance.transform.position = shotDatas.Point;

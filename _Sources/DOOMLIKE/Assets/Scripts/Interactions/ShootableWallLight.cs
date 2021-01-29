@@ -2,7 +2,7 @@
 {
     using UnityEngine;
 
-    public class ShootableWallLight : MonoBehaviour, FPSCtrl.IFPSShootable
+    public class ShootableWallLight : MonoBehaviour, FPSSystem.IFPSShootable
     {
         [SerializeField] private Collider _collider = null;
         [SerializeField] private GameObject _light = null;
@@ -19,7 +19,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             _light.SetActive(false);
             _wallMeshRenderer.material = _lightOffWallMat;

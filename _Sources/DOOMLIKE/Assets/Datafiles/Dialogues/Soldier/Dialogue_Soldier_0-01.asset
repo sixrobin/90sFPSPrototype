@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249f80e827ca7094282dcda5e4b76dc0, type: 3}
+  m_Name: Dialogue_Soldier_0-01
+  m_EditorClassIdentifier: 
+  _id: Soldier_0-01
+  _followingDialogue: {fileID: 11400000, guid: 178602558d72eff49a1cbc54bca0f46e, type: 2}
+  _speakerName: Soldier
+  _sentences:
+  - _text: My name ? C'mon, who needs a name down here...
+    _clip: {fileID: 0}

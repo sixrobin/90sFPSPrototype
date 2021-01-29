@@ -16,13 +16,13 @@
             public bool DialogueTriggeredCallback()
             {
                 _onDialogueTriggered?.Invoke();
-                return _onDialogueTriggered.GetPersistentEventCount() > 0;
+                return _onDialogueTriggered.GetPersistentEventCount() > 0; // Returns true if there's actually a listener.
             }
 
             public bool DialogueOverCallback()
             {
                 _onDialogueOver?.Invoke();
-                return _onDialogueOver.GetPersistentEventCount() > 0;
+                return _onDialogueOver.GetPersistentEventCount() > 0; // Returns true if there's actually a listener.
             }
         }
 
@@ -49,14 +49,8 @@
                     this.Log($"Dialogue over callback executed for dialogue <b>{dialogue.Id}</b>.");
         }
 
-        private void Awake()
+        private void SetupCallbacks(DialogueController dialogueCtrl)
         {
-            if (!Manager.ReferencesHub.TryGetDialogueController(out DialogueController dialogueCtrl))
-            {
-                this.LogError("Callbacks can not be registered if there's no instance of DialogueController in the scene.");
-                return;
-            }
-
             _callbacksByIds = new System.Collections.Generic.Dictionary<string, DialogueCallback>();
             for (int i = _dialoguesCallbacks.Length - 1; i >= 0; --i)
             {
@@ -70,9 +64,20 @@
             dialogueCtrl.DialogueOver += OnDialogueOver;
         }
 
-        private void OnDestroy()
+        private void Awake()
         {
             if (!Manager.ReferencesHub.TryGetDialogueController(out DialogueController dialogueCtrl))
+            {
+                this.LogError("Callbacks can not be registered if there's no instance of DialogueController in the scene.");
+                return;
+            }
+
+            SetupCallbacks(dialogueCtrl);
+        }
+
+        private void OnDestroy()
+        {
+            if (Manager.ReferencesHub.TryGetDialogueController(out DialogueController dialogueCtrl))
             {
                 dialogueCtrl.DialogueTriggered -= OnDialogueTriggered;
                 dialogueCtrl.DialogueOver -= OnDialogueOver;

@@ -6,7 +6,7 @@
     using UnityEngine;
 
     [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
-    public class DummyController : MonoBehaviour, FPSCtrl.IFPSShootable, IConsoleProLoggable
+    public class DummyController : MonoBehaviour, FPSSystem.IFPSShootable, IConsoleProLoggable
     {
         [Header("REFERENCES")]
         [SerializeField] private DummyAttackController _atkController = null;
@@ -71,7 +71,7 @@
 
         public bool ConsoleProMuted => _logsMuted;
 
-        public void OnShot(FPSCtrl.FPSShotDatas shotDatas)
+        public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
             if (_currState == AIState.Death)
                 return;
@@ -224,7 +224,7 @@
         {
             // Requires optimization/caching.
             return Physics.Raycast(transform.position, _target.position - transform.position, out RaycastHit hit, Mathf.Infinity, _playerSightMask)
-                && hit.collider.GetComponent<FPSCtrl.FPSController>() || hit.collider.GetComponent<FPSCtrl.FPSHealthSystem>();
+                && hit.collider.GetComponent<FPSSystem.FPSController>() || hit.collider.GetComponent<FPSSystem.FPSHealthSystem>();
         }
 
         private void EvaluateSpeed()
