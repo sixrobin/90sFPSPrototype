@@ -11,17 +11,22 @@
 
         public override string ConsoleProPrefix => "Door";
 
-        private bool _openCoroutineRunning;
+        private bool _toggleCoroutineRunning;
 
         private bool _canToggle = true;
         public override bool CanToggle
         {
-            get => _canToggle || _openCoroutineRunning;
+            get => _canToggle || _toggleCoroutineRunning;
             protected set
             {
                 _canToggle = value;
-                if (!_canToggle && !IsOn && !_openCoroutineRunning)
-                    this.Log("Locking a door state while it is closed, it then won't open anymore.");
+                if (!_canToggle && !_toggleCoroutineRunning)
+                {
+                    if (!IsOn)
+                        this.Log("Locking a door state while it is closed, it then won't open anymore.", gameObject);
+                    else
+                        this.Log("Locking a door state while it is open, it then won't close anymore.", gameObject);
+                }
             }
         }
 
@@ -29,10 +34,10 @@
         {
             this.Log("Toggling door by shooting its trigger.", gameObject);
 
-            if (_openCoroutineRunning)
+            if (_toggleCoroutineRunning)
             {
                 StopAllCoroutines();
-                _openCoroutineRunning = false;
+                _toggleCoroutineRunning = false;
                 CanToggle = true;
             }
 
@@ -43,35 +48,55 @@
                 _doorRenderers[i].material = _triggerShotMat;
         }
 
-        // Unity event on switch destroyed.
         public void OpenAndLock(float delay = 0f)
         {
-            this.Log($"Opening <b>{transform.name}</b> with a delay of {delay}s.");
+            this.Log($"Opening <b>{transform.name}</b> with a delay of {delay}s.", gameObject);
 
             if (!IsOn && CanToggle)
-                StartCoroutine(OpenAndLockCoroutine(delay));
+                StartCoroutine(ToggleDelayedCoroutine(delay));
+
+            CanToggle = false;
+        }
+
+        public void CloseAndLock(float delay = 0f)
+        {
+            this.Log($"Closing <b>{transform.name}</b> with a delay of {delay}s.", gameObject);
+
+            if (IsOn && CanToggle)
+                StartCoroutine(ToggleDelayedCoroutine(delay));
 
             CanToggle = false;
         }
 
         public override void Toggle()
         {
-            this.Log($"Toggling <b>{transform.name}</b>.");
+            this.Log($"Toggling <b>{transform.name}</b>.", gameObject);
 
-            if (!CanToggle && !_openCoroutineRunning)
+            if (!CanToggle && !_toggleCoroutineRunning)
                 return;
 
             base.Toggle();
-            this.Log($"Triggering animator parameter \"<b>{(IsOn ? "Open" : "Close")}</b>\".");
+            this.Log($"Triggering animator parameter \"<b>{(IsOn ? "Open" : "Close")}</b>\".", gameObject);
             _animator.SetTrigger(IsOn ? "Open" : "Close");
         }
 
-        private System.Collections.IEnumerator OpenAndLockCoroutine(float delay)
+        public void ToggleDelayed(float delay)
         {
-            _openCoroutineRunning = true;
+            if (_toggleCoroutineRunning)
+                return;
+
+            if (delay == 0f)
+                Toggle();
+            else
+                StartCoroutine(ToggleDelayedCoroutine(delay));
+        }
+
+        private System.Collections.IEnumerator ToggleDelayedCoroutine(float delay)
+        {
+            _toggleCoroutineRunning = true;
             yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
             Toggle();
-            _openCoroutineRunning = false;
+            _toggleCoroutineRunning = false;
         }
 
         private void Start()

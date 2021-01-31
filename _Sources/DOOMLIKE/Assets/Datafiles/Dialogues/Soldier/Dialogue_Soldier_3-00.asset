@@ -29,6 +29,6 @@ MonoBehaviour:
     _clip: {fileID: 0}
   - _text: I can't help thinking there's something I could've done for him.
     _clip: {fileID: 0}
-  - _text: I'm glad you came back alive. Last cell is on the right, then I'll open
-      the door. For what it's worth anyway...
+  - _text: I'm glad you came back alive. Last cell is down there on your right, then
+      I'll open the door. For what it's worth anyway...
     _clip: {fileID: 0}
