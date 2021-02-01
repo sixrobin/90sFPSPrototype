@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249f80e827ca7094282dcda5e4b76dc0, type: 3}
+  m_Name: Dialogue_Soldier_2-01
+  m_EditorClassIdentifier: 
+  _id: Soldier_2-01
+  _followingDialogue: {fileID: 11400000, guid: a9ec7058640108d4599db6c830a48cce, type: 2}
+  _speakerName: Soldier
+  _sentences:
+  - _text: ... What ?
+    _clip: {fileID: 0}
+  - _text: You don't know who those monsters are ? What are you here for then ?!
+    _clip: {fileID: 0}
+  - _text: Actually...
+    _clip: {fileID: 0}
+  - _text: The fact that you don't know who they are... that might explain why you're
+      here. Else you wouldn't have come.
+    _clip: {fileID: 0}
+  - _text: Well I don't know exactly. I'm a simple soldier, you know. I was only
+      told they are aliens...
+    _clip: {fileID: 0}
+  - _text: ... coming from the core of the earth.
+    _clip: {fileID: 0}
+  - _text: Like, not the actual core, but... even deeper than the bunker. There seems
+      to be a nest down there.
+    _clip: {fileID: 0}
+  - _text: Correct question is, how did this nest get there ? Well I have no fucking
+      idea.
+    _clip: {fileID: 0}

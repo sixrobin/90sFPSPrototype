@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Dialogue_Soldier_2-00
   m_EditorClassIdentifier: 
   _id: Soldier_2-00
-  _followingDialogue: {fileID: 0}
+  _followingDialogue: {fileID: 11400000, guid: e09583151a0be4840b0e08e71b949b67, type: 2}
   _speakerName: Soldier
   _sentences:
-  - _text: '[Some dialogue after the second cell.]'
+  - _text: Still alive ? I must be dreaming !
+    _clip: {fileID: 0}
+  - _text: Third door's open. There's a training workshop behind, you'll have to
+      do it if you want to reach the next energy cell.
+    _clip: {fileID: 0}
+  - _text: Aim true, shooter.
     _clip: {fileID: 0}

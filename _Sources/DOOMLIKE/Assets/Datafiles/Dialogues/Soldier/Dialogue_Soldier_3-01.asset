@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dialogue_Soldier_3-01
   m_EditorClassIdentifier: 
   _id: Soldier_3-01
-  _followingDialogue: {fileID: 0}
+  _followingDialogue: {fileID: 11400000, guid: f6e9dd77e6a1ab54f9682eafe429c978, type: 2}
   _speakerName: Soldier
   _sentences:
   - _text: My name ?
