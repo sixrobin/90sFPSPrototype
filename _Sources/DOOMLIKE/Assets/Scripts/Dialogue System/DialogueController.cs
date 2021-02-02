@@ -11,7 +11,6 @@
         private ISentence _currSentence;
 
         private bool _skipPressed;
-        private bool _dbgSpeedUp;
 
         public delegate void DialogueEventHandler(ISentencesContainer dialogue);
 
@@ -30,6 +29,7 @@
         [SerializeField, Min(0f)] private float _skipButtonDelay = 1f;
 
         [Header("DEBUG")]
+        [SerializeField] private bool _fastDialogues = false;
         [SerializeField] private bool _consoleProMuted = false;
 
         public bool DialoguePlaying { get; private set; }
@@ -118,7 +118,7 @@
                 str = (i + _lettersPerTick > _currSentence.Text.Length) ? _currSentence.Text : str + _currSentence.Text.Substring(i, _lettersPerTick);
                 _sentenceText.text = str;
 
-                for (float t = 0; t < (_dbgSpeedUp ? 0f : _tickInterval); t += Time.deltaTime)
+                for (float t = 0; t < (_fastDialogues ? 0f : _tickInterval); t += Time.deltaTime)
                 {
                     if (SkipInputPressed() && !_skipPressed)
                     {
@@ -138,7 +138,7 @@
 
         private IEnumerator WaitForSkipCoroutine()
         {
-            if (_dbgSpeedUp)
+            if (_fastDialogues)
                 yield break;
 
             yield return RSLib.Yield.SharedYields.WaitForEndOfFrame;
@@ -185,9 +185,9 @@
         {
             Console.DebugConsole.OverrideCommand(new Console.DebugCommand("toggleFastDialogues", "Toggles dialogues light speed.", true, false, () =>
             {
-                _dbgSpeedUp = !_dbgSpeedUp;
-                ConsoleProLogger.Log(this, $"Fast dialogues {(_dbgSpeedUp ? "on" : "off")}.", gameObject);
-                Console.DebugConsole.LogExternal($"Fast dialogues {(_dbgSpeedUp ? "on" : "off")}.");
+                _fastDialogues = !_fastDialogues;
+                ConsoleProLogger.Log(this, $"Fast dialogues {(_fastDialogues ? "on" : "off")}.", gameObject);
+                Console.DebugConsole.LogExternal($"Fast dialogues {(_fastDialogues ? "on" : "off")}.");
             }));
         }
     }

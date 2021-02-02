@@ -21,7 +21,3 @@ MonoBehaviour:
   - _text: I cannot open all entrances at once. Security things, you know. I'll open
       the second one.
     _clip: {fileID: 0}
-  - _text: ...
-    _clip: {fileID: 0}
-  - _text: Watch out, buddy.
-    _clip: {fileID: 0}

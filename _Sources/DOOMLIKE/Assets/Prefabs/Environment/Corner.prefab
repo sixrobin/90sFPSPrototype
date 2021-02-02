@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &7110376380661426423
 Transform:
@@ -51,7 +51,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &8240429017247341924
 Transform:
@@ -145,7 +145,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 8
+  m_StaticEditorFlags: 26
   m_IsActive: 1
 --- !u!4 &1765050508244531709
 Transform:
@@ -289,6 +289,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall Base (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 881942501595431985, guid: 41db1d8d731a52744bbd0f530502def3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41db1d8d731a52744bbd0f530502def3, type: 3}
 --- !u!4 &6232784696875887418 stripped
@@ -363,6 +368,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wall Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 881942501595431985, guid: 41db1d8d731a52744bbd0f530502def3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41db1d8d731a52744bbd0f530502def3, type: 3}

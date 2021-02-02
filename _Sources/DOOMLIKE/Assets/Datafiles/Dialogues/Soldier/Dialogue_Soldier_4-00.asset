@@ -28,12 +28,7 @@ MonoBehaviour:
   - _text: Well, I feel like I have nothing more to do now that I helped you. And
       I'm glad I did !
     _clip: {fileID: 0}
-  - _text: Take my shotgun. I won't need it anymore.
-    _clip: {fileID: 0}
   - _text: ...
-    _clip: {fileID: 0}
-  - _text: How will I protect myself ? Ha ha ! C'mon buddy, you have to know when
-      to stop !
     _clip: {fileID: 0}
   - _text: Go on. Don't turn around.
     _clip: {fileID: 0}

@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &4591080363188342417
 Transform:
@@ -45,6 +45,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Roof
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390278594882026584, guid: a86c3871f077f294e9a78c52a98326e2,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 4111800916539944351, guid: a86c3871f077f294e9a78c52a98326e2,
         type: 3}
@@ -176,6 +181,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wall 01
       objectReference: {fileID: 0}
+    - target: {fileID: 881942501595431985, guid: 41db1d8d731a52744bbd0f530502def3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41db1d8d731a52744bbd0f530502def3, type: 3}
 --- !u!4 &4644319662917888923 stripped
@@ -254,7 +264,7 @@ PrefabInstance:
     - target: {fileID: 7515290420126709336, guid: cc9dff47b9804da4aae69a271017bb37,
         type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 8
+      value: 26
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc9dff47b9804da4aae69a271017bb37, type: 3}
@@ -330,6 +340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wall 00
+      objectReference: {fileID: 0}
+    - target: {fileID: 881942501595431985, guid: 41db1d8d731a52744bbd0f530502def3,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41db1d8d731a52744bbd0f530502def3, type: 3}

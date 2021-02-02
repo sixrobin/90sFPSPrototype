@@ -2224,7 +2224,7 @@ MonoBehaviour:
     _fullCapacity: 100
     _loadCapacity: 5
     _useInitValues: 1
-    _initStorehouseCount: 10
+    _initStorehouseCount: 25
     _initLoadCount: 5
   _bulletImpactPrefabs:
   - {fileID: 8460442152480617201, guid: b64841333f2b1a24983048e79399cf52, type: 3}
@@ -2345,7 +2345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deathGrayscale: {fileID: 8788388082494117002}
-  _whiteScreenGrayscale: {fileID: 6739577412238197576}
+  _blackScreenGrayscale: {fileID: 0}
 --- !u!114 &8788388082494117000
 MonoBehaviour:
   m_ObjectHideFlags: 0

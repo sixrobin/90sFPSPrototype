@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 5876423604932253946}
   - component: {fileID: 6977031585143556164}
   m_Layer: 8
-  m_Name: Quad (1)
+  m_Name: Wall Arrows 00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &7861990904794997267
 Transform:

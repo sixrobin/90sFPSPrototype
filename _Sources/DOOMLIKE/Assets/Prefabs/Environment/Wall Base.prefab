@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 9008093583428422280}
   - component: {fileID: 4683277933638047745}
   m_Layer: 8
-  m_Name: Quad (30)
+  m_Name: Wall Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &449932239615173416
 Transform:

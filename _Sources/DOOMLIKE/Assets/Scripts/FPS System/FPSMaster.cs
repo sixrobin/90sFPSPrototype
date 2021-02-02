@@ -63,12 +63,6 @@
                 _allControllableComponents[i].SetControllability(true);
         }
 
-        public System.Collections.IEnumerator EnableAllComponentsAtEndOfFrame()
-        {
-            yield return RSLib.Yield.SharedYields.WaitForEndOfFrame;
-            EnableAllComponents();
-        }
-
         /// <summary>
         /// Disables all the controllable components of the FPS controller.
         /// </summary>
@@ -80,6 +74,11 @@
                 _allControllableComponents[i].SetControllability(false);
         }
 
+        public void DisableAllComponentsAtEndOfFrame()
+        {
+            StartCoroutine(DisableAllComponentsAtEndOfFrameCoroutine());
+        }
+
         private void OnTerminalScreenToggled(bool state)
         {
             if (state)
@@ -89,9 +88,21 @@
             }
             else
             {
-                StartCoroutine(EnableAllComponentsAtEndOfFrame());
+                StartCoroutine(EnableAllComponentsAtEndOfFrameCoroutine());
                 FPSUIController.Show();
             }
+        }
+
+        private System.Collections.IEnumerator EnableAllComponentsAtEndOfFrameCoroutine()
+        {
+            yield return RSLib.Yield.SharedYields.WaitForEndOfFrame;
+            EnableAllComponents();
+        }
+
+        private System.Collections.IEnumerator DisableAllComponentsAtEndOfFrameCoroutine()
+        {
+            yield return RSLib.Yield.SharedYields.WaitForEndOfFrame;
+            DisableAllComponents();
         }
 
         private void OnDialogueTriggered(DialogueSystem.ISentencesContainer dialogue)
@@ -102,7 +113,7 @@
 
         private void OnDialogueOver(DialogueSystem.ISentencesContainer dialogue)
         {
-            StartCoroutine(EnableAllComponentsAtEndOfFrame());
+            StartCoroutine(EnableAllComponentsAtEndOfFrameCoroutine());
             FPSUIController.Show();
         }
 

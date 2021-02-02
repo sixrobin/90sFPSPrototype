@@ -5,7 +5,7 @@
     public class CameraRampsController : MonoBehaviour
     {
         [SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _deathGrayscale = null;
-        [SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _whiteScreenGrayscale = null;
+        [SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _blackScreenGrayscale = null;
         //[SerializeField] private UnityStandardAssets.ImageEffects.Grayscale _nightVisionGrayscale = null;
 
         public void FadeToDeathGrayscale(float delay, float desaturationDur, float pauseDur, float fadeToBlackDur, System.Action callback = null)
@@ -52,16 +52,16 @@
 
         private System.Collections.IEnumerator FadeToWhitScreenGrayscaleCoroutine(float delay, float fadeToWhiteDur, float delayAfter, System.Action callback = null)
         {
-            _whiteScreenGrayscale.enabled = true;
+            _blackScreenGrayscale.enabled = true;
             yield return RSLib.Yield.SharedYields.WaitForSeconds(delay);
 
             for (float t = 0f; t < 1f; t += Time.deltaTime / fadeToWhiteDur)
             {
-                _whiteScreenGrayscale.weight = RSLib.EasingCurves.Easing.Ease(t, RSLib.EasingCurves.Curve.InOutSine);
+                _blackScreenGrayscale.weight = RSLib.EasingCurves.Easing.Ease(t, RSLib.EasingCurves.Curve.InOutSine);
                 yield return null;
             }
 
-            _whiteScreenGrayscale.weight = 1f;
+            _blackScreenGrayscale.weight = 1f;
             yield return RSLib.Yield.SharedYields.WaitForSeconds(delayAfter);
 
             callback?.Invoke();

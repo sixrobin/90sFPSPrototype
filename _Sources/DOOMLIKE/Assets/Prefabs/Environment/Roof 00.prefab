@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 1050212389495164674}
   - component: {fileID: 8066650820886601056}
   m_Layer: 8
-  m_Name: Roof
+  m_Name: Roof 00
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!4 &4111800916539944351
 Transform:

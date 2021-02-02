@@ -43,6 +43,7 @@
         private Vector3 _currCamEulerAngles;
 
         private bool _recentering;
+        private bool _lookingAt;
 
         private float _xAxisSensiMult = 1f;
         private float _yAxisSensiMult = 1f;
@@ -107,9 +108,20 @@
             _maxPitch = _pitchClamped ? _initMaxPitch : 90f;
         }
 
-        public void Recenter(float dur)
+        public void Recenter(float degreesPerSec)
         {
-            StartCoroutine(RecenterCoroutine(dur));
+            StartCoroutine(RecenterCoroutine(degreesPerSec));
+        }
+
+        public void LookAt(Vector3 target)
+        {
+            transform.forward = target - transform.position;
+            _currCamEulerAngles = transform.localEulerAngles;
+        }
+
+        public System.Collections.IEnumerator LookAt(Vector3 target, float speed)
+        {
+            return LookAtCoroutine(target, speed);
         }
 
         protected override void OnControlAllowed()
@@ -146,7 +158,7 @@
             _rawCamInput.y *= _yawSpeed;
             _rawCamInput *= Time.deltaTime;
 
-            if (!_recentering)
+            if (!_recentering && !_lookingAt)
             {
                 _currCamEulerAngles.y += _rawCamInput.y * (_xAxisReversed ? -1 : 1) * _yAxisSensiMult;
                 _currCamEulerAngles.x += _rawCamInput.x * (_yAxisReversed ? 1 : -1) * _xAxisSensiMult;
@@ -176,19 +188,39 @@
             _scopeVisual.SetActive(!state);
         }
 
-        private System.Collections.IEnumerator RecenterCoroutine(float degreesPerSecond)
+        private System.Collections.IEnumerator RecenterCoroutine(float degreesPerSec)
         {
             _recentering = true;
 
             float initXSign = Mathf.Sign(_currCamEulerAngles.x);
             while (initXSign > 0f ? _currCamEulerAngles.x > 0f : _currCamEulerAngles.x < 0f)
             {
-                _currCamEulerAngles = _currCamEulerAngles.AddX((initXSign > 0f ? -degreesPerSecond : degreesPerSecond) * Time.deltaTime);
+                _currCamEulerAngles = _currCamEulerAngles.AddX((initXSign > 0f ? -degreesPerSec : degreesPerSec) * Time.deltaTime);
                 yield return null;
             }
 
             _currCamEulerAngles = _currCamEulerAngles.WithX(0f);
             _recentering = false;
+        }
+
+        private System.Collections.IEnumerator LookAtCoroutine(Vector3 target, float speed)
+        {
+            _lookingAt = true;
+
+            Vector3 lookAtDir = target - transform.position;
+            while (Vector3.Angle(lookAtDir, transform.forward) > 2f)
+            {
+                Vector3 lookAt = Vector3.RotateTowards(transform.forward, lookAtDir, speed * Time.deltaTime, 0f);
+                transform.rotation = Quaternion.LookRotation(lookAt);
+                _currCamEulerAngles = transform.localEulerAngles;
+
+                yield return null;
+            }
+
+            // Avoid camera to do to full rotation after look at.
+            _currCamEulerAngles.x -= 360f;
+
+            _lookingAt = false;
         }
 
         private void Awake()
@@ -215,7 +247,9 @@
 
         private void LateUpdate()
         {
-            EvaluateDestination();
+            if (Controllable)
+                EvaluateDestination();
+
             Position();
             ApplyExtraMovements();
         }
