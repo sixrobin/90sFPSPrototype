@@ -70,7 +70,18 @@
             FPSMaster.FPSHeadBob.SetPercentage(0f);
             FPSMaster.FPSCamera.Recenter(180f);
             FPSMaster.FPSCameraAnimator.PlayDeathAnimation();
-            FPSMaster.FPSCamera.CamRampsController.FadeToDeathGrayscale(_delay, _desaturationDur, _pauseDur, _fadeToBlackDur);
+            FPSMaster.FPSCamera.CamRampsController.FadeToDeathGrayscale(_delay, _desaturationDur, _pauseDur, _fadeToBlackDur, Reload);
+        }
+
+        private void Reload()
+        {
+            StartCoroutine(ReloadCoroutine());
+        }
+
+        private System.Collections.IEnumerator ReloadCoroutine()
+        {
+            yield return new WaitForSeconds(1f);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
 
         private void Awake()

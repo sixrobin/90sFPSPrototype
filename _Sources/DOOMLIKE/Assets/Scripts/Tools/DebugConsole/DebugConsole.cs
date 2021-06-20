@@ -896,7 +896,7 @@
 
         private void Update()
         {
-            if (_enabled && !IsOpen && Input.GetKeyDown(KeyCode.Quote))
+            if (_enabled && !IsOpen && Input.GetKeyDown(KeyCode.Quote) && Input.GetKey(KeyCode.F12))
                 IsOpen = true;
         }
 

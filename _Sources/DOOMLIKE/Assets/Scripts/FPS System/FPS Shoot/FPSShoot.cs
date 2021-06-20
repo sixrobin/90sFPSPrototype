@@ -136,10 +136,11 @@
                 {
                     if (FPSMagazine.IsCompletelyEmpty)
                     {
-                        this.Log("Trying to shoot with a completely empty magazine.", gameObject);
-                        _shootInput = false;
-                        TriedShot?.Invoke(ShootInputResult.Failure);
-                        return;
+                        TryLoadCartridge(new Cartridge(5));
+                        //this.Log("Trying to shoot with a completely empty magazine.", gameObject);
+                        //_shootInput = false;
+                        //TriedShot?.Invoke(ShootInputResult.Failure);
+                        //return;
                     }
 
                     this.Log("Trying to shoot with an empty magazine load, reloading instead.", gameObject);

@@ -2224,7 +2224,7 @@ MonoBehaviour:
     _fullCapacity: 100
     _loadCapacity: 5
     _useInitValues: 1
-    _initStorehouseCount: 25
+    _initStorehouseCount: 50
     _initLoadCount: 5
   _bulletImpactPrefabs:
   - {fileID: 8460442152480617201, guid: b64841333f2b1a24983048e79399cf52, type: 3}

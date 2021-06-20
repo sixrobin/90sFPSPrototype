@@ -9,7 +9,7 @@
             if (Input.anyKeyDown)
             {
                 Manager.ApplicationManager.LogRealtimeSinceStartup();
-                Manager.ApplicationManager.OpenPersistentDataPath();
+                //Manager.ApplicationManager.OpenPersistentDataPath();
                 Manager.ApplicationManager.Quit();
             }
         }
