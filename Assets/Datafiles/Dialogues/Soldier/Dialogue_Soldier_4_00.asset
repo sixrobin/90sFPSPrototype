@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249f80e827ca7094282dcda5e4b76dc0, type: 3}
+  m_Name: Dialogue_Soldier_4_00
+  m_EditorClassIdentifier: 
+  _id: Soldier_4-00
+  _followingDialogue: {fileID: 11400000, guid: 5d94c6d082134e14182aae5420a43c20, type: 2}
+  _speakerName: Soldier
+  _sentences:
+  - _text: ...
+    _clip: {fileID: 0}
+  - _text: You really made it, uh ? I see that nothing is holding the gate anymore.
+    _clip: {fileID: 0}
+  - _text: So... I guess I have to open it, right ?
+    _clip: {fileID: 0}
+  - _text: I'm not coming with you. I'm sorry, I just can't. I've spent too much
+      time here, and...
+    _clip: {fileID: 0}
+  - _text: Well, I feel like I have nothing more to do now that I helped you. And
+      I'm glad I did !
+    _clip: {fileID: 0}
+  - _text: ...
+    _clip: {fileID: 0}
+  - _text: Go on. Don't turn around.
+    _clip: {fileID: 0}

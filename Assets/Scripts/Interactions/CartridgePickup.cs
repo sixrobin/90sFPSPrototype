@@ -47,7 +47,7 @@
 
         private void OnGUI()
         {
-            if (!Manager.DebugManager.DbgViewOn)
+            if (!Manager.DebugManager.DebugViewOn)
                 return;
 
             Camera mainCamera = Camera.main;
@@ -59,7 +59,7 @@
                 return;
 
             worldPos.y = Screen.height - worldPos.y;
-            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"Ammos: {(_capacity == -1 ? "X" : _capacity.ToString())}", Manager.DebugManager.WorldSpaceDbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"Ammos: {(_capacity == -1 ? "X" : _capacity.ToString())}", Manager.DebugManager.WorldSpaceDebugStyle);
         }
     }
 }

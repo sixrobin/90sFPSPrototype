@@ -5,13 +5,13 @@
     public class DebugManager : RSLib.Framework.Singleton<DebugManager>, IConsoleProLoggable
     {
         [SerializeField] private bool _logsMuted = false;
-        [SerializeField] private bool _dbgViewOn = false;
+        [SerializeField] private bool _debugViewOn = false;
 
-        private GUIStyle _worldSpaceDbgStyle;
+        private GUIStyle _worldSpaceDebugStyle;
 
-        public static bool DbgViewOn => DebugManager.Exists() ? Instance._dbgViewOn : false;
+        public static bool DebugViewOn => Exists() && Instance._debugViewOn;
 
-        public static GUIStyle WorldSpaceDbgStyle => Instance._worldSpaceDbgStyle;
+        public static GUIStyle WorldSpaceDebugStyle => Instance._worldSpaceDebugStyle;
 
         public string ConsoleProPrefix => "Debug Manager";
 
@@ -21,7 +21,7 @@
         {
             base.Awake();
 
-            _worldSpaceDbgStyle = new GUIStyle()
+            this._worldSpaceDebugStyle = new GUIStyle()
             {
                 alignment = TextAnchor.MiddleLeft,
                 fontStyle = FontStyle.Bold,
@@ -39,8 +39,8 @@
         [ContextMenu("Toggle Debug View")]
         private void DBG_ToggleDebugView()
         {
-            _dbgViewOn = !_dbgViewOn;
-            ConsoleProLogger.Log(this, $"Debug View {(_dbgViewOn ? "on" : "off")}.", gameObject);
+            this._debugViewOn = !this._debugViewOn;
+            ConsoleProLogger.Log(this, $"Debug View {(this._debugViewOn ? "on" : "off")}.", gameObject);
         }
 
         [ContextMenu("Auto Complete Workshops")]

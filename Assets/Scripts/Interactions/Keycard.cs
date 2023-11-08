@@ -4,7 +4,7 @@
 
     public class Keycard : OutlinedInteraction, IConsoleProLoggable
     {
-        [SerializeField] private int _id;
+        [SerializeField] private int _id = 0;
 
         public int Id => _id;
 

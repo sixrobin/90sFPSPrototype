@@ -4,7 +4,7 @@
 
     public class KeycardLock : OutlinedInteraction, IConsoleProLoggable
     {
-        [SerializeField] private int[] _validIds;
+        [SerializeField] private int[] _validIds = null;
 
         public bool ConsoleProMuted => false;
 

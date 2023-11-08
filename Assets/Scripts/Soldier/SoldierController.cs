@@ -23,8 +23,8 @@
         private Transform _target;
         private int _hurtCount;
 
-        private SoldierState _currState = SoldierState.Idle;
-        private float _currStateTimer = 0f;
+        private SoldierState _currentState = SoldierState.Idle;
+        private float _currentStateTimer = 0f;
 
         private DialogueSystem.DialoguePlaylist _dialoguePlaylist;
 
@@ -49,13 +49,13 @@
 
         public override void Focus()
         {
-            if (_currState == SoldierState.Idle)
+            if (this._currentState == SoldierState.Idle)
                 base.Focus();
         }
 
         public override void Interact()
         {
-            if (_currState == SoldierState.Idle)
+            if (this._currentState == SoldierState.Idle)
             {
                 base.Interact();
                 Manager.ReferencesHub.DialogueController?.Play(_dialoguePlaylist.Next());
@@ -98,7 +98,7 @@
 
         public void OnShot(FPSSystem.FPSShotDatas shotDatas)
         {
-            if (_currState != SoldierState.Idle)
+            if (this._currentState != SoldierState.Idle)
                 return;
 
             SetState(SoldierState.Hurt);
@@ -117,12 +117,12 @@
 
         private void SetState(SoldierState newState)
         {
-            _currState = newState;
-            _currStateTimer = 0f;
+            this._currentState = newState;
+            this._currentStateTimer = 0f;
 
             this.Log($"Setting state to {newState}.");
 
-            switch (_currState)
+            switch (this._currentState)
             {
                 case SoldierState.Idle:
                     _animator.SetTrigger(ANM_PARAM_LEAN);
@@ -147,9 +147,9 @@
 
         private void Update()
         {
-            _currStateTimer += Time.deltaTime;
+            this._currentStateTimer += Time.deltaTime;
 
-            switch (_currState)
+            switch (this._currentState)
             {
                 case SoldierState.Idle:
                 case SoldierState.Hurt:
@@ -157,7 +157,7 @@
 
                 case SoldierState.Aim:
                     transform.forward = (_target.position - transform.position).WithY(0f);
-                    if (_currStateTimer > _shootsInterval)
+                    if (this._currentStateTimer > _shootsInterval)
                         SetState(SoldierState.Shoot);
                     break;
 

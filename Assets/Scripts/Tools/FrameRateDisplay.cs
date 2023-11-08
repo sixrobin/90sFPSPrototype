@@ -15,7 +15,7 @@
 
         private void OnGUI()
         {
-            if (!Manager.DebugManager.DbgViewOn)
+            if (!Manager.DebugManager.DebugViewOn)
                 return;
 
             int w = Screen.width;

@@ -35,9 +35,9 @@
 
         [Header("DEBUG")]
         [SerializeField] private bool _logsMuted = false;
-        [SerializeField] private bool _dbgModeOn = true;
-        [SerializeField] private float _dbgDist = 9f;
-        [SerializeField] private Transform _dbgStateTextPivot = null;
+        [SerializeField] private bool _debugModeOn = true;
+        [SerializeField] private float _debugDist = 9f;
+        [SerializeField] private Transform _debugStateTextPivot = null;
         [SerializeField] private LineRenderer _pathView = null;
 
         private UnityEngine.AI.NavMeshAgent _navMeshAgent;
@@ -65,7 +65,7 @@
 
         public bool IsBulletImpactCrossable => false;
 
-        public bool DbgModeOn => _dbgModeOn;
+        public bool DebugModeOn => this._debugModeOn;
 
         public string ConsoleProPrefix => "Dummy";
 
@@ -76,7 +76,7 @@
             if (_currState == AIState.Death)
                 return;
 
-            if (Manager.ReferencesHub.FPSMaster.DbgGodMode)
+            if (Manager.ReferencesHub.FPSMaster.DebugGodMode)
                 HealthSystem.Kill(); // Damages should be passed in as an OnShot() method argument.
             else
                 HealthSystem.Damage(26); // TMP hard coded value.
@@ -93,7 +93,7 @@
         // Animation event.
         public void OnAttackFrame()
         {
-            if (_dbgModeOn)
+            if (this._debugModeOn)
                 this.Log($"<b>{transform.name}</b> attacking.", gameObject);
 
             _atkController.Attack();
@@ -289,7 +289,7 @@
             AdjustAnimatorMoveSpeed();
             Act();
 
-            _pathView.enabled = _dbgModeOn && Manager.DebugManager.DbgViewOn;
+            _pathView.enabled = this._debugModeOn && Manager.DebugManager.DebugViewOn;
             if (_pathView.enabled)
             {
                 _pathView.positionCount = _navMeshAgent.path.corners.Length;
@@ -300,18 +300,18 @@
 
         private void OnGUI()
         {
-            if (!_dbgModeOn || !Manager.DebugManager.DbgViewOn || _currPlayerDistSqr > _dbgDist.Sqr() || _currState == AIState.Death)
+            if (!_debugModeOn || !Manager.DebugManager.DebugViewOn || _currPlayerDistSqr > _debugDist.Sqr() || _currState == AIState.Death)
                 return;
 
             Camera mainCamera = Camera.main;
             if ((mainCamera.transform.position - transform.position).sqrMagnitude > 16f)
                 return;
 
-            Vector3 worldPos = mainCamera.WorldToScreenPoint(_dbgStateTextPivot.position);
+            Vector3 worldPos = mainCamera.WorldToScreenPoint(_debugStateTextPivot.position);
             if (worldPos.z < 0f)
                 return;
 
-            GUIStyle dbgStyle = new GUIStyle()
+            GUIStyle debugStyle = new GUIStyle()
             {
                 alignment = TextAnchor.MiddleLeft,
                 fontStyle = FontStyle.Bold,
@@ -323,9 +323,9 @@
             };
 
             worldPos.y = Screen.height - worldPos.y;
-            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"State: {_currState}", dbgStyle);
-            GUI.Label(new Rect(worldPos.x, worldPos.y + 10f, 200f, 100f), $"Sight: {HasPlayerInSight()}", dbgStyle);
-            GUI.Label(new Rect(worldPos.x, worldPos.y + 20f, 200f, 100f), $"Reach: {CanReachTarget()}", dbgStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y, 200f, 100f), $"State: {_currState}", debugStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y + 10f, 200f, 100f), $"Sight: {HasPlayerInSight()}", debugStyle);
+            GUI.Label(new Rect(worldPos.x, worldPos.y + 20f, 200f, 100f), $"Reach: {CanReachTarget()}", debugStyle);
         }
     }
 }

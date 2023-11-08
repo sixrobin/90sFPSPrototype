@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249f80e827ca7094282dcda5e4b76dc0, type: 3}
+  m_Name: Dialogue_Soldier_0_00
+  m_EditorClassIdentifier: 
+  _id: Soldier_0-00
+  _followingDialogue: {fileID: 11400000, guid: cee26b7179f36f540be9df09ed143820, type: 2}
+  _speakerName: Soldier
+  _sentences:
+  - _text: Made it out alive, uh ? Seems you're a tough guy.
+    _clip: {fileID: 0}
+  - _text: What are you looking for anyway ? Finding answers ? Trying to save us
+      all ?
+    _clip: {fileID: 0}
+  - _text: Guess you wanna go through that big door, right ? You might find what
+      you want behind, but if I were you...
+    _clip: {fileID: 0}
+  - _text: I'd turn around. That's the best thing you can do if you want to stay
+      alive.
+    _clip: {fileID: 0}
+  - _text: ...
+    _clip: {fileID: 0}
+  - _text: You're going on, aren't you ? Aight man, but don't say I didn't warn you
+      once you're dead.
+    _clip: {fileID: 0}
+  - _text: That gate can't open just like this, there are 4 energy cells you need
+      to destroy to break the security system.
+    _clip: {fileID: 0}
+  - _text: Yeah I know, that seems too much for one gate, but believe me, it's better
+      like that for everyone !
+    _clip: {fileID: 0}
+  - _text: Anyway... the gate won't be useful much longer so... I won't stop you.
+      Maybe you can do something, save us ? Ah ah ! Ah...
+    _clip: {fileID: 0}
+  - _text: I'll open the door to the first energy cell. Do not thank me. No no, you
+      really should not.
+    _clip: {fileID: 0}

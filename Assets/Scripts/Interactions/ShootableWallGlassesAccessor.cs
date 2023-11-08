@@ -5,7 +5,7 @@
     public class ShootableWallGlassesAccessor : MonoBehaviour
     {
         [SerializeField] private ShootableWallGlass[] _wallGlasses = null;
-        [SerializeField] private Transform _dbgGlassesParent = null;
+        [SerializeField] private Transform _debugGlassesParent = null;
 
         [ContextMenu("Break Glasses")]
         public void BreakGlasses()
@@ -24,8 +24,8 @@
         [ContextMenu("Get Wall Glasses in Children")]
         private void GetWallGlassesInChildren()
         {
-            _wallGlasses = _dbgGlassesParent != null
-                ? _dbgGlassesParent.GetComponentsInChildren<ShootableWallGlass>()
+            _wallGlasses = _debugGlassesParent != null
+                ? _debugGlassesParent.GetComponentsInChildren<ShootableWallGlass>()
                 : GetComponentsInChildren<ShootableWallGlass>();
         }
     }

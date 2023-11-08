@@ -16,7 +16,7 @@
 
         public void Attack()
         {
-            if (DummyController.DbgModeOn)
+            if (DummyController.DebugModeOn)
                 ConsoleProLogger.Log(DummyController, "Attack.", gameObject);
 
             Vector3 atkPos = transform.position
